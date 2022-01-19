@@ -1,1 +1,25 @@
-<p>header works!</p>
+<mat-sidenav-container>
+
+  <mat-toolbar color="primary" class="menu-spacer">
+
+      <span style="cursor: pointer"><h1 (click)="onTitleClick();">TR State Syphilis Registry</h1></span>
+
+      <a mat-button [routerLink]="'/'">
+        <mat-icon>search</mat-icon>
+        Search
+      </a>
+
+      <a mat-button  [routerLink]="'/about'">
+        <mat-icon>info</mat-icon>
+        About
+      </a>
+
+      <a mat-button [routerLink]="'/login'">
+        <mat-icon>account_circle</mat-icon>
+        Login
+      </a>
+
+  </mat-toolbar>
+
+</mat-sidenav-container>
+
