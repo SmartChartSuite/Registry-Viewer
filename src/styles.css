@@ -2,3 +2,44 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/*This is bootstrap-like container, and we can change the media queries as needed one day*/
+.container {
+  padding-right: 30px;
+  padding-left: 30px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+.top-spacer{
+  padding-top: 15px;
+}
+
+/*Adding some green buttons. We may have to change the color if we don't like it*/
+.mat-button.mat-success {
+  color: green;
+}
+
+.mat-raised-button.mat-success, .mat-flat-button.mat-success{
+  background-color: green;
+  color: white;
+}
+
+.mat-form-field-appearance-outline.mat-success .mat-form-field-outline.mat-success{
+  color: green;
+}

@@ -1,6 +1,6 @@
 <mat-sidenav-container>
 
-  <mat-toolbar color="primary" class="menu-spacer">
+  <mat-toolbar color="primary">
 
       <span style="cursor: pointer"><h1 (click)="onTitleClick();">TR State Syphilis Registry</h1></span>
 
@@ -8,6 +8,8 @@
         <mat-icon>search</mat-icon>
         Search
       </a>
+
+      <span class="menu-spacer"></span>
 
       <a mat-button  [routerLink]="'/about'">
         <mat-icon>info</mat-icon>

@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {SearchComponent} from "./components/search/search.component";
 import {AboutComponent} from "./components/about/about.component";
 import {LoginComponent} from "./components/login/login.component";
+import {CaseExplorerComponent} from "./components/case-explorer/case-explorer.component";
 
 const routes: Routes = [
   //We need to add Login guard to this section
   {
     path: '',
-    component: SearchComponent
+    component: CaseExplorerComponent
   },
   {
     path: 'about',
