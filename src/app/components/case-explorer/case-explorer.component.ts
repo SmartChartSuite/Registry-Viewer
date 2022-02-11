@@ -5,12 +5,12 @@ import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute} from "@angular/router";
 import {distinctUntilChanged, fromEvent, Subscription, tap} from "rxjs";
 import { debounceTime } from "rxjs/operators";
-import {Decedent} from "../../model/decedent";
 import {CaseExplorerService} from "../../service/case-explorer.service";
+import {CaseRecord} from "../../model/case.record";
 interface ngOnDestroy {
 }
 
-class DecedentService {
+class CaseRecordService {
 }
 
 @Component({
@@ -20,11 +20,10 @@ class DecedentService {
 })
 export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy {
 
-  decedent: Decedent;
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['personId', 'firstName', 'lastName', 'gender', 'age'];
   totalCount: 0;
-  decedentList: Decedent[];
+  caseRecordList: CaseRecord[];
   isLoading = true;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -41,20 +40,20 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
     private caseExplorerService: CaseExplorerService,
   ) { }
 
-  getDecedents(filter: string, sortOrder: string,  sortBy: string, pageNumber: number, pageSize: number): void {
+  getCaseRecords(filter: string, sortOrder: string, sortBy: string, pageNumber: number, pageSize: number): void {
     this.isLoading = true;
     this.loadDataObservable$ = this.caseExplorerService.getCases(filter, sortOrder, sortBy, pageNumber, pageSize).subscribe(
       (response: any) => {
-        this.decedentList = response.data;
+        this.caseRecordList = response.data;
         this.totalCount = response.count;
-        this.dataSource = new MatTableDataSource<any>(this.decedentList);
+        this.dataSource = new MatTableDataSource<any>(this.caseRecordList);
         this.isLoading = false;
       }
     );
   }
 
   ngOnInit(): void {
-    this.getDecedents(null, null, null, null, null);
+    this.getCaseRecords(null, null, null, null, null);
   }
 
   ngAfterViewInit() {
@@ -62,7 +61,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
     this.dataSource.sort = this.sort;
 
     this.sort.sortChange.subscribe(() => {
-      this.getDecedents(
+      this.getCaseRecords(
         this.input.nativeElement.value,
         this.sort.direction,
         this.sort.active,
@@ -76,7 +75,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
         debounceTime(500),
         distinctUntilChanged(),
         tap((text) => {
-          this.getDecedents(
+          this.getCaseRecords(
             this.input.nativeElement.value,
             this.sort.direction,
             this.sort.active,
@@ -97,7 +96,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   }
 
   pageChanged(event: PageEvent) {
-    this.getDecedents(
+    this.getCaseRecords(
       this.input.nativeElement.value,
       this.sort.direction,
       this.sort.active,

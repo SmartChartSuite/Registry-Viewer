@@ -1,5 +1,5 @@
-export class Decedent {
-  decedentId: number;
+export class CaseRecord {
+  caseRecordId: number;
   firstName: string;
   lastName: string;
   gender: string;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import { map, Observable} from "rxjs";
-import {DecedentResponse} from "../model/decedent.response";
+import {CaseRecordApiResponse} from "../model/case.record.api.response";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class CaseExplorerService {
     sortOrder?: string,
     sortBy?: string,
     pageNumber?: number,
-    pageSize?: number):  Observable<DecedentResponse> {
+    pageSize?: number):  Observable<CaseRecordApiResponse> {
 
     const filterParam: string = filter || '';
     const sortOrderParam: string = sortOrder || 'asc';
@@ -31,7 +31,7 @@ export class CaseExplorerService {
         .set('pageNumber', pageNumberParam)
         .set('pageSize', pageSizePram)
     }).pipe(map((result: any) => (
-        result as DecedentResponse
+        result as CaseRecordApiResponse
       )),
     );
   }
