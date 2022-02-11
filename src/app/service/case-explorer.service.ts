@@ -30,9 +30,9 @@ export class CaseExplorerService {
         .set('sortOrder', sortOrderParam)
         .set('pageNumber', pageNumberParam)
         .set('pageSize', pageSizePram)
-    }).pipe(map((result: any) => (
+    }).pipe(map((result: any) =>
         result as CaseRecordApiResponse
-      )),
+      ),
     );
   }
 }
