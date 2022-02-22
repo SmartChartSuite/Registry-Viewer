@@ -20,11 +20,14 @@ class CaseRecordService {
 })
 export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy {
 
+
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['personId', 'firstName', 'lastName', 'gender', 'age'];
+  displayedColumns: string[] = ['personId', 'lastName', 'givenName', 'dob', 'sex', 'address', 'phone', 'specimenCollectionDate', 'status'];
   totalCount: 0;
   caseRecordList: CaseRecord[];
   isLoading = true;
+  searchBy = ['lastName', 'givenName'];
+  searchTerm = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -103,5 +106,9 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
       this.paginator.pageIndex,
       this.paginator.pageSize
     );
+  }
+
+  onSearch() {
+
   }
 }

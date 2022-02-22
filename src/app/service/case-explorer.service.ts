@@ -23,7 +23,7 @@ export class CaseExplorerService {
     const pageNumberParam: number = pageNumber || 0;
     const pageSizePram: number = pageSize || 10;
 
-    return this.http.get('/api/decedent-list', {
+    return this.http.get('/api/person-list', {
       params: new HttpParams()
         .set('filter', filterParam)
         .set('sortBy', sortByParam)
