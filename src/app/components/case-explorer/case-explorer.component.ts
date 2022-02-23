@@ -16,13 +16,13 @@ class CaseRecordService {
 @Component({
   selector: 'app-case-explorer',
   templateUrl: './case-explorer.component.html',
-  styleUrls: ['./case-explorer.component.css']
+  styleUrls: ['./case-explorer.component.css'],
 })
 export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy {
 
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['personId', 'lastName', 'givenName', 'dob', 'sex', 'address', 'phone', 'specimenCollectionDate', 'status'];
+  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'sex', 'address', 'phone', 'specimenCollectionDate', 'status'];
   totalCount: 0;
   caseRecordList: CaseRecord[];
   isLoading = true;

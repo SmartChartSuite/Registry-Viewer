@@ -19,7 +19,7 @@ export class CaseExplorerService {
 
     const filterParam: string = filter || '';
     const sortOrderParam: string = sortOrder || 'asc';
-    const sortByParam: string = sortBy || 'personId';
+    const sortByParam: string = sortBy || 'specimenCollectionDate';
     const pageNumberParam: number = pageNumber || 0;
     const pageSizePram: number = pageSize || 10;
 
