@@ -8,10 +8,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { LoginComponent } from './components/login/login.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
-import {MatMenuModule} from "@angular/material/menu";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatListModule, MatNavList} from "@angular/material/list";
 import { AboutComponent } from './components/about/about.component';
 import { CaseExplorerComponent } from './components/case-explorer/case-explorer.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -21,6 +19,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {HttpClientModule} from "@angular/common/http";
 import {MatSortModule} from "@angular/material/sort";
 import {MatInputModule} from "@angular/material/input";
+import { RegistryViewerComponent } from './components/registry-viewer/registry-viewer.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {MatInputModule} from "@angular/material/input";
     HeaderComponent,
     LoginComponent,
     AboutComponent,
-    CaseExplorerComponent
+    CaseExplorerComponent,
+    RegistryViewerComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +46,9 @@ import {MatInputModule} from "@angular/material/input";
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSortModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

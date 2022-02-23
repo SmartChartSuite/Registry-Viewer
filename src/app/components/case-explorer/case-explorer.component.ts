@@ -2,15 +2,12 @@ import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {distinctUntilChanged, fromEvent, Subscription, tap} from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import {CaseExplorerService} from "../../service/case-explorer.service";
 import {CaseRecord} from "../../model/case.record";
 interface ngOnDestroy {
-}
-
-class CaseRecordService {
 }
 
 @Component({
@@ -40,6 +37,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private caseExplorerService: CaseExplorerService,
   ) { }
 
@@ -57,6 +55,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   ngOnInit(): void {
     this.getCaseRecords(null, null, null, null, null);
+
   }
 
   ngAfterViewInit() {
@@ -95,7 +94,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   }
 
   onRowClicked(row: any) {
-    console.log(row);
+    this.router.navigate(['registry-viewer']);
   }
 
   pageChanged(event: PageEvent) {

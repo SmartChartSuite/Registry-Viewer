@@ -25,14 +25,32 @@ export class CaseExplorerService {
 
     return this.http.get('/api/person-list', {
       params: new HttpParams()
-        .set('filter', filterParam)
-        .set('sortBy', sortByParam)
-        .set('sortOrder', sortOrderParam)
-        .set('pageNumber', pageNumberParam)
-        .set('pageSize', pageSizePram)
+        .append('filter', filterParam)
+        .append('sortBy', sortByParam)
+        .append('sortOrder', sortOrderParam)
+        .append('pageNumber', pageNumberParam)
+        .append('pageSize', pageSizePram)
     }).pipe(map((result: any) =>
         result as CaseRecordApiResponse
       ),
     );
+  };
+
+  testCall(searchTerm?: string, fields?: string[]):  Observable<Object> {
+    let httpParams = new HttpParams();
+
+    if(searchTerm){
+      httpParams.append('searchTerm', searchTerm)
+    }
+    if(fields){
+      httpParams.append('fields', fields?.join(', '))
+    }
+
+    return this.http.get('/api/searchCaseRecords', {
+      params: httpParams}).pipe(map((result: any) =>
+        result as Object
+      ),
+    );
   }
+
 }

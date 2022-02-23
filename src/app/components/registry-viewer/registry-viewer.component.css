@@ -1,0 +1,8 @@
+/*.example-card {*/
+/*  max-width: 400px;*/
+/*}*/
+
+mat-card{
+  width: 80%;
+  height: 80%;
+}
