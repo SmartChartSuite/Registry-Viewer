@@ -55,6 +55,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   ngOnInit(): void {
     this.getCaseRecords(null, null, null, null, null);
+    this.caseExplorerService.testCall().subscribe();
 
   }
 

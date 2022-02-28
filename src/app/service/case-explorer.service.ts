@@ -39,14 +39,18 @@ export class CaseExplorerService {
   testCall(searchTerm?: string, fields?: string[]):  Observable<Object> {
     let httpParams = new HttpParams();
 
+    searchTerm = 'plamen';
+
+    fields = ['firstName', 'lastName'];
+
     if(searchTerm){
-      httpParams.append('searchTerm', searchTerm)
+      httpParams = httpParams.append('searchTerm', searchTerm)
     }
     if(fields){
-      httpParams.append('fields', fields?.join(', '))
+      httpParams = httpParams.append('fields', fields?.join(', '))
     }
 
-    return this.http.get('/api/searchCaseRecords', {
+    return this.http.get('/api/search-case', {
       params: httpParams}).pipe(map((result: any) =>
         result as Object
       ),
