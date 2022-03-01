@@ -1,2 +1,56 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
+<mat-sidenav-container fullscreen>
+
+  <mat-sidenav #sidenav>
+
+    <mat-nav-list (click)="sidenav.close()">
+
+      <a mat-list-item [routerLink]="'/'">
+        <mat-icon>search</mat-icon>
+        <span>Search</span>
+      </a>
+
+      <a mat-list-item [routerLink]="'/about'">
+        <mat-icon>info</mat-icon>
+        <span>About</span>
+      </a>
+
+
+      <a mat-list-item [routerLink]="'/login'">
+        <mat-icon>account_circle</mat-icon>
+        <span>Login</span>
+      </a>
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-toolbar color="primary">
+
+    <button mat-icon-button (click)="sidenav.open()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span style="cursor: pointer"><h1 (click)="onTitleClick();">TR State Syphilis Registry</h1></span>
+
+    <a mat-button [routerLink]="'/'">
+      <mat-icon>search</mat-icon>
+      Search
+    </a>
+
+    <span class="menu-spacer"></span>
+
+    <a mat-button  [routerLink]="'/about'">
+      <mat-icon>info</mat-icon>
+      About
+    </a>
+
+    <button mat-raised-button color="accent">
+      <mat-icon>account_circle</mat-icon>
+      Login
+    </button>
+
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+
+</mat-sidenav-container>
+
