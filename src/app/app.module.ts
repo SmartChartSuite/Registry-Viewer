@@ -22,6 +22,8 @@ import { RegistryViewerComponent } from './components/registry-viewer/registry-v
 import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatListModule} from "@angular/material/list";
+import { TestComponent } from './components/test/test.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import {MatListModule} from "@angular/material/list";
     LoginComponent,
     AboutComponent,
     CaseExplorerComponent,
-    RegistryViewerComponent
+    RegistryViewerComponent,
+    TestComponent
   ],
     imports: [
         BrowserModule,
@@ -48,7 +51,8 @@ import {MatListModule} from "@angular/material/list";
         HttpClientModule,
         MatCardModule,
         MatGridListModule,
-        MatListModule
+        MatListModule,
+      MatTooltipModule
     ],
   providers: [],
   bootstrap: [AppComponent]

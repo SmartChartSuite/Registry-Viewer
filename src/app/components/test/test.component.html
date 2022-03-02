@@ -1,0 +1,39 @@
+<!--<p>test works!</p>-->
+<!--<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" multiTemplateDataRows>-->
+
+<!--  <ng-container matColumnDef="name">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Name </th>-->
+<!--    <ng-container *matCellDef="let data">-->
+<!--      <td mat-cell *ngIf="data.name" [attr.rowspan]="2">-->
+<!--        {{ data.name }}-->
+<!--      </td>-->
+<!--    </ng-container>-->
+<!--  </ng-container>-->
+
+<!--  <ng-container matColumnDef="descriptions">-->
+<!--    <th mat-header-cell *matHeaderCellDef> Descriptions </th>-->
+<!--    <td mat-cell *matCellDef="let data"> {{ data.description }} </td>-->
+<!--  </ng-container>-->
+
+<!--  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--</table>-->
+
+
+<table>
+  <ng-container *ngFor="let data of labResults3">
+    <tr>
+      <td [attr.rowspan]="data.results.length">{{data.group}}</td>
+      <td>{{data.results[0].result}}</td>
+      <td>{{data.results[0].test}}</td>
+      <td>{{data.results[0].date | date:'mediumDate'}}</td>
+    </tr>
+    <ng-container *ngFor="let number of data.results; let i= index;">
+      <tr *ngIf="i!=0">
+        <td>{{number.result}}</td>
+        <td>{{number.test}}</td>
+        <td>{{number.date | date:'mediumDate'}}</td>
+      </tr>
+    </ng-container>
+  </ng-container>
+</table>
