@@ -13,14 +13,26 @@ export class RegistryViewerComponent implements OnInit {
   constructor() {
   }
 
+  setMatCardContentHeight(windowSize: number){
+    if(windowSize <= 440){
+      this.matCardContentHeight = 60;
+    }
+    else if(windowSize <= 1440){
+      this.matCardContentHeight = 70;
+    }
+    else {
+      this.matCardContentHeight = 80;
+    }
+  }
+
   onResize(event: any) {
     this.breakpoint = (event.target.innerWidth <= 992) ? 1 : 2;
-    this.matCardContentHeight = (event.target.innerWidth <= 1200) ? 70 : 80;
+    this.setMatCardContentHeight(event.target.innerWidth);
   }
 
   ngOnInit(): void {
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
-    this.matCardContentHeight = (window.innerWidth<= 1200) ? 70 : 80;
+    this.setMatCardContentHeight(window.innerWidth);
   }
 
 

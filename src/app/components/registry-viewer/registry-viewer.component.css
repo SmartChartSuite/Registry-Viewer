@@ -14,7 +14,6 @@ h1 {
 }
 table {
   width: 90%;
-  /*line-height: 40px;*/
   margin: 30px auto;
   text-align: left;
 }
@@ -32,3 +31,4 @@ table td {
 .menu-spacer{
   flex: 1 1 auto;
 }
+
