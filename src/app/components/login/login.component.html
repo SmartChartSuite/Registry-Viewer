@@ -1,1 +1,38 @@
-<p>login works!</p>
+<mat-grid-list cols="1" rows="1" rowHeight="2:1">
+
+  <mat-grid-tile>
+
+    <mat-card class="mat-elevation-z5">
+
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-subtitle>Please enter your username and password.</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <form autocomplete="off" novalidate [formGroup]="form" (submit)="submit()">
+          <div>
+            <mat-form-field appearance="outline" class="form-input">
+              <mat-label>Username</mat-label>
+              <input matInput formControlName="email">
+            </mat-form-field>
+            <mat-error *ngIf="form.get('email').touched && form.get('email').hasError('required')">This field is mandatory.</mat-error>
+          </div>
+          <div>
+            <mat-form-field appearance="outline" class="form-input">
+              <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password">
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </mat-form-field>
+            <mat-error *ngIf="form.get('password').touched && form.get('password').hasError('required')">This field is mandatory.</mat-error>
+          </div>
+          <button mat-raised-button color="primary" type="submit">Login</button>
+        </form>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </mat-grid-tile>
+
+</mat-grid-list>

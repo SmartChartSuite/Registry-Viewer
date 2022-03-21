@@ -24,6 +24,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatListModule} from "@angular/material/list";
 import { TestComponent } from './components/test/test.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         MatCardModule,
         MatGridListModule,
         MatListModule,
-      MatTooltipModule
+        MatTooltipModule,
+        ReactiveFormsModule
     ],
   providers: [],
   bootstrap: [AppComponent]
