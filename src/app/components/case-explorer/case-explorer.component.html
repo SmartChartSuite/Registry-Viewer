@@ -3,6 +3,7 @@
   <h1>Patient Search</h1>
 
   <div>
+
     <form autocomplete="off" novalidate [formGroup]="searchForm" (submit)="onSubmit()">
 
       <mat-form-field appearance="outline" [style.width.%]=30>
@@ -25,14 +26,17 @@
         </button>
       </span>
 
+      <!--Filter search results is not part of the form, but if we take it out it will render on a separate line (the form creates a div)-->
+      <span style="float: right;">
+        <mat-form-field appearance="outline">
+          <mat-label>Filter Search Results</mat-label>
+          <input matInput #input>
+        </mat-form-field>
+      </span>
+
     </form>
 
-    <span style="float: right;">
-      <mat-form-field appearance="outline">
-        <mat-label>Filter Search Results</mat-label>
-        <input matInput #input>
-      </mat-form-field>
-    </span>
+
 
   </div>
 
