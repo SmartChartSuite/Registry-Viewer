@@ -3,26 +3,29 @@
   <h1>Patient Search</h1>
 
   <div>
-    <mat-form-field appearance="outline" [style.width.%]=30>
-      <mat-label>Search Records</mat-label>
-      <input matInput type='text'>
+    <form autocomplete="off" novalidate [formGroup]="searchForm" (submit)="onSubmit()">
 
-    </mat-form-field>
-
-    <span style="margin-left: 1em">
-      <mat-form-field appearance="outline">
-        <mat-label>Select a Date of Birth</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+      <mat-form-field appearance="outline" [style.width.%]=30>
+        <mat-label>Search Records</mat-label>
+        <input matInput type='text' formControlName="searchQuery">
       </mat-form-field>
-    </span>
 
-    <span style="margin-left: 1em;">
-    <button mat-raised-button color="primary" style="padding-top: 0.5em; padding-bottom: 0.5em;">
-      <mat-icon>search</mat-icon> Search
-    </button>
-    </span>
+      <span style="margin-left: 1em">
+        <mat-form-field appearance="outline">
+          <mat-label>Select a Date of Birth</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="dob">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </span>
+
+      <span style="margin-left: 1em;">
+        <button mat-raised-button color="primary" type="submit" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+          <mat-icon>search</mat-icon> Search
+        </button>
+      </span>
+
+    </form>
 
     <span style="float: right;">
       <mat-form-field appearance="outline">

@@ -7,6 +7,7 @@ import {distinctUntilChanged, fromEvent, Subscription, tap} from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import {CaseExplorerService} from "../../service/case-explorer.service";
 import {CaseRecord} from "../../model/case.record";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 interface ngOnDestroy {
 }
 
@@ -17,6 +18,9 @@ interface ngOnDestroy {
 })
 export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy {
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('input') input: ElementRef;
 
   dataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'sex', 'address', 'phone', 'specimenCollectionDate', 'status'];
@@ -26,19 +30,16 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   searchBy = ['lastName', 'givenName'];
   searchTerm = '';
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  @ViewChild(MatSort) sort: MatSort;
-
-  @ViewChild('input') input: ElementRef;
-
   filterResultsObservable$: Subscription;
   loadDataObservable$: Subscription;
+  searchForm: FormGroup;
+
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private caseExplorerService: CaseExplorerService,
+    private formBuilder: FormBuilder
   ) { }
 
   getCaseRecords(filter: string, sortOrder: string, sortBy: string, pageNumber: number, pageSize: number): void {
@@ -56,6 +57,10 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   ngOnInit(): void {
     this.getCaseRecords(null, null, null, null, null);
     this.caseExplorerService.testCall().subscribe();
+    this.searchForm = this.formBuilder.group({
+      searchQuery: [null],
+      dob: [null]
+    });
 
   }
 
@@ -110,5 +115,9 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   onSearch() {
 
+  }
+
+  onSubmit() {
+    console.log(this.searchForm);
   }
 }

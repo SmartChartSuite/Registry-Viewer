@@ -8,14 +8,16 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class LoginComponent implements OnInit {
 
+  hide = true;
+  loginForm: FormGroup;
+
   constructor(
     private formBuilder: FormBuilder
   ) { }
 
-  hide = true;
-  form: FormGroup;
+
   ngOnInit() {
-    this.form = this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       email: [null, [Validators.required]],
       password: [null, Validators.required]
     });
@@ -26,6 +28,6 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.form);
+    console.log(this.loginForm);
   }
 }
