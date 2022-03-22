@@ -3,20 +3,34 @@
   <h1>Patient Search</h1>
 
   <div>
-    <mat-form-field appearance="outline" [style.width.%]=50>
+    <mat-form-field appearance="outline" [style.width.%]=30>
       <mat-label>Search Records</mat-label>
       <input matInput type='text'>
-      <button mat-mini-fab matSuffix color="primary">
-        <mat-icon>search</mat-icon>
-      </button>
+
     </mat-form-field>
 
-    <span style="float: right">
+    <span style="margin-left: 1em">
+      <mat-form-field appearance="outline">
+        <mat-label>Select a Date of Birth</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </span>
+
+    <span style="margin-left: 1em;">
+    <button mat-raised-button color="primary" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+      <mat-icon>search</mat-icon> Search
+    </button>
+    </span>
+
+    <span style="float: right;">
       <mat-form-field appearance="outline">
         <mat-label>Filter Search Results</mat-label>
         <input matInput #input>
       </mat-form-field>
     </span>
+
   </div>
 
   <div class="spinner-container" *ngIf="isLoading">

@@ -12,21 +12,26 @@
       <mat-card-content>
 
         <form autocomplete="off" novalidate [formGroup]="form" (submit)="submit()">
+
           <div>
             <mat-form-field appearance="outline" class="form-input">
               <mat-label>Username</mat-label>
-              <input matInput formControlName="email">
+              <input placeholder="username"  matInput formControlName="email">
             </mat-form-field>
             <mat-error *ngIf="form.get('email').touched && form.get('email').hasError('required')">This field is mandatory.</mat-error>
           </div>
+
           <div>
             <mat-form-field appearance="outline" class="form-input">
-              <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password">
+              <input matInput placeholder="password" [type]="hide ? 'password' : 'text'" formControlName="password">
+              <mat-label>Password</mat-label>
               <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </mat-form-field>
             <mat-error *ngIf="form.get('password').touched && form.get('password').hasError('required')">This field is mandatory.</mat-error>
           </div>
+
           <button mat-raised-button color="primary" type="submit">Login</button>
+
         </form>
 
       </mat-card-content>

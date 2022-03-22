@@ -25,6 +25,8 @@ import {MatListModule} from "@angular/material/list";
 import { TestComponent } from './components/test/test.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {ReactiveFormsModule} from "@angular/forms";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import {ReactiveFormsModule} from "@angular/forms";
         MatGridListModule,
         MatListModule,
         MatTooltipModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ],
   providers: [],
   bootstrap: [AppComponent]
