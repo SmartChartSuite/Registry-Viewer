@@ -1,0 +1,35 @@
+<div>
+  <h2 mat-dialog-title>Add Annotation</h2>
+
+  <mat-dialog-content [formGroup]="form">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Select Category</mat-label>
+        <mat-select placeholder="Select Category"
+                    formControlName="category">
+          <mat-option value="One">One</mat-option>
+          <mat-option value="Two">Two</mat-option>
+          <mat-option value="Three">Three</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field appearance="outline" [style.width.%]=100>
+        <mat-label>Annotation Text</mat-label>
+        <textarea rows="10" cols="50"
+               matInput
+               placeholeder="Annotation Text"
+               formControlName="description">
+        </textarea>
+      </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+  </mat-dialog-actions>
+
+</div>

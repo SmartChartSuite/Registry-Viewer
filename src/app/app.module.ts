@@ -27,6 +27,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import { AnnotationDialogComponent } from './components/annotation-dialog/annotation-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -35,31 +38,34 @@ import {MatNativeDateModule} from "@angular/material/core";
     AboutComponent,
     CaseExplorerComponent,
     RegistryViewerComponent,
-    TestComponent
+    TestComponent,
+    AnnotationDialogComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        MatTableModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatSortModule,
-        HttpClientModule,
-        MatCardModule,
-        MatGridListModule,
-        MatListModule,
-        MatTooltipModule,
-        ReactiveFormsModule,
-        MatDatepickerModule,
-        MatNativeDateModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
+    HttpClientModule,
+    MatCardModule,
+    MatGridListModule,
+    MatListModule,
+    MatTooltipModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatDialogModule,
+    MatSelectModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

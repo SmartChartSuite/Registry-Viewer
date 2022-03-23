@@ -31,7 +31,7 @@
                 <td style="font-size: 11px;">{{labResult.values[0].date | date:'mediumDate'}}</td>
                 <td style="font-size: 11px;">{{labResult.values[0].test}}</td>
                 <td style="font-size: 11px;">{{labResult.values[0].result}}</td>
-                <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation">edit_note</mat-icon></td>
+                <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation" (click)="onEditAnnotation(labResult.values[0])">edit_note</mat-icon></td>
                 <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
               </tr>
               <ng-container *ngFor="let testData of labResult.values; let i = index;">
@@ -39,7 +39,7 @@
                   <td style="font-size: 11px;">{{testData.date | date:'mediumDate'}}</td>
                   <td style="font-size: 11px;">{{testData.test}}</td>
                   <td style="font-size: 11px;">{{testData.result}}</td>
-                  <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add annotation">edit_note</mat-icon></td>
+                  <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation" (click)="onEditAnnotation(testData)">edit_note</mat-icon></td>
                   <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
                 </tr>
               </ng-container>
@@ -48,13 +48,11 @@
           </table>
         </mat-card-content>
 
-        <mat-card-actions fxFlexAlign="end" align="end">
-          <span style="margin-right: 1em">
+        <mat-card-actions align="end">
           <button mat-raised-button color="primary">
             <mat-icon>add</mat-icon>
             Add Result
           </button>
-          </span>
         </mat-card-actions>
 
       </mat-card>
@@ -74,6 +72,8 @@
               <th>Group</th>
               <th>Date</th>
               <th>Condition</th>
+              <th>Note</th>
+              <th>Details</th>
               <th></th>
             </tr>
             </thead>
@@ -83,13 +83,15 @@
                 <td [attr.rowspan]="diagnose.values.length" style="font-weight: bold;  width: 20%;">{{diagnose.group}}</td>
                 <td style="font-size: 11px; width: 20%;">{{diagnose.values[0].date | date:'mediumDate'}}</td>
                 <td style="font-size: 11px;">{{diagnose.values[0].condition}}</td>
-                <td><mat-icon style="font-size: 18px;">check</mat-icon></td>
+                <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation">edit_note</mat-icon></td>
+                <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
               </tr>
               <ng-container *ngFor="let diagnoseData of diagnose.values; let i = index;">
                 <tr *ngIf="i!=0">
                   <td style="font-size: 11px;">{{diagnoseData.date | date:'mediumDate'}}</td>
                   <td style="font-size: 11px;">{{diagnoseData.condition}}</td>
-                  <td><mat-icon style="font-size: 18px;">check</mat-icon></td>
+                  <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation">edit_note</mat-icon></td>
+                  <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
                 </tr>
               </ng-container>
             </ng-container>
@@ -97,13 +99,11 @@
           </table>
         </mat-card-content>
 
-        <mat-card-actions fxFlexAlign="end" align="end">
-          <span style="margin-right: 1em">
+        <mat-card-actions align="end">
           <button mat-raised-button color="primary">
             <mat-icon>add</mat-icon>
             Add Diagnose
           </button>
-          </span>
         </mat-card-actions>
 
       </mat-card>
@@ -123,6 +123,8 @@
               <th>Date</th>
               <th>Medication</th>
               <th>Dose</th>
+              <th>Note</th>
+              <th>Details</th>
             </tr>
             </thead>
             <tbody>
@@ -131,6 +133,8 @@
                 <td style="font-size: 11px;">{{data.date | date:'mediumDate'}}</td>
                 <td style="font-size: 11px;">{{data.medication}}</td>
                 <td style="font-size: 11px;">{{data.dose}}</td>
+                <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add annotation">edit_note</mat-icon></td>
+                <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
               </tr>
              </ng-container>
             </tbody>
@@ -138,13 +142,11 @@
 
         </mat-card-content>
 
-        <mat-card-actions fxFlexAlign="end" align="end">
-          <span style="margin-right: 1em">
+        <mat-card-actions align="end">
           <button mat-raised-button color="primary">
             <mat-icon>add</mat-icon>
             Add Treatment
           </button>
-          </span>
         </mat-card-actions>
 
       </mat-card>
@@ -158,7 +160,7 @@
           <mat-card-title>Other History</mat-card-title>
         </mat-card-header>
 
-        <mat-card-content style="margin-top:20px" [style.overflow]="'auto'" [style.height.%]="'80'">
+        <mat-card-content style="margin-top:20px" [style.overflow]="'auto'" [style.height.%]="matCardContentHeight">
           <table>
             <thead>
             <tr>
@@ -166,6 +168,8 @@
               <th>Date</th>
               <th>Observation</th>
               <th>Result</th>
+              <th>Note</th>
+              <th>Details</th>
             </tr>
             </thead>
             <tbody>
@@ -175,12 +179,16 @@
                 <td style="font-size: 11px;">{{observationHistory.values[0].date | date:'mediumDate'}}</td>
                 <td style="font-size: 11px;">{{observationHistory.values[0].observation}}</td>
                 <td style="font-size: 11px;">{{observationHistory.values[0].value}}</td>
+                <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add annotation">edit_note</mat-icon></td>
+                <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
               </tr>
               <ng-container *ngFor="let testData of observationHistory.values; let i = index;">
                 <tr *ngIf="i!=0">
                   <td style="font-size: 11px;">{{testData.date | date:'mediumDate'}}</td>
                   <td style="font-size: 11px;">{{testData.observation}}</td>
                   <td style="font-size: 11px;">{{testData.value}}</td>
+                  <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add annotation">edit_note</mat-icon></td>
+                  <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
                 </tr>
               </ng-container>
             </ng-container>
@@ -188,15 +196,12 @@
           </table>
         </mat-card-content>
 
-        <mat-card-actions fxFlexAlign="end" align="end">
-          <span style="margin-right: 1em">
+        <mat-card-actions align="end">
           <button mat-raised-button color="primary">
             <mat-icon>add</mat-icon>
             Add Record
           </button>
-          </span>
         </mat-card-actions>
-
       </mat-card>
     </mat-grid-tile>
 

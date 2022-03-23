@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {openAnnotationDialog} from "../annotation-dialog/annotation-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {filter} from "rxjs";
+
 
 @Component({
   selector: 'app-registry-viewer',
@@ -10,7 +14,7 @@ export class RegistryViewerComponent implements OnInit {
   breakpoint: number;
   matCardContentHeight: number;
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
   }
 
   setMatCardContentHeight(windowSize: number){
@@ -35,6 +39,13 @@ export class RegistryViewerComponent implements OnInit {
     this.setMatCardContentHeight(window.innerWidth);
   }
 
+  onEditAnnotation(value: any) {
+    openAnnotationDialog(this.dialog, {category: "One", description: "Sample annotation text"})
+      .pipe(filter(val => !!val))
+      .subscribe(
+        val=> console.log(val)
+      )
+  }
 
   otherMedicalHistory: [
     {
@@ -234,5 +245,7 @@ export class RegistryViewerComponent implements OnInit {
 
   ]
 
+
 }
+
 
