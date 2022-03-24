@@ -1,8 +1,9 @@
 mat-card {
   width: 85%;
   height: 85%;
+  margin-left:auto;
+  margin-right:auto;
 }
-
 h1 {
   text-align: center;
 }
@@ -32,3 +33,7 @@ table td {
   flex: 1 1 auto;
 }
 
+.expanded-content{
+  width: 100%;
+  height: 100%;
+}

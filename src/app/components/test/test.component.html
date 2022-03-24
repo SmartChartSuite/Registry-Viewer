@@ -20,20 +20,23 @@
 <!--</table>-->
 
 
-<table>
-  <ng-container *ngFor="let data of labResults3">
-    <tr>
-      <td [attr.rowspan]="data.results.length">{{data.group}}</td>
-      <td>{{data.results[0].result}}</td>
-      <td>{{data.results[0].test}}</td>
-      <td>{{data.results[0].date | date:'mediumDate'}}</td>
-    </tr>
-    <ng-container *ngFor="let number of data.results; let i= index;">
-      <tr *ngIf="i!=0">
-        <td>{{number.result}}</td>
-        <td>{{number.test}}</td>
-        <td>{{number.date | date:'mediumDate'}}</td>
-      </tr>
-    </ng-container>
-  </ng-container>
-</table>
+<!--<table>-->
+<!--  <ng-container *ngFor="let data of labResults3">-->
+<!--    <tr>-->
+<!--      <td [attr.rowspan]="data.results.length">{{data.group}}</td>-->
+<!--      <td>{{data.results[0].result}}</td>-->
+<!--      <td>{{data.results[0].test}}</td>-->
+<!--      <td>{{data.results[0].date | date:'mediumDate'}}</td>-->
+<!--    </tr>-->
+<!--    <ng-container *ngFor="let number of data.results; let i= index;">-->
+<!--      <tr *ngIf="i!=0">-->
+<!--        <td>{{number.result}}</td>-->
+<!--        <td>{{number.test}}</td>-->
+<!--        <td>{{number.date | date:'mediumDate'}}</td>-->
+<!--      </tr>-->
+<!--    </ng-container>-->
+<!--  </ng-container>-->
+<!--</table>-->
+<mat-card>
+
+</mat-card>

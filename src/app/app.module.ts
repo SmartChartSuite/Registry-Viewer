@@ -31,6 +31,10 @@ import {AnnotationDialogComponent} from './components/annotation-dialog/annotati
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
 import {DetailsDialogComponent} from './components/details-dialog/details-dialog.component';
+import { LabResultsComponent } from './components/lab-results/lab-results.component';
+import { DiagnosticsComponent } from './components/diagnostics/diagnostics.component';
+import { TreatmentComponent } from './components/treatment/treatment.component';
+import { OtherHistoryComponent } from './components/other-history/other-history.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,10 @@ import {DetailsDialogComponent} from './components/details-dialog/details-dialog
     TestComponent,
     AnnotationDialogComponent,
     DetailsDialogComponent,
+    LabResultsComponent,
+    DiagnosticsComponent,
+    TreatmentComponent,
+    OtherHistoryComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,49 @@
+<mat-card>
+
+  <mat-card-header>
+    <mat-card-title>Other History</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content style="margin-top:20px" [style.overflow]="'auto'" [style.height.%]="matCardContentHeight">
+    <table>
+      <thead>
+      <tr>
+        <th>Group</th>
+        <th>Date</th>
+        <th>Observation</th>
+        <th>Result</th>
+        <th>Note</th>
+        <th>Details</th>
+      </tr>
+      </thead>
+      <tbody>
+      <ng-container *ngFor="let observationHistory of otherMedicalHistoryFormatted">
+        <tr>
+          <td [attr.rowspan]="observationHistory.values.length" style="font-weight: bold;  width: 20%;">{{observationHistory.group}}</td>
+          <td style="font-size: 11px;">{{observationHistory.values[0].date | date:'mediumDate'}}</td>
+          <td style="font-size: 11px;">{{observationHistory.values[0].observation}}</td>
+          <td style="font-size: 11px;">{{observationHistory.values[0].value}}</td>
+          <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add annotation">edit_note</mat-icon></td>
+          <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
+        </tr>
+        <ng-container *ngFor="let testData of observationHistory.values; let i = index;">
+          <tr *ngIf="i!=0">
+            <td style="font-size: 11px;">{{testData.date | date:'mediumDate'}}</td>
+            <td style="font-size: 11px;">{{testData.observation}}</td>
+            <td style="font-size: 11px;">{{testData.value}}</td>
+            <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add annotation">edit_note</mat-icon></td>
+            <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
+          </tr>
+        </ng-container>
+      </ng-container>
+      </tbody>
+    </table>
+  </mat-card-content>
+
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      Add Record
+    </button>
+  </mat-card-actions>
+</mat-card>
