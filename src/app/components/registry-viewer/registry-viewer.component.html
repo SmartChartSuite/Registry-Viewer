@@ -32,7 +32,7 @@
                 <td style="font-size: 11px;">{{labResult.values[0].test}}</td>
                 <td style="font-size: 11px;">{{labResult.values[0].result}}</td>
                 <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation" (click)="onEditAnnotation(labResult.values[0])">edit_note</mat-icon></td>
-                <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
+                <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details" (click)="onViewDetails(labResult.values[0])">expand</mat-icon></td>
               </tr>
               <ng-container *ngFor="let testData of labResult.values; let i = index;">
                 <tr *ngIf="i!=0">
@@ -40,7 +40,7 @@
                   <td style="font-size: 11px;">{{testData.test}}</td>
                   <td style="font-size: 11px;">{{testData.result}}</td>
                   <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation" (click)="onEditAnnotation(testData)">edit_note</mat-icon></td>
-                  <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
+                  <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details" (click)="onViewDetails(labResult.values[0])">expand</mat-icon></td>
                 </tr>
               </ng-container>
             </ng-container>

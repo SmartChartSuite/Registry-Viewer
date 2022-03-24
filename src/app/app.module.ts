@@ -30,6 +30,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import { AnnotationDialogComponent } from './components/annotation-dialog/annotation-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
+import { DetailsDialogComponent } from './components/details-dialog/details-dialog.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {MatSelectModule} from "@angular/material/select";
     RegistryViewerComponent,
     TestComponent,
     AnnotationDialogComponent,
+    DetailsDialogComponent,
   ],
   imports: [
     BrowserModule,
