@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+}
+
+tr.text-value-row {
+  height: 0;
+}
+
+tr.annotation-row:not(.expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.annotation-row:not(.expanded-row):active {
+  background: #efefef;
+}
+
+.annotation-row td {
+  border-bottom-width: 0;
+}
+
+.annotation-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.annotation-text-value {
+  padding: 16px;
+}
