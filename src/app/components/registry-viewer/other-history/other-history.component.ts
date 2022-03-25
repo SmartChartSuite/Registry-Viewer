@@ -3,7 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 @Component({
   selector: 'app-other-history',
   templateUrl: './other-history.component.html',
-  styleUrls: ['./other-history.component.css', '../registry-viewer/registry-viewer.component.css']
+  styleUrls: ['./other-history.component.css', '../registry-viewer.component.css']
 })
 export class OtherHistoryComponent implements OnInit {
 

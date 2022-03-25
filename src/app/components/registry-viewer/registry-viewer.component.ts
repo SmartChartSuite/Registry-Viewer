@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {openAnnotationDialog} from "../annotation-dialog/annotation-dialog.component";
+import {openAnnotationDialog} from "./annotation-dialog/annotation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {filter} from "rxjs";
-import {openDetailsDialog} from "../details-dialog/details-dialog.component";
+import {openDetailsDialog} from "./details-dialog/details-dialog.component";
 
 
 @Component({

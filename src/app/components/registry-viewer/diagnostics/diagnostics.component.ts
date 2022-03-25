@@ -3,7 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 @Component({
   selector: 'app-diagnostics',
   templateUrl: './diagnostics.component.html',
-  styleUrls: ['./diagnostics.component.css', '../registry-viewer/registry-viewer.component.css']
+  styleUrls: ['./diagnostics.component.css', '../registry-viewer.component.css']
 })
 export class DiagnosticsComponent implements OnInit {
 

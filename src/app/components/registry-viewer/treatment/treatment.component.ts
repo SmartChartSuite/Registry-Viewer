@@ -3,7 +3,7 @@ import {Component, Input, OnInit} from '@angular/core';
 @Component({
   selector: 'app-treatment',
   templateUrl: './treatment.component.html',
-  styleUrls: ['./treatment.component.css',  '../registry-viewer/registry-viewer.component.css']
+  styleUrls: ['./treatment.component.css',  '../registry-viewer.component.css']
 })
 export class TreatmentComponent implements OnInit {
 

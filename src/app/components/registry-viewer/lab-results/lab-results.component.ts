@@ -7,7 +7,7 @@ import {MatDialog} from "@angular/material/dialog";
 @Component({
   selector: 'app-lab-results',
   templateUrl: './lab-results.component.html',
-  styleUrls: ['./lab-results.component.css', '../registry-viewer/registry-viewer.component.css'],
+  styleUrls: ['./lab-results.component.css', '../registry-viewer.component.css'],
 })
 export class LabResultsComponent implements OnInit{
 
