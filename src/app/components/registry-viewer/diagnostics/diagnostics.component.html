@@ -5,37 +5,61 @@
   </mat-card-header>
 
   <mat-card-content style="margin-top:20px" [style.overflow]="'auto'" [style.height.%]="matCardContentHeight">
-    <table>
-      <thead>
-      <tr>
-        <th>Group</th>
-        <th>Date</th>
-        <th>Condition</th>
-        <th>Note</th>
-        <th>Details</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <ng-container *ngFor="let diagnose of diagnosesFormatted">
-        <tr>
-          <td [attr.rowspan]="diagnose.values.length" style="font-weight: bold;  width: 20%;">{{diagnose.group}}</td>
-          <td style="font-size: 11px; width: 20%;">{{diagnose.values[0].date | date:'mediumDate'}}</td>
-          <td style="font-size: 11px;">{{diagnose.values[0].condition}}</td>
-          <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation">edit_note</mat-icon></td>
-          <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
-        </tr>
-        <ng-container *ngFor="let diagnoseData of diagnose.values; let i = index;">
-          <tr *ngIf="i!=0">
-            <td style="font-size: 11px;">{{diagnoseData.date | date:'mediumDate'}}</td>
-            <td style="font-size: 11px;">{{diagnoseData.condition}}</td>
-            <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation">edit_note</mat-icon></td>
-            <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>
-          </tr>
-        </ng-container>
+<!--    <table>-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>Group</th>-->
+<!--        <th>Date</th>-->
+<!--        <th>Condition</th>-->
+<!--        <th>Note</th>-->
+<!--        <th>Details</th>-->
+<!--        <th></th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <ng-container *ngFor="let diagnose of diagnosesFormatted">-->
+<!--        <tr>-->
+<!--          <td [attr.rowspan]="diagnose.values.length" style="font-weight: bold;  width: 20%;">{{diagnose.group}}</td>-->
+<!--          <td style="font-size: 11px; width: 20%;">{{diagnose.values[0].date | date:'mediumDate'}}</td>-->
+<!--          <td style="font-size: 11px;">{{diagnose.values[0].condition}}</td>-->
+<!--          <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation">edit_note</mat-icon></td>-->
+<!--          <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>-->
+<!--        </tr>-->
+<!--        <ng-container *ngFor="let diagnoseData of diagnose.values; let i = index;">-->
+<!--          <tr *ngIf="i!=0">-->
+<!--            <td style="font-size: 11px;">{{diagnoseData.date | date:'mediumDate'}}</td>-->
+<!--            <td style="font-size: 11px;">{{diagnoseData.condition}}</td>-->
+<!--            <td style="cursor: pointer; color: #3F51B5"><mat-icon matTooltip="Add Annotation">edit_note</mat-icon></td>-->
+<!--            <td style="cursor: pointer; text-align: center; color: #3F51B5"><mat-icon matTooltip="View Details">expand</mat-icon></td>-->
+<!--          </tr>-->
+<!--        </ng-container>-->
+<!--      </ng-container>-->
+<!--      </tbody>-->
+<!--    </table>-->
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)= "onSortData($event)">
+
+      <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.field }}
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let row">{{ row[column.field] }}</mat-cell>
       </ng-container>
-      </tbody>
-    </table>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      <!-- Group header -->
+      <ng-container matColumnDef="groupHeader">
+        <mat-cell colspan="999" *matCellDef="let group">
+          <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
+          <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
+          <strong>{{groupByColumns[group.level-1]}} = {{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong>
+        </mat-cell>
+      </ng-container>
+
+      <mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup;" (click)="groupHeaderClick(row)"> </mat-row>
+
+    </mat-table>
   </mat-card-content>
 
   <mat-card-actions align="end">
