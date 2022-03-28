@@ -1,1 +1,24 @@
-<p>demographic-data works!</p>
+<mat-grid-list cols="3" rowHeight="100px">
+  <mat-grid-tile>
+    <div class="tile">
+      DOB: {{demographicData.dob}}<br/>
+      Gender: {{demographicData.gender}}
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div class="tile">
+    Address:<br/>
+    {{demographicData.address.street}}<br/>
+    {{demographicData.address.city}} {{demographicData.address.state}} {{demographicData.address.zip}}<br/>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div class="tile">
+      Phone {{demographicData.phone}}<br/>
+      Other: other info<br/>
+    </div>
+  </mat-grid-tile>
+
+</mat-grid-list>

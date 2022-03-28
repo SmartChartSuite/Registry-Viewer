@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 
 @Component({
   selector: 'app-demographic-data',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./demographic-data.component.css']
 })
 export class DemographicDataComponent implements OnInit {
+  @Input() demographicData: any;
 
   constructor() { }
 

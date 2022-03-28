@@ -2,7 +2,7 @@
   <h1>George P. Burdell</h1>
 
   <div style="margin: 2em 2em 2em 2em">
-    <app-demographic-data></app-demographic-data>
+    <app-demographic-data [demographicData]=demographicData></app-demographic-data>
   </div>
 
   <mat-grid-list [cols]="breakpoint" rowHeight="1:1" (window:resize)="onResize($event)">

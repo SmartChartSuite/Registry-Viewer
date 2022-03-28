@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {openAnnotationDialog} from "./annotation-dialog/annotation-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {filter} from "rxjs";
-import {openDetailsDialog} from "./details-dialog/details-dialog.component";
 
 
 @Component({
@@ -14,6 +11,19 @@ export class RegistryViewerComponent implements OnInit {
 
   breakpoint: number;
   matCardContentHeight: number;
+
+  //TODO this data should be retrieved from the backend
+  demographicData = {
+    address:  {
+      street: "7985 Waxwing Pass",
+      city: "Columbus",
+      state: "OH",
+      zip: "87913"
+    },
+    phone: "770-123-9876",
+    dob: "Dec 31, 1923",
+    gender: "other"
+  }
 
   constructor(private dialog: MatDialog) {
   }
@@ -39,6 +49,7 @@ export class RegistryViewerComponent implements OnInit {
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
   }
+
 
 }
 
