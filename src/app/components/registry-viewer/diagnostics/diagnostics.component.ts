@@ -36,6 +36,7 @@ export class DiagnosticsComponent implements OnInit {
 
   expandedDiagnose: any[] = [];
   expandedSubDiagnose: Diagnosis[] = [];
+  isExpandAllActive = false;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -43,13 +44,17 @@ export class DiagnosticsComponent implements OnInit {
     protected dataSourceService: DiagnosticsService,
   ) {
 
-    this.columns = [{
-      field: 'name'
-    }, {
-      field: 'condition'
-    }, {
-      field: 'date'
-    }];
+    this.columns = [
+      {
+        field: 'date'
+      },
+      {
+        field: 'condition'
+      },
+      {
+        field: 'action'
+      }
+    ];
     this.displayedColumns = this.columns.map(column => column.field);
     this.groupByColumns = ['name'];
 
@@ -69,7 +74,15 @@ export class DiagnosticsComponent implements OnInit {
       );
   }
 
+
+  onExpandAll() {
+    this.isExpandAllActive = true;
+    this.dataSource.data = this.addGroupsNew(this._allGroup, this.allData, this.groupByColumns, this.dataSource.data[0]);
+    this.expandedDiagnose = this.dataSource.data[0];
+  }
+
   groupHeaderClick(row) {
+    this.isExpandAllActive = false;
     if (row.expanded) {
       row.expanded = false;
       this.dataSource.data = this.getGroups(this.allData, this.groupByColumns);
@@ -83,10 +96,10 @@ export class DiagnosticsComponent implements OnInit {
   getGroups(data: any[], groupByColumns: string[]): any[] {
     const rootGroup = new Group();
     rootGroup.expanded = false;
-    return this.getGroupList(data, 0, groupByColumns, rootGroup);
+    return this.getGroupList(data, 0, groupByColumns);
   }
 
-  getGroupList(data: any[], level: number = 0, groupByColumns: string[], parent: Group): any[] {
+  getGroupList(data: any[], level: number = 0, groupByColumns: string[]): any[] {
     if (level >= groupByColumns.length) {
       return data;
     }
@@ -95,19 +108,19 @@ export class DiagnosticsComponent implements OnInit {
         row => {
           const result = new Group();
           result.level = level + 1;
-          for (let i = 0; i <= level; i++) {
-            result[groupByColumns[i]] = row[groupByColumns[i]];
-          }
+          groupByColumns.forEach((group, i) => {
+            if(i <= level){
+              result[groupByColumns[i]] = row[groupByColumns[i]];
+            }
+          });
           return result;
         }
       ),
       JSON.stringify);
 
     const currentColumn = groupByColumns[level];
-    let subGroups = [];
     groups.forEach(group => {
-      const rowsInGroup = data.filter(row => group[currentColumn] === row[currentColumn]);
-      group.totalCounts = rowsInGroup.length;
+      group.totalCounts = data.filter(row => group[currentColumn] === row[currentColumn]).length;
       this.expandedSubDiagnose = [];
     });
     groups = groups.sort((a: Diagnosis, b: Diagnosis) => {
@@ -135,16 +148,18 @@ export class DiagnosticsComponent implements OnInit {
       const rowsInGroup = data.filter(row => group[currentColumn] === row[currentColumn]);
       group.totalCounts = rowsInGroup.length;
 
-      if (group.name == dataRow.name.toString()) {
-        group.expanded = dataRow.expanded;
+      if (this.isExpandAllActive || group.name == dataRow.name.toString()) {
+        group.expanded =  dataRow.expanded;
         const subGroup = this.getSublevelNew(allGroup, rowsInGroup, level + 1, groupByColumns, group, dataRow.name.toString());
         this.expandedSubDiagnose = subGroup;
         subGroup.unshift(group);
         subGroups = subGroups.concat(subGroup);
-      } else {
+      }
+      else {
         subGroups = subGroups.concat(group);
       }
     });
+
     return subGroups;
   }
 
