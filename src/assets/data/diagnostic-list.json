@@ -1,0 +1,69 @@
+{
+  "data":[
+    {
+      "name": "Syphilis",
+      "date": "2022-01-04T05:00:00.000Z",
+      "condition": "Primary genital syphilis"
+    },
+    {
+      "name": "Related Conditions",
+      "date": "2015-07-19T04:00:00.000Z",
+      "condition": "Chlamydial infection of genitourinary tract, unspecified"
+    },
+    {
+      "name": "Related Conditions",
+      "date": "2016-08-19T04:00:00.000Z",
+      "condition": "Chlamydial infection of genitourinary tract, unspecified"
+    },
+    {
+      "name": "Related Conditions",
+      "date": "2016-08-19T04:00:00.000Z",
+      "condition": "Chlamydial infection of genitourinary tract, unspecified"
+    },
+    {
+      "name": "Related Conditions",
+      "date": "2016-08-19T04:00:00.000Z",
+      "condition": "Gonococcal infection, unspecified"
+    },
+    {
+      "name": "HIV",
+      "date": "2015-06-19T04:00:00.000Z",
+      "condition": "Chlamydial infection of genitourinary tract, unspecified"
+    },
+    {
+      "name": "HIV",
+      "date": "2016-12-19T04:00:00.000Z",
+      "condition": "Chlamydial infection of genitourinary tract, unspecified"
+    },
+    {
+      "name": "HIV",
+      "date": "2016-08-19T04:00:00.000Z",
+      "condition": "Chlamydial infection of genitourinary tract, unspecified"
+    },
+    {
+      "name": "HIV",
+      "date": "2016-08-19T04:00:00.000Z",
+      "condition": "Gonococcal infection, unspecified"
+    },
+    {
+      "name": "Other Condition",
+      "date": "2015-06-19T04:00:00.000Z",
+      "condition": "Chlamydial infection of genitourinary tract, unspecified"
+    },
+    {
+      "name": "Other Condition",
+      "date": "2016-12-19T04:00:00.000Z",
+      "condition": "Chlamydial infection of genitourinary tract, unspecified"
+    },
+    {
+      "name": "Other Condition",
+      "date": "2016-08-19T04:00:00.000Z",
+      "condition": "Chlamydial infection of genitourinary tract, unspecified"
+    },
+    {
+      "name": "Other Condition",
+      "date": "2016-08-19T04:00:00.000Z",
+      "condition": "Gonococcal infection, unspecified"
+    }
+  ]
+}

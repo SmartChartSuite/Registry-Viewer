@@ -36,13 +36,15 @@
 <!--      </ng-container>-->
 <!--      </tbody>-->
 <!--    </table>-->
-    <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort (matSortChange)= "onSortData($event)">
+    <mat-table [dataSource]="dataSource" matSort (matSortChange)= "onSortData($event)">
 
       <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
         <mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.field }}
         </mat-header-cell>
 
         <mat-cell *matCellDef="let row">{{ row[column.field] }}</mat-cell>
+<!--        <mat-cell *matCellDef="let row">{{ row[column.field] }}</mat-cell>-->
+<!--        {{column.value === 'DATE' ? (row[column.lowercaseValue] | date): row[column.lowercaseValue]}}-->
       </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

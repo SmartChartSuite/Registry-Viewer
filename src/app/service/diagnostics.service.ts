@@ -10,6 +10,6 @@ export class DiagnosticsService {
   constructor(private http: HttpClient) { }
 
   getAllData(): Observable<any[]> {
-    return this.http.get<any[]>('./assets/data/car-list.json');
+    return this.http.get<any[]>('./assets/data/diagnostic-list.json');
   }
 }

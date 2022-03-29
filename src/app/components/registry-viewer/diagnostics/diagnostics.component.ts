@@ -9,12 +9,10 @@ export class Group {
   totalCounts = 0;
 }
 
-export class Car {
-  id: string = '';
-  vin: string = '';
-  brand: string = '';
-  year: string = '';
-  color: string = '';
+export class Diagnosis {
+  name: string = '';
+  date: string = '';
+  condition: string = '';
 }
 
 // This is the example we follow https://stackblitz.com/edit/angular-material-table-row-grouping-expand-sort
@@ -36,8 +34,8 @@ export class DiagnosticsComponent implements OnInit {
   allData: any[];
   _allGroup: any[];
 
-  expandedCar: any[] = [];
-  expandedSubCar: Car[] = [];
+  expandedDiagnose: any[] = [];
+  expandedSubDiagnose: Diagnosis[] = [];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -46,18 +44,14 @@ export class DiagnosticsComponent implements OnInit {
   ) {
 
     this.columns = [{
-      field: 'id'
+      field: 'name'
     }, {
-      field: 'vin'
+      field: 'condition'
     }, {
-      field: 'brand'
-    }, {
-      field: 'year'
-    }, {
-      field: 'color'
+      field: 'date'
     }];
     this.displayedColumns = this.columns.map(column => column.field);
-    this.groupByColumns = ['brand'];
+    this.groupByColumns = ['name'];
 
   }
 
@@ -81,7 +75,7 @@ export class DiagnosticsComponent implements OnInit {
       this.dataSource.data = this.getGroups(this.allData, this.groupByColumns);
     } else {
       row.expanded = true;
-      this.expandedCar = row;
+      this.expandedDiagnose = row;
       this.dataSource.data = this.addGroupsNew(this._allGroup, this.allData, this.groupByColumns, row);
     }
   }
@@ -114,11 +108,11 @@ export class DiagnosticsComponent implements OnInit {
     groups.forEach(group => {
       const rowsInGroup = data.filter(row => group[currentColumn] === row[currentColumn]);
       group.totalCounts = rowsInGroup.length;
-      this.expandedSubCar = [];
+      this.expandedSubDiagnose = [];
     });
-    groups = groups.sort((a: Car, b: Car) => {
+    groups = groups.sort((a: Diagnosis, b: Diagnosis) => {
       const isAsc = 'asc';
-      return this.compare(a.brand, b.brand, isAsc);
+      return this.compare(a.condition, b.condition, isAsc);
 
     });
     this._allGroup = groups;
@@ -141,10 +135,10 @@ export class DiagnosticsComponent implements OnInit {
       const rowsInGroup = data.filter(row => group[currentColumn] === row[currentColumn]);
       group.totalCounts = rowsInGroup.length;
 
-      if (group.brand == dataRow.brand.toString()) {
+      if (group.name == dataRow.name.toString()) {
         group.expanded = dataRow.expanded;
-        const subGroup = this.getSublevelNew(allGroup, rowsInGroup, level + 1, groupByColumns, group, dataRow.brand.toString());
-        this.expandedSubCar = subGroup;
+        const subGroup = this.getSublevelNew(allGroup, rowsInGroup, level + 1, groupByColumns, group, dataRow.name.toString());
+        this.expandedSubDiagnose = subGroup;
         subGroup.unshift(group);
         subGroups = subGroups.concat(subGroup);
       } else {
@@ -174,25 +168,21 @@ export class DiagnosticsComponent implements OnInit {
         data.splice(index, 1);
       }
 
-      data = data.sort((a: Car, b: Car) => {
+      data = data.sort((a: Diagnosis, b: Diagnosis) => {
         const isAsc = sort.direction === 'asc';
         switch (sort.active) {
-          case 'id':
-            return this.compare(a.id, b.id, isAsc);
-          case 'vin':
-            return this.compare(a.vin, b.vin, isAsc);
-          case 'brand':
-            return this.compare(a.brand, b.brand, isAsc);
-          case 'year':
-            return this.compare(a.year, b.year, isAsc);
-          case 'color':
-            return this.compare(a.color, b.color, isAsc);
+          case 'name':
+            return this.compare(a.name, b.name, isAsc);
+          case 'date':
+            return this.compare(a.date, b.date, isAsc);
+          case 'condition':
+            return this.compare(a.condition, b.condition, isAsc);
           default:
             return 0;
         }
       });
     }
-    this.dataSource.data = this.addGroupsNew(this._allGroup, data, this.groupByColumns, this.expandedCar);
+    this.dataSource.data = this.addGroupsNew(this._allGroup, data, this.groupByColumns, this.expandedDiagnose);
   }
 
   private compare(a, b, isAsc) {
