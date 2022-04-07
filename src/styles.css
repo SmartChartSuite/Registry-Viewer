@@ -33,11 +33,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   }
 }
 
-/*@media (min-width: 2560px) {*/
-/*  .container {*/
-/*    width: 2500px;*/
-/*  }*/
-/*}*/
+/* Color Shades */
+.primary-light {
+  background-color: #9fa8da;
+}
 
 .top-spacer{
   padding-top: 15px;

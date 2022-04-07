@@ -36,6 +36,9 @@ import { DiagnosticsComponent } from './components/registry-viewer/diagnostics/d
 import { TreatmentComponent } from './components/registry-viewer/treatment/treatment.component';
 import { OtherHistoryComponent } from './components/registry-viewer/other-history/other-history.component';
 import { DemographicDataComponent } from './components/registry-viewer/demographic-data/demographic-data.component';
+import { DefaultViewComponent } from './components/registry-viewer/default-view/default-view.component';
+import { ChronologicalViewComponent } from './components/registry-viewer/chronological-view/chronological-view.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -52,6 +55,8 @@ import { DemographicDataComponent } from './components/registry-viewer/demograph
     TreatmentComponent,
     OtherHistoryComponent,
     DemographicDataComponent,
+    DefaultViewComponent,
+    ChronologicalViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +81,8 @@ import { DemographicDataComponent } from './components/registry-viewer/demograph
     MatDatepickerModule,
     MatNativeDateModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

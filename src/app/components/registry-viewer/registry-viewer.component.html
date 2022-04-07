@@ -1,28 +1,141 @@
-<div class="container top-spacer">
-  <h1>George P. Burdell</h1>
+<mat-toolbar class="subject-header primary-light">
+  <mat-toolbar-row>
+    <h2>George P. Burdell</h2>
+    <span style="font-size: 0.6em; margin-left: 1em" >Other case/demographic info here</span>
+    <span class="content-spacer"></span>
+    <button mat-raised-button color="primary"
+            (click)="resultViewer.toggle()"
+            aria-label="Button with a pending jobs icon"
+            matTooltip="Show/Hide Job Status">
+      Toggle
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-  <div style="margin: 2em 2em 2em 2em">
-    <app-demographic-data [demographicData]=demographicData></app-demographic-data>
-  </div>
+<mat-sidenav-container hasBackdrop="false">
 
-  <mat-grid-list [cols]="breakpoint" rowHeight="1:1" (window:resize)="onResize($event)">
+  <mat-sidenav #resultViewer class="registry-viewer-sidenav" mode="side" position="end" disableClose opened>
 
-    <mat-grid-tile>
-      <app-lab-results [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-lab-results>
-    </mat-grid-tile>
+    <div style="margin-top: 1em; margin-bottom: 1em">
+      <button mat-raised-button (click)="accordion.openAll()">Expand All</button>
+      <span style="margin-left: 1em"></span>
+      <button mat-raised-button (click)="accordion.closeAll()">Collapse All</button>
+    </div>
 
-    <mat-grid-tile>
-      <app-diagnostics [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-diagnostics>
-    </mat-grid-tile>
+    <mat-accordion multi>
 
-    <mat-grid-tile>
-      <app-treatment [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-treatment>
-    </mat-grid-tile>
+      <mat-expansion-panel togglePosition="before">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Details
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <p>This is the primary content of the panel.</p>
+      </mat-expansion-panel>
 
-    <mat-grid-tile>
-      <app-other-history [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-other-history>
-    </mat-grid-tile>
+      <mat-expansion-panel togglePosition="before">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Annotations
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
 
-  </mat-grid-list>
+          <div>
+            <mat-form-field appearance="outline" [style.width.%]=100>
+              <mat-label>Flags</mat-label>
+              <select matNativeControl required>
+                <option value="one">One</option>
+                <option value="two">Two</option>
+                <option value="three">Three</option>
+              </select>
+            </mat-form-field>
+          </div>
 
-</div>
+          <div>
+            <mat-form-field appearance="outline" [style.width.%]=100>
+              <mat-label>Annotation Text</mat-label>
+              <textarea rows="10" matInput placeholeder="Annotation Text">
+              </textarea>
+            </mat-form-field>
+          </div>
+          <button mat-raised-button>Save</button>
+
+          <table mat-table
+                 [dataSource]="dataSource" multiTemplateDataRows>
+
+            <ng-container matColumnDef="flag">
+              <th mat-header-cell *matHeaderCellDef>Flag</th>
+              <td mat-cell *matCellDef="let annotation"> {{annotation.flag}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="updated">
+              <th mat-header-cell *matHeaderCellDef> Updated</th>
+              <td mat-cell *matCellDef="let annotation"> {{annotation.updated | date}} </td>
+            </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let annotation" [attr.colspan]="columnsToDisplay.length">
+                <div class="annotation-detail">
+                  <div class="annotation-text-value">
+                    {{annotation.textValue}}
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let annotation; columns: columnsToDisplay;"
+                class="annotation-row"
+                (click)="annotation.expanded = !annotation.expanded">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="text-value-row"></tr>
+          </table>
+
+
+        </div>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div style="max-width: 85%; margin: auto">
+
+    <div style="margin: 2em 2em 2em 2em">
+      <button (click)="isDefaultViewActive = !isDefaultViewActive" mat-raised-button class="mat-primary">Switch View</button>
+    </div>
+
+    <!--  <app-default-view></app-default-view>-->
+    <div *ngIf="!isDefaultViewActive">
+      <app-chronological-view></app-chronological-view>
+    </div>
+
+    <div *ngIf="isDefaultViewActive">
+      <mat-grid-list [cols]="breakpoint" rowHeight="1:1" (window:resize)="onResize($event)">
+
+        <mat-grid-tile>
+          <app-lab-results [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-lab-results>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <app-diagnostics [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-diagnostics>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <app-treatment [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-treatment>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <app-other-history [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-other-history>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+    </div>
+    </div>
+  </mat-sidenav-content>
+
+
+</mat-sidenav-container>

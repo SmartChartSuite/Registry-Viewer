@@ -1,56 +1,24 @@
-<mat-sidenav-container fullscreen>
+<mat-toolbar color="primary">
 
-  <mat-sidenav #sidenav>
+  <span class="pointer"><h1 (click)="onTitleClick();">TR State Syphilis Registry</h1></span>
 
-    <mat-nav-list (click)="sidenav.close()">
+  <span class="menu-spacer"></span>
 
-      <a mat-list-item [routerLink]="'/'">
-        <mat-icon>search</mat-icon>
-        <span>Search</span>
-      </a>
+  <a mat-button [routerLink]="'/'">
+    <mat-icon>search</mat-icon>
+    Search
+  </a>
 
-      <a mat-list-item [routerLink]="'/about'">
-        <mat-icon>info</mat-icon>
-        <span>About</span>
-      </a>
+  <a mat-button [routerLink]="'/about'">
+    <mat-icon>info</mat-icon>
+    About
+  </a>
 
-      <a mat-list-item [routerLink]="'/login'">
-        <mat-icon>account_circle</mat-icon>
-        <span>Login</span>
-      </a>
+  <button mat-raised-button color="accent" [routerLink]="'/login'">
+    <mat-icon>account_circle</mat-icon>
+    Login
+  </button>
 
-    </mat-nav-list>
-
-  </mat-sidenav>
-
-  <mat-toolbar color="primary">
-
-    <button mat-icon-button (click)="sidenav.open()">
-      <mat-icon>menu</mat-icon>
-    </button>
-
-    <span class="pointer"><h1 (click)="onTitleClick();">TR State Syphilis Registry</h1></span>
-
-    <span class="menu-spacer"></span>
-
-    <a mat-button [routerLink]="'/'">
-      <mat-icon>search</mat-icon>
-      Search
-    </a>
-
-    <a mat-button  [routerLink]="'/about'">
-      <mat-icon>info</mat-icon>
-      About
-    </a>
-
-    <button mat-raised-button color="accent"  [routerLink]="'/login'">
-      <mat-icon>account_circle</mat-icon>
-      Login
-    </button>
-
-  </mat-toolbar>
-
-  <router-outlet></router-outlet>
-
-</mat-sidenav-container>
+</mat-toolbar>
+<router-outlet></router-outlet>
 
