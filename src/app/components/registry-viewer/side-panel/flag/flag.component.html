@@ -1,0 +1,9 @@
+<label id="radio-group-label">Select a flag</label>
+<mat-radio-group
+  aria-labelledby="radio-group-label"
+  class="radio-group"
+  [(ngModel)]="selectedFlag">
+  <mat-radio-button class="example-radio-button" *ngFor="let flag of flagList" [value]="flag">
+    {{flag}}
+  </mat-radio-button>
+</mat-radio-group>

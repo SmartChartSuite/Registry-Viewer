@@ -1,0 +1,41 @@
+<div style="margin-top: 1em; margin-bottom: 1em; margin-left:1em;">
+  <button *ngIf="!allPanelsExpanded" mat-raised-button (click)="accordion.openAll(); allPanelsExpanded=true">
+    <mat-icon>expand_more</mat-icon>
+    Expand All
+  </button>
+  <button *ngIf="allPanelsExpanded" mat-raised-button (click)="accordion.closeAll(); allPanelsExpanded=false">
+    <mat-icon>expand_less</mat-icon>
+      Collapse All
+  </button>
+</div>
+
+<mat-accordion multi>
+
+  <mat-expansion-panel togglePosition="before" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-details></app-details>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel togglePosition="before" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Flag
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-flag></app-flag>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel togglePosition="before" [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Annotations
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-annotations></app-annotations>
+  </mat-expansion-panel>
+
+</mat-accordion>

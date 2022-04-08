@@ -24,7 +24,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatListModule} from "@angular/material/list";
 import {TestComponent} from './components/test/test.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {AnnotationDialogComponent} from './components/registry-viewer/annotation-dialog/annotation-dialog.component';
@@ -36,9 +36,15 @@ import { DiagnosticsComponent } from './components/registry-viewer/diagnostics/d
 import { TreatmentComponent } from './components/registry-viewer/treatment/treatment.component';
 import { OtherHistoryComponent } from './components/registry-viewer/other-history/other-history.component';
 import { DemographicDataComponent } from './components/registry-viewer/demographic-data/demographic-data.component';
-import { DefaultViewComponent } from './components/registry-viewer/default-view/default-view.component';
+import { DetailsViewComponent } from './components/registry-viewer/details-view/details-view.component';
 import { ChronologicalViewComponent } from './components/registry-viewer/chronological-view/chronological-view.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { SidePanelComponent } from './components/registry-viewer/side-panel/side-panel.component';
+import { DetailsComponent } from './components/registry-viewer/side-panel/details/details.component';
+import { FlagComponent } from './components/registry-viewer/side-panel/flag/flag.component';
+import { AnnotationsComponent } from './components/registry-viewer/side-panel/annotations/annotations.component';
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   declarations: [
@@ -55,8 +61,12 @@ import {MatExpansionModule} from "@angular/material/expansion";
     TreatmentComponent,
     OtherHistoryComponent,
     DemographicDataComponent,
-    DefaultViewComponent,
+    DetailsViewComponent,
     ChronologicalViewComponent,
+    SidePanelComponent,
+    DetailsComponent,
+    FlagComponent,
+    AnnotationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,7 +92,10 @@ import {MatExpansionModule} from "@angular/material/expansion";
     MatNativeDateModule,
     MatDialogModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSlideToggleModule,
+    FormsModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

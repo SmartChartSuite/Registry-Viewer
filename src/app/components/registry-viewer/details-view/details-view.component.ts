@@ -1,30 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-registry-viewer',
-  templateUrl: './registry-viewer.component.html',
-  styleUrls: ['./registry-viewer.component.css']
+  selector: 'app-details-view',
+  templateUrl: './details-view.component.html',
+  styleUrls: ['./details-view.component.css']
 })
-export class RegistryViewerComponent implements OnInit {
+export class DetailsViewComponent implements OnInit {
 
   breakpoint: number;
   matCardContentHeight: number;
-
-  //TODO this data should be retrieved from the backend
-  demographicData = {
-    address:  {
-      street: "7985 Waxwing Pass",
-      city: "Columbus",
-      state: "OH",
-      zip: "87913"
-    },
-    phone: "770-123-9876",
-    dob: "Dec 31, 1923",
-    gender: "other"
-  }
-
-  isDefaultViewActive = true;
-
   constructor() {
   }
 

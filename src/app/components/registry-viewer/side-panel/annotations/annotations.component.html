@@ -1,0 +1,33 @@
+<button *ngIf="!isAddAnnotationInputVisible" mat-raised-button color="primary"
+        (click)="isAddAnnotationInputVisible = true">
+  <mat-icon matTooltip="Add annotation">edit_note</mat-icon>
+  Add Annotation
+</button>
+<div *ngIf="isAddAnnotationInputVisible">
+
+  <div>
+    <mat-form-field appearance="outline" [style.width.%]=100>
+      <mat-label>Annotation Text</mat-label>
+      <textarea rows="10" matInput placeholeder="Annotation Text"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div align="right">
+    <button mat-raised-button (click)="isAddAnnotationInputVisible=false">Cancel</button>
+    <span style="margin-left: 1em">
+      <button mat-raised-button mat-raised-button color="primary">
+        <mat-icon matTooltip="Save annotation">save</mat-icon>
+        Save
+      </button>
+    </span>
+  </div>
+
+</div>
+
+<div *ngFor="let annotation of annotationList; index as i">
+  <hr/>
+  <div style="margin-top: 1em; margin-bottom: 0.5em">
+    {{annotation.updated | date:'mediumDate'}}
+  </div>
+  <div>{{annotation.textValue}}</div>
+</div>

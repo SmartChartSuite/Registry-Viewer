@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DefaultViewComponent } from './default-view.component';
+import { SidePanelComponent } from './side-panel.component';
 
-describe('DefaultViewComponent', () => {
-  let component: DefaultViewComponent;
-  let fixture: ComponentFixture<DefaultViewComponent>;
+describe('SidePanelComponent', () => {
+  let component: SidePanelComponent;
+  let fixture: ComponentFixture<SidePanelComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DefaultViewComponent ]
+      declarations: [ SidePanelComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DefaultViewComponent);
+    fixture = TestBed.createComponent(SidePanelComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

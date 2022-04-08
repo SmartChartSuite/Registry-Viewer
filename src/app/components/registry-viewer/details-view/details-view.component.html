@@ -1,0 +1,19 @@
+<mat-grid-list [cols]="breakpoint" rowHeight="1:1" (window:resize)="onResize($event)">
+
+  <mat-grid-tile>
+    <app-lab-results [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-lab-results>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <app-diagnostics [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-diagnostics>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <app-treatment [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-treatment>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <app-other-history [matCardContentHeight]="matCardContentHeight" class="expanded-content"></app-other-history>
+  </mat-grid-tile>
+
+</mat-grid-list>

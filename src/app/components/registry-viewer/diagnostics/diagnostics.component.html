@@ -15,9 +15,6 @@
         </mat-header-cell>
         <mat-cell style="font-size: 11px;" *matCellDef="let row">
           <span *ngIf="column.field === 'date'">{{row[column.field] | date}}</span>
-          <span *ngIf="column.field === 'action'" style="cursor: pointer; color: #3F51B5">
-            <mat-icon matTooltip="Add Annotation">edit_note</mat-icon>
-          </span>
           <span *ngIf="column.field === 'name' || column.field === 'condition'">{{row[column.field]}}</span>
         </mat-cell>
         <mat-cell *matCellDef="let row">
@@ -34,7 +31,7 @@
           <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
           <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
           <strong>{{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong>
-          <span class="content-spacer"></span>
+          <span class="spacer"></span>
         </mat-cell>
       </ng-container>
 

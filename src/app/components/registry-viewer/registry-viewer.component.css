@@ -4,15 +4,7 @@ mat-card {
   margin-left:auto;
   margin-right:auto;
 }
-h1 {
-  text-align: center;
-}
 
-.text-inside-grid {
-  position: absolute;
-  left: 10px;
-  top: 20px;
-}
 table {
   width: 90%;
   margin: 30px auto;
@@ -32,15 +24,6 @@ table td {
 .data-cell{
   font-size: 11px;
   cursor: pointer;
-}
-
-.menu-spacer{
-  flex: 1 1 auto;
-}
-
-.expanded-content{
-  width: 100%;
-  height: 100%;
 }
 
 .registry-viewer-sidenav {

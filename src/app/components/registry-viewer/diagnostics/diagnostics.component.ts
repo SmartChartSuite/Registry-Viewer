@@ -53,9 +53,6 @@ export class DiagnosticsComponent implements OnInit {
       {
         field: 'condition'
       },
-      {
-        field: 'action'
-      }
     ];
     this.displayedColumns = this.columns.map(column => column.field);
     this.groupByColumns = ['name'];
