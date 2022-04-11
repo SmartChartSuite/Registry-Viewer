@@ -65,5 +65,32 @@ const ANNOTATION_DATA: Annotation[] = [
         by cosmic ray spallation and supernovae and not by stellar nucleosynthesis, it is a
         low-abundance element in the Solar system and in the Earth's crust.`,
     expanded: false
+  },
+  {
+    position: 5,
+    flag: 'One',
+    updated: "2022-11-10T02:03:00Z",
+    textValue: `Boron is a chemical element with symbol B and atomic number 5. Produced entirely
+        by cosmic ray spallation and supernovae and not by stellar nucleosynthesis, it is a
+        low-abundance element in the Solar system and in the Earth's crust.`,
+    expanded: false
+  },
+  {
+    position: 5,
+    flag: 'One',
+    updated: "2022-11-10T02:03:00Z",
+    textValue: `Boron is a chemical element with symbol B and atomic number 5. Produced entirely
+        by cosmic ray spallation and supernovae and not by stellar nucleosynthesis, it is a
+        low-abundance element in the Solar system and in the Earth's crust.`,
+    expanded: false
+  },
+  {
+    position: 5,
+    flag: 'One',
+    updated: "2022-11-10T02:03:00Z",
+    textValue: `Boron is a chemical element with symbol B and atomic number 5. Produced entirely
+        by cosmic ray spallation and supernovae and not by stellar nucleosynthesis, it is a
+        low-abundance element in the Solar system and in the Earth's crust.`,
+    expanded: false
   }
 ];

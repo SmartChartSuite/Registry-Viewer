@@ -5,15 +5,15 @@
   </mat-card-header>
 
   <mat-card-content style="margin-top:20px" [style.overflow]="'auto'" [style.height.%]="matCardContentHeight">
-    <button *ngIf=!isExpandAllActive style="font-size: 11px;" mat-stroked-button (click)="onExpandAll()">Expand All</button>
-    <button *ngIf=isExpandAllActive style="font-size: 11px;" mat-stroked-button (click)="onCollapseAll()">Collapse All</button>
+    <button *ngIf=!isExpandAllActive mat-stroked-button (click)="onExpandAll()">Expand All</button>
+    <button *ngIf=isExpandAllActive mat-stroked-button (click)="onCollapseAll()">Collapse All</button>
     <mat-table [dataSource]="dataSource" matSort (matSortChange)= "onSortData($event)">
 
       <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ column.field }}
         </mat-header-cell>
-        <mat-cell style="font-size: 11px;" *matCellDef="let row" (click)="onRowSelected(row)">
+        <mat-cell *matCellDef="let row" (click)="onRowSelected(row)" style="cursor: pointer">
           <span *ngIf="column.field === 'date'">{{row[column.field] | date}}</span>
           <span *ngIf="column.field === 'name' || column.field === 'condition'">{{row[column.field]}}</span>
         </mat-cell>
@@ -27,7 +27,7 @@
 
       <!-- Group header -->
       <ng-container matColumnDef="groupHeader">
-        <mat-cell colspan="999" *matCellDef="let group" style="font-size: 11px;">
+        <mat-cell colspan="999" *matCellDef="let group"  style="cursor: pointer">
           <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
           <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
           <strong>{{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong>
