@@ -1,7 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
-import {openAnnotationDialog} from "../annotation-dialog/annotation-dialog.component";
-import {filter} from "rxjs";
-import {openDetailsDialog} from "../details-dialog/details-dialog.component";
+import {Component, Input, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({
@@ -19,18 +16,9 @@ export class LabResultsComponent implements OnInit{
   }
 
   onEditAnnotation(value: any): void {
-    openAnnotationDialog(this.dialog, {category: "One", description: "Sample annotation text"})
-      .pipe(filter(val => !!val))
-      .subscribe(
-        val=> console.log(val)
-      )
   }
 
   onViewDetails(value: any): void {
-    openDetailsDialog(this.dialog, {key: "value"})
-      .subscribe(
-        val=> console.log(val)
-      )
   }
 
   labResultsFormatted = [

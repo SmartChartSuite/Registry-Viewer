@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Annotation} from "../../annotation-dialog/annotation-dialog.component";
+import {Annotation} from "../../../../model/Annotation";
+
+
 
 @Component({
   selector: 'app-annotations',

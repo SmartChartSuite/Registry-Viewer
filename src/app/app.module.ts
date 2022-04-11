@@ -27,10 +27,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
-import {AnnotationDialogComponent} from './components/registry-viewer/annotation-dialog/annotation-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
-import {DetailsDialogComponent} from './components/registry-viewer/details-dialog/details-dialog.component';
 import { LabResultsComponent } from './components/registry-viewer/lab-results/lab-results.component';
 import { DiagnosticsComponent } from './components/registry-viewer/diagnostics/diagnostics.component';
 import { TreatmentComponent } from './components/registry-viewer/treatment/treatment.component';
@@ -55,8 +53,6 @@ import {SidenavService} from "./service/sidenav.service";
     CaseExplorerComponent,
     RegistryViewerComponent,
     TestComponent,
-    AnnotationDialogComponent,
-    DetailsDialogComponent,
     LabResultsComponent,
     DiagnosticsComponent,
     TreatmentComponent,
