@@ -13,7 +13,7 @@
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ column.field }}
         </mat-header-cell>
-        <mat-cell style="font-size: 11px;" *matCellDef="let row">
+        <mat-cell style="font-size: 11px;" *matCellDef="let row" (click)="onRowSelected(row)">
           <span *ngIf="column.field === 'date'">{{row[column.field] | date}}</span>
           <span *ngIf="column.field === 'name' || column.field === 'condition'">{{row[column.field]}}</span>
         </mat-cell>

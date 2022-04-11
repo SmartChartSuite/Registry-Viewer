@@ -45,6 +45,7 @@ import { DetailsComponent } from './components/registry-viewer/side-panel/detail
 import { FlagComponent } from './components/registry-viewer/side-panel/flag/flag.component';
 import { AnnotationsComponent } from './components/registry-viewer/side-panel/annotations/annotations.component';
 import {MatRadioModule} from "@angular/material/radio";
+import {SidenavService} from "./service/sidenav.service";
 
 @NgModule({
   declarations: [
@@ -97,7 +98,7 @@ import {MatRadioModule} from "@angular/material/radio";
     FormsModule,
     MatRadioModule
   ],
-  providers: [],
+  providers: [SidenavService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

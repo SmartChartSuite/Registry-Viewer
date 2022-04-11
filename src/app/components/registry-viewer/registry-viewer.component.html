@@ -2,17 +2,12 @@
   <mat-toolbar-row>
     <h2>George P. Burdell</h2>
     <span style="font-size: 0.6em; margin-left: 1em" >Other case/demographic info here</span>
-    <span class="spacer"></span>
-    <button mat-raised-button color="primary"
-            (click)="resultViewer.toggle()">
-      Toggle
-    </button>
   </mat-toolbar-row>
 </mat-toolbar>
 
 <mat-sidenav-container hasBackdrop="false">
 
-  <mat-sidenav #resultViewer class="registry-viewer-sidenav" mode="side" position="end" disableClose opened>
+  <mat-sidenav #resultViewerSidenav class="registry-viewer-sidenav" mode="side" position="end" disableClose closed>
     <app-side-panel></app-side-panel>
   </mat-sidenav>
 

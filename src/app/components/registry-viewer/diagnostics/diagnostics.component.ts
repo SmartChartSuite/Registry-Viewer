@@ -2,6 +2,7 @@ import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, Sort} from "@angular/material/sort";
 import {DiagnosticsService} from "../../../service/diagnostics.service";
+import {SidenavService} from "../../../service/sidenav.service";
 
 export class Group {
   level = 0;
@@ -44,6 +45,7 @@ export class DiagnosticsComponent implements OnInit {
 
   constructor(
     protected dataSourceService: DiagnosticsService,
+    private sidenavService: SidenavService
   ) {
 
     this.columns = [
@@ -237,5 +239,10 @@ export class DiagnosticsComponent implements OnInit {
 
   private compare(a, b, isAsc) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  onRowSelected(row) {
+    console.log(row);
+    this.sidenavService.open();
   }
 }

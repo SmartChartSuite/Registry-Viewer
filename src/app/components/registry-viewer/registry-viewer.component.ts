@@ -1,11 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {MatSidenav} from "@angular/material/sidenav";
+import {SidenavService} from "../../service/sidenav.service";
 
 @Component({
   selector: 'app-registry-viewer',
   templateUrl: './registry-viewer.component.html',
   styleUrls: ['./registry-viewer.component.css']
 })
-export class RegistryViewerComponent implements OnInit {
+export class RegistryViewerComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('resultViewerSidenav') public resultViewerSidenav: MatSidenav;
 
   breakpoint: number;
   matCardContentHeight: number;
@@ -25,7 +29,7 @@ export class RegistryViewerComponent implements OnInit {
 
   isDefaultViewActive = true;
 
-  constructor() {
+  constructor(private sidenavService: SidenavService) {
   }
 
   setMatCardContentHeight(windowSize: number){
@@ -46,4 +50,9 @@ export class RegistryViewerComponent implements OnInit {
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
   }
+
+  ngAfterViewInit(): void {
+    this.sidenavService.setSidenav(this.resultViewerSidenav);
+  }
+
 }
