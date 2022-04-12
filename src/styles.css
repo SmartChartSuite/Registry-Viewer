@@ -56,7 +56,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   color: green;
 }
 
-
 .spacer{
   flex: 1 1 auto;
+}
+
+.selected-row-background {
+  background-color: #E8EAF6;
 }

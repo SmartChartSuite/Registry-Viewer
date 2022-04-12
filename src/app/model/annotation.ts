@@ -1,4 +1,4 @@
-export interface Annotation {
+export class Annotation {
   flag: string;
   position: number;
   updated: string;

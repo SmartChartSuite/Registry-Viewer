@@ -1,12 +1,15 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
+import {MatMultiSort, MatMultiSortTableDataSource, TableData} from "ngx-mat-multi-sort";
+import {SidenavService} from "../../../service/sidenav.service";
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export class Record {
+  index: number;
+  section: string;
+  category: string;
+  date: string;
+  value: string;
 }
 
 
@@ -17,21 +20,45 @@ export interface PeriodicElement {
 })
 
 
-export class ChronologicalViewComponent implements OnInit, AfterViewInit{
-  displayedColumns: string[] = ['date', 'section', 'category', 'value', 'action'];
-  dataSource = new MatTableDataSource(DATA);
+export class ChronologicalViewComponent implements OnInit {
+  CLIENT_SIDE = true;
 
-  @ViewChild(MatSort) sort: MatSort;
-  constructor() { }
+  table: TableData<Record>;
+  @ViewChild(MatMultiSort, { static: false }) sort: MatMultiSort;
+  selectedRow: Record;
 
-  ngOnInit(): void {
-
+  constructor(
+    private sidenavService: SidenavService
+  ) {
+    this.table = new TableData<Record>(
+      [
+        { id: 'index', name: '#' },
+        { id: 'section', name: 'Section' },
+        { id: 'category', name: 'Category' },
+        { id: 'date', name: 'Date' },
+        { id: 'value', name: 'Value' }
+      ], { localStorageKey: 'settings' }
+    );
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+  ngOnInit() {
+    setTimeout(() => {
+      this.initData();
+    }, 0);
   }
 
+  initData() {
+    this.table.dataSource = new MatMultiSortTableDataSource(this.sort, this.CLIENT_SIDE);
+    const tableData = DATA.map((element, i) =>
+      {let obj: Record = {index: i, category : element.category, date : element.date, section: element.section, value: element.value }; return obj});
+    this.table.data = tableData;
+  }
+
+  onSelectRow(row) {
+    this.sidenavService.open();
+    this.selectedRow = row;
+    console.log(row);
+  }
 }
 
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Annotation} from "../../../../model/Annotation";
+import {Annotation} from "../../../../model/annotation";
 
 
 

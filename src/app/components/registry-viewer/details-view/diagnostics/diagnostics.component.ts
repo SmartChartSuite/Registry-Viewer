@@ -1,8 +1,8 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, Sort} from "@angular/material/sort";
-import {DiagnosticsService} from "../../../service/diagnostics.service";
-import {SidenavService} from "../../../service/sidenav.service";
+import {DiagnosticsService} from "../../../../service/diagnostics.service";
+import {SidenavService} from "../../../../service/sidenav.service";
 
 export class Group {
   level = 0;
@@ -22,7 +22,7 @@ export class Diagnosis {
 @Component({
   selector: 'app-diagnostics',
   templateUrl: './diagnostics.component.html',
-  styleUrls: ['./diagnostics.component.css', '../registry-viewer.component.css']
+  styleUrls: ['./diagnostics.component.css', '../../registry-viewer.component.css']
 })
 export class DiagnosticsComponent implements OnInit {
 

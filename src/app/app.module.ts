@@ -29,10 +29,10 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
-import { LabResultsComponent } from './components/registry-viewer/lab-results/lab-results.component';
-import { DiagnosticsComponent } from './components/registry-viewer/diagnostics/diagnostics.component';
-import { TreatmentComponent } from './components/registry-viewer/treatment/treatment.component';
-import { OtherHistoryComponent } from './components/registry-viewer/other-history/other-history.component';
+import { LabResultsComponent } from './components/registry-viewer/details-view/lab-results/lab-results.component';
+import { DiagnosticsComponent } from './components/registry-viewer/details-view/diagnostics/diagnostics.component';
+import { TreatmentComponent } from './components/registry-viewer/details-view/treatment/treatment.component';
+import { OtherHistoryComponent } from './components/registry-viewer/details-view/other-history/other-history.component';
 import { DemographicDataComponent } from './components/registry-viewer/demographic-data/demographic-data.component';
 import { DetailsViewComponent } from './components/registry-viewer/details-view/details-view.component';
 import { ChronologicalViewComponent } from './components/registry-viewer/chronological-view/chronological-view.component';
@@ -44,6 +44,7 @@ import { FlagComponent } from './components/registry-viewer/side-panel/flag/flag
 import { AnnotationsComponent } from './components/registry-viewer/side-panel/annotations/annotations.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {SidenavService} from "./service/sidenav.service";
+import {MatMultiSortModule} from "ngx-mat-multi-sort";
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import {SidenavService} from "./service/sidenav.service";
     MatExpansionModule,
     MatSlideToggleModule,
     FormsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatMultiSortModule
   ],
   providers: [SidenavService],
   bootstrap: [AppComponent]
