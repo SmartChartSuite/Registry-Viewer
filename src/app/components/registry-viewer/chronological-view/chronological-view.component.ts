@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort} from "@angular/material/sort";
-import {MatTableDataSource} from "@angular/material/table";
+import { Component, OnInit, ViewChild} from '@angular/core';
 import {MatMultiSort, MatMultiSortTableDataSource, TableData} from "ngx-mat-multi-sort";
 import {SidenavService} from "../../../service/sidenav.service";
+import {Diagnosis} from "../details-view/diagnostics/diagnostics.component";
 
 export class Record {
   index: number;
@@ -22,10 +21,11 @@ export class Record {
 
 export class ChronologicalViewComponent implements OnInit {
   CLIENT_SIDE = true;
-
-  table: TableData<Record>;
-  @ViewChild(MatMultiSort, { static: false }) sort: MatMultiSort;
   selectedRow: Record;
+  table: TableData<Record>;
+  categoryList: string[] = CATEGORIES;
+
+  @ViewChild(MatMultiSort, { static: false }) sort: MatMultiSort;
 
   constructor(
     private sidenavService: SidenavService
@@ -39,6 +39,10 @@ export class ChronologicalViewComponent implements OnInit {
         { id: 'value', name: 'Value' }
       ], { localStorageKey: 'settings' }
     );
+  };
+
+  onCategorySelected(){
+    console.log("do something");
   }
 
   ngOnInit() {
@@ -61,6 +65,9 @@ export class ChronologicalViewComponent implements OnInit {
   }
 }
 
+const CATEGORIES = [
+  "Lab Results", "Diagnosis", "Treatment", "Other History"
+];
 
 const DATA = [
   {

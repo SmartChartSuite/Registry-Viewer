@@ -1,6 +1,12 @@
+<div>
+  <span>Selected Categories: </span>
+    <span *ngFor="let category of categoryList" style="margin: 1em 1em 1em 1em">
+      <mat-checkbox (change)="onCategorySelected()">{{category}}</mat-checkbox>
+    </span>
+</div>
 <mat-multi-sort-table-settings [tableData]="table" [closeDialogOnChoice]="false">
   <button mat-stroked-button>
-    Select columns
+    Select columns:
     <mat-icon>menu</mat-icon>
   </button>
   <!-- Optional custom content for the sort indicator chip (here column name with icons)  -->

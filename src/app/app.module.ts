@@ -45,6 +45,7 @@ import { AnnotationsComponent } from './components/registry-viewer/side-panel/an
 import {MatRadioModule} from "@angular/material/radio";
 import {SidenavService} from "./service/sidenav.service";
 import {MatMultiSortModule} from "ngx-mat-multi-sort";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -94,7 +95,8 @@ import {MatMultiSortModule} from "ngx-mat-multi-sort";
     MatSlideToggleModule,
     FormsModule,
     MatRadioModule,
-    MatMultiSortModule
+    MatMultiSortModule,
+    MatCheckboxModule
   ],
   providers: [SidenavService],
   bootstrap: [AppComponent]
