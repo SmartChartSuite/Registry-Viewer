@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import { map, Observable} from "rxjs";
 import {CaseRecordApiResponse} from "../model/case.record.api.response";
 import {CaseRecord} from "../model/case.record";
-
+import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
@@ -12,14 +12,14 @@ export class CaseExplorerService {
   constructor(private http: HttpClient) { }
 
   getCases(searchTerms):  Observable<CaseRecordApiResponse> {
-    let options = null;
+    let options = {};
     if(searchTerms && searchTerms.length>0){
       const terms: string = searchTerms.join(', ');
       const httpParams = new HttpParams().set('terms', terms);
       options = { params: httpParams };
     }
 
-    return this.http.get('https://apps.hdap.gatech.edu/registry-viewer-api/search-cases').pipe(
+    return this.http.get(environment.apiUrl + 'search-cases', options).pipe(
       map((result: any) => {
         let caseList: CaseRecord[] = result.cases.map(
           (element: any) => {
@@ -42,7 +42,6 @@ export class CaseExplorerService {
           count: result.count,
           data: caseList
         }
-        console.log(parsedResponse);
         return parsedResponse;
         }
       ),

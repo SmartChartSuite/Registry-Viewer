@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: "https://gt-apps.hdap.gatech.edu/rc-api"
 };

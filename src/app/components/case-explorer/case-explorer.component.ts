@@ -1,40 +1,28 @@
-import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
-import {distinctUntilChanged, fromEvent, Subscription, tap} from "rxjs";
-import { debounceTime } from "rxjs/operators";
 import {CaseExplorerService} from "../../service/case-explorer.service";
 import {CaseRecord} from "../../model/case.record";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-interface ngOnDestroy {
-}
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {CaseRecordApiResponse} from "../../model/case.record.api.response";
 
 @Component({
   selector: 'app-case-explorer',
   templateUrl: './case-explorer.component.html',
   styleUrls: ['./case-explorer.component.css'],
 })
-export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy {
+export class CaseExplorerComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
 
-  dataSource = new MatTableDataSource<any>();
+  dataSource : MatTableDataSource<CaseRecord>;
   displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'specimenCollectionDate', 'status'];
-  totalCount: 0;
-  caseRecordList: CaseRecord[];
   isLoading = true;
-  searchBy = ['lastName', 'givenName'];
-  searchTerm = '';
-
-  filterResultsObservable$: Subscription;
-  loadDataObservable$: Subscription;
   searchForm: FormGroup;
-  private searchTerms : string[];
-
 
   constructor(
     private route: ActivatedRoute,
@@ -43,82 +31,60 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
     private formBuilder: FormBuilder,
   ) { }
 
-  getCaseRecords(filter: string, sortOrder: string, sortBy: string, pageNumber: number, pageSize: number): void {
+  getCaseRecords(searchTerms?: string[]): void {
     this.isLoading = true;
-    this.loadDataObservable$ = this.caseExplorerService.getCases(this.searchTerms).subscribe(
-      (response: any) => {
-        this.caseRecordList = response.data;
-        this.totalCount = response.count;
-        this.dataSource = new MatTableDataSource<any>(this.caseRecordList);
+    this.caseExplorerService.getCases(searchTerms).subscribe(
+      (response: CaseRecordApiResponse) => {
+        this.dataSource = new MatTableDataSource(response.data);
         this.isLoading = false;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
     );
   }
 
   ngOnInit(): void {
-    this.getCaseRecords(null, null, null, null, null);
-    this.caseExplorerService.getCases(this.searchTerms).subscribe();
+    this.getCaseRecords();
     this.searchForm = this.formBuilder.group({
       searchQuery: [null],
       dob: [null]
     });
-
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-
-    this.sort.sortChange.subscribe(() => {
-      this.getCaseRecords(
-        this.input.nativeElement.value,
-        this.sort.direction,
-        this.sort.active,
-        this.paginator.pageIndex,
-        this.paginator.pageSize
-      );
-    });
-
-    this.filterResultsObservable$ = fromEvent(this.input.nativeElement,'keyup')
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((text) => {
-          this.getCaseRecords(
-            this.input.nativeElement.value,
-            this.sort.direction,
-            this.sort.active,
-            this.paginator.pageIndex,
-            this.paginator.pageSize
-          );
-        })
-      ).subscribe();
-  }
-
-  ngOnDestroy(){
-    this.filterResultsObservable$.unsubscribe();
-    this.loadDataObservable$.unsubscribe();
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   onRowClicked(row: any) {
     this.router.navigate(['registry-viewer']);
   }
 
-  pageChanged(event: PageEvent) {
-    this.getCaseRecords(
-      this.input.nativeElement.value,
-      this.sort.direction,
-      this.sort.active,
-      this.paginator.pageIndex,
-      this.paginator.pageSize
-    );
+  getDateStr(date: Date): string {
+    const y  = date.getFullYear().toString();
+    const m = (date.getMonth() + 1).toString(); // month is 0 based in js
+    const d = date.getDate().toString();
+    return y + '-' + m + '-' + d;
   }
 
-  onSearch() {
+  onSearchFormSubmit() {
+    //split the string on one or more white spaces
+    let searchTerms = this.searchForm.value?.searchQuery?.trim().split(/\s+/);
+    const dob = this.searchForm.value?.dob;
 
-  }
+    if(dob){
+      if(!searchTerms){
+        searchTerms = [];
+      };
+      const dobStr = this.getDateStr(dob);
+      searchTerms.push(dobStr);
+    }
 
-  onSubmit() {
-    console.log(this.searchForm);
+    if(searchTerms){
+      this.getCaseRecords(searchTerms);
+    }
   }
 }
