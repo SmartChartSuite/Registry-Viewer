@@ -3,6 +3,9 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, Sort} from "@angular/material/sort";
 import {DiagnosticsService} from "../../../../service/diagnostics.service";
 import {SidenavService} from "../../../../service/sidenav.service";
+import {MatDialog} from "@angular/material/dialog";
+import {openAnnotationDialog} from "../../addRecordDialog/add-record-dialog.component";
+import {filter} from "rxjs";
 
 export class Group {
   level = 0;
@@ -45,7 +48,8 @@ export class DiagnosticsComponent implements OnInit {
 
   constructor(
     protected dataSourceService: DiagnosticsService,
-    private sidenavService: SidenavService
+    private sidenavService: SidenavService,
+    private dialog: MatDialog
   ) {
 
     this.columns = [
@@ -244,5 +248,20 @@ export class DiagnosticsComponent implements OnInit {
   onRowSelected(row) {
     console.log(row);
     this.sidenavService.open();
+  }
+
+  // onAddDiagnose(): void {
+  //   openDetailsDialog(this.dialog, {key: "value"})
+  //     .subscribe(
+  //       val=> console.log(val)
+  //     )
+  // }
+
+  onAddDiagnose(): void {
+    openAnnotationDialog(this.dialog, {category: "One", description: "Sample annotation text"})
+      .pipe(filter(val => !!val))
+      .subscribe(
+        val=> console.log(val)
+      )
   }
 }

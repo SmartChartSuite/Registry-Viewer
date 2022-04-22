@@ -46,6 +46,8 @@ import {MatRadioModule} from "@angular/material/radio";
 import {SidenavService} from "./service/sidenav.service";
 import {MatMultiSortModule} from "ngx-mat-multi-sort";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {AddRecordDialogComponent} from './components/registry-viewer/addRecordDialog/add-record-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     DetailsComponent,
     FlagComponent,
     AnnotationsComponent,
+    AddRecordDialogComponent
   ],
   imports: [
     BrowserModule,
