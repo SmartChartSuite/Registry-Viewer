@@ -7,11 +7,11 @@ import {environment} from "../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
-export class CaseExplorerService {
+export class CaseRecordsService {
 
   constructor(private http: HttpClient) { }
 
-  getCases(searchTerms):  Observable<CaseRecordApiResponse> {
+  getAllCases(searchTerms):  Observable<CaseRecordApiResponse> {
     let options = {};
     if(searchTerms && searchTerms.length>0){
       const terms: string = searchTerms.join(', ');
@@ -23,6 +23,7 @@ export class CaseExplorerService {
       map((result: any) => {
         let caseList: CaseRecord[] = result.cases.map(
           (element: any) => {
+            //TODO this parser will not be needed once the API returns correct data
             let parsedCase: CaseRecord = {
               caseId: element.caseId,
               givenName: element.firstName,
@@ -48,25 +49,14 @@ export class CaseExplorerService {
     );
   };
 
-  testCall(searchTerm?: string, fields?: string[]):  Observable<Object> {
-    let httpParams = new HttpParams();
-
-    searchTerm = 'plamen';
-
-    fields = ['firstName', 'lastName'];
-
-    if(searchTerm){
-      httpParams = httpParams.append('searchTerm', searchTerm)
-    }
-    if(fields){
-      httpParams = httpParams.append('fields', fields?.join(', '))
-    }
-
-    return this.http.get('/api/search-case', {
-      params: httpParams}).pipe(map((result: any) =>
-        result as Object
+  getByCaseId (caseId):  Observable<any> {
+    return this.http.get(environment.apiUrl + 'search-caseId' + caseId).pipe(
+      map((result: any) => {
+        console.log(result)
+        return result;
+        }
       ),
     );
-  }
+  };
 
 }

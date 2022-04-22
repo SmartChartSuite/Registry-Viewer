@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CaseExplorerService } from './case-explorer.service';
+import { CaseRecordsService } from './case-records.service';
 
 describe('CaseExplorerService', () => {
-  let service: CaseExplorerService;
+  let service: CaseRecordsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CaseExplorerService);
+    service = TestBed.inject(CaseRecordsService);
   });
 
   it('should be created', () => {

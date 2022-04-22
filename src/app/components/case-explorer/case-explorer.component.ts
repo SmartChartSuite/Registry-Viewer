@@ -3,7 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
-import {CaseExplorerService} from "../../service/case-explorer.service";
+import {CaseRecordsService} from "../../service/case-records.service";
 import {CaseRecord} from "../../model/case.record";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {CaseRecordApiResponse} from "../../model/case.record.api.response";
@@ -27,13 +27,13 @@ export class CaseExplorerComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private caseExplorerService: CaseExplorerService,
+    private caseRecordsService: CaseRecordsService,
     private formBuilder: FormBuilder,
   ) { }
 
   getCaseRecords(searchTerms?: string[]): void {
     this.isLoading = true;
-    this.caseExplorerService.getCases(searchTerms).subscribe(
+    this.caseRecordsService.getAllCases(searchTerms).subscribe(
       (response: CaseRecordApiResponse) => {
         this.dataSource = new MatTableDataSource(response.data);
         this.isLoading = false;
