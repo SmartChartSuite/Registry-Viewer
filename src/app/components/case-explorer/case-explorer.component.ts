@@ -23,7 +23,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   @ViewChild('input') input: ElementRef;
 
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'sex', 'address', 'phone', 'specimenCollectionDate', 'status'];
+  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'specimenCollectionDate', 'status'];
   totalCount: 0;
   caseRecordList: CaseRecord[];
   isLoading = true;
@@ -33,18 +33,19 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
   filterResultsObservable$: Subscription;
   loadDataObservable$: Subscription;
   searchForm: FormGroup;
+  private searchTerms : string[];
 
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private caseExplorerService: CaseExplorerService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) { }
 
   getCaseRecords(filter: string, sortOrder: string, sortBy: string, pageNumber: number, pageSize: number): void {
     this.isLoading = true;
-    this.loadDataObservable$ = this.caseExplorerService.getCases(filter, sortOrder, sortBy, pageNumber, pageSize).subscribe(
+    this.loadDataObservable$ = this.caseExplorerService.getCases(this.searchTerms).subscribe(
       (response: any) => {
         this.caseRecordList = response.data;
         this.totalCount = response.count;
@@ -56,7 +57,7 @@ export class CaseExplorerComponent implements OnInit, AfterViewInit, ngOnDestroy
 
   ngOnInit(): void {
     this.getCaseRecords(null, null, null, null, null);
-    this.caseExplorerService.testCall().subscribe();
+    this.caseExplorerService.getCases(this.searchTerms).subscribe();
     this.searchForm = this.formBuilder.group({
       searchQuery: [null],
       dob: [null]

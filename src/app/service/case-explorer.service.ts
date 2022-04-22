@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import { map, Observable} from "rxjs";
 import {CaseRecordApiResponse} from "../model/case.record.api.response";
+import {CaseRecord} from "../model/case.record";
 
 @Injectable({
   providedIn: 'root'
@@ -10,28 +11,40 @@ export class CaseExplorerService {
 
   constructor(private http: HttpClient) { }
 
-  getCases(
-    filter?: string,
-    sortOrder?: string,
-    sortBy?: string,
-    pageNumber?: number,
-    pageSize?: number):  Observable<CaseRecordApiResponse> {
+  getCases(searchTerms):  Observable<CaseRecordApiResponse> {
+    let options = null;
+    if(searchTerms && searchTerms.length>0){
+      const terms: string = searchTerms.join(', ');
+      const httpParams = new HttpParams().set('terms', terms);
+      options = { params: httpParams };
+    }
 
-    const filterParam: string = filter || '';
-    const sortOrderParam: string = sortOrder || 'asc';
-    const sortByParam: string = sortBy || 'specimenCollectionDate';
-    const pageNumberParam: number = pageNumber || 0;
-    const pageSizePram: number = pageSize || 10;
-
-    return this.http.get('/api/person-list', {
-      params: new HttpParams()
-        .append('filter', filterParam)
-        .append('sortBy', sortByParam)
-        .append('sortOrder', sortOrderParam)
-        .append('pageNumber', pageNumberParam)
-        .append('pageSize', pageSizePram)
-    }).pipe(map((result: any) =>
-        result as CaseRecordApiResponse
+    return this.http.get('https://apps.hdap.gatech.edu/registry-viewer-api/search-cases').pipe(
+      map((result: any) => {
+        let caseList: CaseRecord[] = result.cases.map(
+          (element: any) => {
+            let parsedCase: CaseRecord = {
+              caseId: element.caseId,
+              givenName: element.firstName,
+              lastName: element.lastName,
+              gender: element.gender,
+              dob: element.dob,
+              phone: element.phone,
+              state: element.state,
+              status: element.status,
+              street: element.street,
+              zip: element.zip,
+              specimenCollectionDate: null
+            };
+            return parsedCase;
+        });
+        let parsedResponse: CaseRecordApiResponse = {
+          count: result.count,
+          data: caseList
+        }
+        console.log(parsedResponse);
+        return parsedResponse;
+        }
       ),
     );
   };

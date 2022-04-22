@@ -1,7 +1,13 @@
 export class CaseRecord {
-  caseRecordId: number;
-  firstName: string;
+  caseId: number;
+  givenName: string;
   lastName: string;
   gender: string;
-  age: number;
+  dob: string;
+  phone: string;
+  state: string;
+  status: string;
+  street: string;
+  zip: string;
+  specimenCollectionDate: string;
 }
