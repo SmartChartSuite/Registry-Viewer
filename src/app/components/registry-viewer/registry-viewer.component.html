@@ -4,7 +4,6 @@
     <span style="font-size: 0.6em; margin-left: 1em" >Other case/demographic info here</span>
   </mat-toolbar-row>
 </mat-toolbar>
-
 <mat-sidenav-container hasBackdrop="false">
 
   <mat-sidenav #resultViewerSidenav class="registry-viewer-sidenav" mode="side" position="end" disableClose closed>
@@ -18,13 +17,13 @@
         <mat-slide-toggle [(ngModel)]="isDefaultViewActive" >Switch to {{ isDefaultViewActive ? "Chronological" : "Details" }} View</mat-slide-toggle>
       </div>
 
-      <div *ngIf="!isDefaultViewActive">
-        <app-chronological-view></app-chronological-view>
-      </div>
+      <app-chronological-view
+        *ngIf="isDefaultViewActive"
+        [caseRecordChronologicalData]="caseRecordChronologicalData$ | async"
+      >
+      </app-chronological-view>
 
-      <div *ngIf="isDefaultViewActive">
-        <app-details-view></app-details-view>
-      </div>
+      <app-details-view *ngIf="!isDefaultViewActive"></app-details-view>
 
     </div>
   </mat-sidenav-content>

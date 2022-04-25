@@ -25,7 +25,7 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'registry-viewer',
+    path: 'registry-viewer/:id',
     component: RegistryViewerComponent
   },
   { // This path MUST ALWAYS be the last path!!!

@@ -1,6 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {SidenavService} from "../../service/sidenav.service";
+import {CaseRecordsService} from "../../service/case-records.service";
+import {ActivatedRoute} from "@angular/router";
+import {Observable} from "rxjs";
+import {ChronologicalCaseRecord} from "../../model/chronological.case.record";
+
 
 @Component({
   selector: 'app-registry-viewer',
@@ -13,6 +18,7 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
 
   breakpoint: number;
   matCardContentHeight: number;
+  caseRecordChronologicalData$: Observable<ChronologicalCaseRecord[]>;
 
   //TODO this data should be retrieved from the backend
   demographicData = {
@@ -29,7 +35,9 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
 
   isDefaultViewActive = true;
 
-  constructor(private sidenavService: SidenavService) {
+  constructor(private sidenavService: SidenavService,
+              private caseRecordsService: CaseRecordsService,
+              private route: ActivatedRoute,) {
   }
 
   setMatCardContentHeight(windowSize: number){
@@ -49,6 +57,9 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
+    this.caseRecordsService.getByCaseId(this.route.snapshot.paramMap.get('id')).subscribe();
+    this.caseRecordChronologicalData$ = this.caseRecordsService.caseRecordChronologicalData$
+    ;
   }
 
   ngAfterViewInit(): void {
