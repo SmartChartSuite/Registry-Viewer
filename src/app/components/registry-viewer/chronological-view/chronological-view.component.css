@@ -1,3 +1,7 @@
-table{
+table {
   width: 100%;
+}
+
+.mat-column-value{
+  flex: 0 0 40%;
 }
