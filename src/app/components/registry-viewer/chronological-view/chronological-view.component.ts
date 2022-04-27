@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import {SidenavService} from "../../../service/sidenav.service";
-import {Diagnosis} from "../details-view/diagnostics/diagnostics.component";
 import {MatSidenav} from "@angular/material/sidenav";
 import {ChronologicalCaseRecord} from "../../../model/chronological.case.record";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, MatSortable} from "@angular/material/sort";
+import {FormControl} from "@angular/forms";
 
 export class Record {
   section: string;
@@ -23,7 +23,7 @@ export class Record {
 
 export class ChronologicalViewComponent implements AfterViewInit {
   selectedRow: ChronologicalCaseRecord;
-  categoryList: string[] = CATEGORIES;
+
   @Input() caseRecordChronologicalData: ChronologicalCaseRecord[];
   @Input() sections: string[];
 
@@ -33,14 +33,16 @@ export class ChronologicalViewComponent implements AfterViewInit {
 
   displayedColumns = ['contentId', 'date', 'question', 'value', 'section', 'category', 'flag'];
   dataSource: MatTableDataSource<ChronologicalCaseRecord>;
+  selectedSectionFormControl = new FormControl();
+  selectedSections: any;
 
   constructor(
     private sidenavService: SidenavService,
   ) {
   };
 
-  onCategorySelected(){
-    console.log("do something");
+  onCategorySelected(section: string){
+    console.log(section);
   }
 
   onSelectRow(row) {
@@ -55,12 +57,37 @@ export class ChronologicalViewComponent implements AfterViewInit {
       this.sort.sort(({ id: 'date', start: 'desc'}) as MatSortable);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      this.dataSource.filterPredicate = this.getFilterPredicate();
+      this.selectedSectionFormControl.patchValue(this.sections);
+      this.selectedSections = this.sections.map((element) => ({name: element, selected: true}));
     })
+  }
 
+  private getFilterPredicate() {
+    return function (row: any, filters: string) {
+      let matchFilter: boolean = false;
+      const filterArray = filters.split(',');
+      filterArray.forEach((filter: string) => {
+          if(row.section.indexOf(filter) != -1){
+            matchFilter = true;
+          }
+        }
+      )
+      return matchFilter;
+    };
+  }
+
+  onSectionSelectionChange() {
+    const filterList = this.selectedSections.filter(element => element.selected).map(element => element.name);
+    if(filterList.length === 0){
+      // when no filters are selected the data source filter does not run, and we need to empty the table manually
+      this.dataSource.data = [];
+    }
+    else {
+      // else just set back the data source data to what it needs to be (in case emptied at any time before)
+      this.dataSource.data = this.caseRecordChronologicalData;
+    }
+    this.dataSource.filter = filterList.join(',');
   }
 
 }
-
-const CATEGORIES = [
-  "Lab Results", "Diagnosis", "Treatment", "Other History"
-];

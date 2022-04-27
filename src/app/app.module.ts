@@ -47,6 +47,7 @@ import {SidenavService} from "./service/sidenav.service";
 import {MatMultiSortModule} from "ngx-mat-multi-sort";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AddRecordDialogComponent} from './components/registry-viewer/addRecordDialog/add-record-dialog.component';
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 
 @NgModule({
@@ -70,37 +71,38 @@ import {AddRecordDialogComponent} from './components/registry-viewer/addRecordDi
     AnnotationsComponent,
     AddRecordDialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatSortModule,
-    HttpClientModule,
-    MatCardModule,
-    MatGridListModule,
-    MatListModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatDialogModule,
-    MatSelectModule,
-    MatExpansionModule,
-    MatSlideToggleModule,
-    FormsModule,
-    MatRadioModule,
-    MatMultiSortModule,
-    MatCheckboxModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatSortModule,
+        HttpClientModule,
+        MatCardModule,
+        MatGridListModule,
+        MatListModule,
+        MatTooltipModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatDialogModule,
+        MatSelectModule,
+        MatExpansionModule,
+        MatSlideToggleModule,
+        FormsModule,
+        MatRadioModule,
+        MatMultiSortModule,
+        MatCheckboxModule,
+        MatButtonToggleModule
+    ],
   providers: [SidenavService],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,9 @@
 <div>
-    <span *ngFor="let section of sections" style="margin: 1em 1em 1em 1em">
-      <mat-checkbox (change)="onCategorySelected()">{{section}}</mat-checkbox>
-    </span>
+  <span style="margin-right: 1em" *ngFor="let section of selectedSections">
+    <mat-checkbox [(ngModel)]="section.selected" (change)="onSectionSelectionChange()">
+      {{section.name}}
+    </mat-checkbox>
+  </span>
 </div>
 
 <mat-table [dataSource]="dataSource" matSort>
@@ -37,7 +39,7 @@
   </ng-container>
 
   <ng-container matColumnDef="flag">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Flag </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row.flag }} </mat-cell>
   </ng-container>
 
@@ -49,4 +51,4 @@
   </mat-row>
 </mat-table>
 
-<mat-paginator [pageSizeOptions]="[ 25, 50, 100]"></mat-paginator>
+<mat-paginator [pageSizeOptions]="[25, 50, 100]"></mat-paginator>
