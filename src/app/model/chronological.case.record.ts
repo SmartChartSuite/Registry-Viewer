@@ -6,4 +6,5 @@ export class ChronologicalCaseRecord {
   value: string;
   question: string;
   flag: string;
+  details: any;
 }

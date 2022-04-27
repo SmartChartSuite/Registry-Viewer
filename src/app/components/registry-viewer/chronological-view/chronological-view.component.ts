@@ -1,13 +1,11 @@
-import {Component, Input, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {TableData} from "ngx-mat-multi-sort";
+import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
 import {SidenavService} from "../../../service/sidenav.service";
 import {Diagnosis} from "../details-view/diagnostics/diagnostics.component";
 import {MatSidenav} from "@angular/material/sidenav";
-import {CaseRecordsService} from "../../../service/case-records.service";
 import {ChronologicalCaseRecord} from "../../../model/chronological.case.record";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
+import {MatSort, MatSortable} from "@angular/material/sort";
 
 export class Record {
   section: string;
@@ -23,18 +21,17 @@ export class Record {
 })
 
 
-export class ChronologicalViewComponent {
-  CLIENT_SIDE = true;
+export class ChronologicalViewComponent implements AfterViewInit {
   selectedRow: ChronologicalCaseRecord;
-  table: TableData<ChronologicalCaseRecord>;
   categoryList: string[] = CATEGORIES;
   @Input() caseRecordChronologicalData: ChronologicalCaseRecord[];
+  @Input() sections: string[];
 
   @ViewChild('resultViewerSidenav') public resultViewerSidenav: MatSidenav;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns = ['contentId', 'section', 'category', 'date', 'value', 'flag'];
+  displayedColumns = ['contentId', 'date', 'question', 'value', 'section', 'category', 'flag'];
   dataSource: MatTableDataSource<ChronologicalCaseRecord>;
 
   constructor(
@@ -46,20 +43,22 @@ export class ChronologicalViewComponent {
     console.log("do something");
   }
 
-
   onSelectRow(row) {
     this.sidenavService.open();
     this.selectedRow = row;
+    this.sidenavService.setSidenavData(row);
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    // For now, we want to recreate the table every time we update the data source. In the future this may change :-)
-    if(changes['caseRecordChronologicalData']?.currentValue?.length > 0){
-      this.dataSource = new MatTableDataSource(changes['caseRecordChronologicalData']?.currentValue);
+  ngAfterViewInit(): void {
+    setTimeout(()=>{
+      this.dataSource = new MatTableDataSource(this.caseRecordChronologicalData);
+      this.sort.sort(({ id: 'date', start: 'desc'}) as MatSortable);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-    }
+    })
+
   }
+
 }
 
 const CATEGORIES = [

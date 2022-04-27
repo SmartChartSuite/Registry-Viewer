@@ -1,7 +1,6 @@
 <div>
-  <span>Selected Categories: </span>
-    <span *ngFor="let category of categoryList" style="margin: 1em 1em 1em 1em">
-      <mat-checkbox (change)="onCategorySelected()">{{category}}</mat-checkbox>
+    <span *ngFor="let section of sections" style="margin: 1em 1em 1em 1em">
+      <mat-checkbox (change)="onCategorySelected()">{{section}}</mat-checkbox>
     </span>
 </div>
 
@@ -12,13 +11,18 @@
     <mat-cell *matCellDef="let row"> {{row.contentId}} </mat-cell>
   </ng-container>
 
+  <ng-container matColumnDef="question">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Question </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row.question}} </mat-cell>
+  </ng-container>
+
   <ng-container matColumnDef="section">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Section </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row.section}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="category">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Category </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Subsection </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row.category}} </mat-cell>
   </ng-container>
 
@@ -45,4 +49,4 @@
   </mat-row>
 </mat-table>
 
-<mat-paginator [pageSizeOptions]="[ 10, 25, 100]"></mat-paginator>
+<mat-paginator [pageSizeOptions]="[ 25, 50, 100]"></mat-paginator>

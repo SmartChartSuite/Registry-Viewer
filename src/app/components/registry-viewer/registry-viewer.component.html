@@ -18,12 +18,13 @@
       </div>
 
       <app-chronological-view
-        *ngIf="isDefaultViewActive"
+        *ngIf="!isDefaultViewActive"
         [caseRecordChronologicalData]="caseRecordChronologicalData$ | async"
+        [sections]="sections$ | async"
       >
       </app-chronological-view>
 
-      <app-details-view *ngIf="!isDefaultViewActive"></app-details-view>
+      <app-details-view *ngIf="isDefaultViewActive"></app-details-view>
 
     </div>
   </mat-sidenav-content>

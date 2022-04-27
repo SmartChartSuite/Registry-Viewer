@@ -19,6 +19,8 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   breakpoint: number;
   matCardContentHeight: number;
   caseRecordChronologicalData$: Observable<ChronologicalCaseRecord[]>;
+  isDefaultViewActive = true;
+  sections$: Observable<string[]>;
 
   //TODO this data should be retrieved from the backend
   demographicData = {
@@ -32,8 +34,6 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
     dob: "Dec 31, 1923",
     gender: "other"
   }
-
-  isDefaultViewActive = true;
 
   constructor(private sidenavService: SidenavService,
               private caseRecordsService: CaseRecordsService,
@@ -58,8 +58,8 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
     this.caseRecordsService.getByCaseId(this.route.snapshot.paramMap.get('id')).subscribe();
-    this.caseRecordChronologicalData$ = this.caseRecordsService.caseRecordChronologicalData$
-    ;
+    this.caseRecordChronologicalData$ = this.caseRecordsService.caseRecordChronologicalData$;
+    this.sections$ = this.caseRecordsService.sections$;
   }
 
   ngAfterViewInit(): void {

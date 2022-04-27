@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {SidenavService} from "../../../../service/sidenav.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-details',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor (private sidenavService: SidenavService,) { }
+
+  details$: Observable<any>;
 
   ngOnInit(): void {
+    this.details$ = this.sidenavService.data$
   }
 
 }

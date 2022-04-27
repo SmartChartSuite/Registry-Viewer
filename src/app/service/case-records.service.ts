@@ -14,9 +14,13 @@ export class CaseRecordsService {
   caseRecordChronologicalData:  ChronologicalCaseRecord [];
   caseRecordChronologicalData$: BehaviorSubject<ChronologicalCaseRecord []>;
 
+  sections: string[];
+  sections$: BehaviorSubject<string[]>
+
 
   constructor(private http: HttpClient) {
     this.caseRecordChronologicalData$ = new BehaviorSubject(this.caseRecordChronologicalData);
+    this.sections$ = new BehaviorSubject(this.sections);
   }
 
   getAllCases(searchTerms):  Observable<CaseRecordApiResponse> {
@@ -66,6 +70,7 @@ export class CaseRecordsService {
     return this.http.get(environment.apiUrl + 'case-record',  options).pipe(
       map((result: any) => {
         this.caseRecordChronologicalData$.next(this.createCaseRecordChronologicalData(result));
+        this.sections$.next(this.extractSectionList(result))
         return result;
         }
       ),
@@ -80,13 +85,24 @@ export class CaseRecordsService {
         caseRecordChronologicalData.section = element.section;
         caseRecordChronologicalData.category = element.category
         caseRecordChronologicalData.date = element.date;
-        caseRecordChronologicalData.value = element?.sourceValue?.value;
+        caseRecordChronologicalData.value = element?.derivedValue?.value;
         caseRecordChronologicalData.question = element.question;
         caseRecordChronologicalData.flag = element.flag;
+        caseRecordChronologicalData.details = element.details[0]?.value;
         return caseRecordChronologicalData;
       }
     );
-    console.log(mapped);
     return mapped;
+  }
+
+  private extractSectionList(result: any): string[]{
+    let sections: string[] = [];
+    result.contents.forEach((element: any)=> {
+      if(sections.indexOf(element.section) === -1){
+        sections.push(element.section);
+      }
+    });
+    console.log(sections);
+    return sections;
   }
 }
