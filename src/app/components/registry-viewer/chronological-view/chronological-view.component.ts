@@ -56,6 +56,7 @@ export class ChronologicalViewComponent implements AfterViewInit {
       this.dataSource = new MatTableDataSource(this.caseRecordChronologicalData);
       this.sort.sort(({ id: 'date', start: 'desc'}) as MatSortable);
       this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator.pageSize = 50;
       this.dataSource.sort = this.sort;
       this.dataSource.filterPredicate = this.getFilterPredicate();
       this.selectedSectionFormControl.patchValue(this.sections);
