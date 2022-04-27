@@ -11,12 +11,26 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
+
+    <div class="centered-content" style="margin-top: 2em; margin-bottom: 2em">
+
+      <mat-button-toggle-group >
+        <mat-button-toggle checked="isDefaultViewActive"  (click)="isDefaultViewActive = true">Summary View
+        </mat-button-toggle>
+        <mat-button-toggle (click)="isDefaultViewActive = false">
+          Chronological View
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+
+<!--      <button mat-raised-button color="accent" *ngIf="isDefaultViewActive" (click)="isDefaultViewActive = false">-->
+<!--        Chronological View-->
+<!--      </button>-->
+<!--      <button mat-raised-button color="primary" *ngIf="!isDefaultViewActive" (click)="isDefaultViewActive = true">-->
+<!--        Summary View-->
+<!--      </button>-->
+    </div>
+
     <div style="max-width: 85%; margin: auto">
-
-      <div style="margin: 2em 2em 2em 2em">
-        <mat-slide-toggle [(ngModel)]="isDefaultViewActive" >Switch to {{ isDefaultViewActive ? "Chronological" : "Details" }} View</mat-slide-toggle>
-      </div>
-
       <app-chronological-view
         *ngIf="!isDefaultViewActive"
         [caseRecordChronologicalData]="caseRecordChronologicalData$ | async"

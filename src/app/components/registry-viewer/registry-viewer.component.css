@@ -38,3 +38,25 @@ mat-sidenav-container {
   flex-direction: column;
   height: 100vh;
 }
+
+.centered-content {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mat-button-toggle-checked{
+  background-color: #303f9f;
+  color: white;
+}
+
+
+.mat-button-toggle {
+  background-color: #c5cae9;
+}
+
+.mat-button-toggle-checked {
+  background-color: #303f9f;
+  color: whitesmoke;
+}

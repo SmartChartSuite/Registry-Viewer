@@ -1,4 +1,4 @@
-<div>
+<div style="margin-bottom: 1em">
   <span style="margin-right: 1em" *ngFor="let section of selectedSections">
     <mat-checkbox [(ngModel)]="section.selected" (change)="onSectionSelectionChange()">
       {{section.name}}

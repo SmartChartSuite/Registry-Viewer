@@ -59,7 +59,7 @@ export class ChronologicalViewComponent implements AfterViewInit {
       this.dataSource.sort = this.sort;
       this.dataSource.filterPredicate = this.getFilterPredicate();
       this.selectedSectionFormControl.patchValue(this.sections);
-      this.selectedSections = this.sections.map((element) => ({name: element, selected: true}));
+      this.selectedSections = this.sections?.map((element) => ({name: element, selected: true}));
     })
   }
 
