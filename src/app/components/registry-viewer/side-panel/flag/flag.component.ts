@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-flag',
@@ -7,12 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FlagComponent implements OnInit {
 
-  selectedFlag: string;
-  flagList: string[] = ['One', 'Two', 'Three', 'Review'];
+  flagChecked: true;
+  flag: string;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onFlagChanged($event: MatCheckboxChange) {
+    console.log($event);
+  }
 }

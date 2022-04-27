@@ -24,6 +24,26 @@ export class CaseRecordsService {
     this.sections$ = new BehaviorSubject(this.sections);
   }
 
+  updateCaseRecord(caseId: number, contentId: number, keyValue: any) : Observable<any>{
+    let options = {};
+
+    if(!!caseId){
+      const httpParams = new HttpParams().set('case-id', caseId);
+      options = { params: httpParams };
+    }
+    if(!!contentId){
+      const httpParams = new HttpParams().set('content-id', contentId);
+      options = { params: httpParams };
+    }
+
+    return this.http.put(environment.apiUrl + 'case-record',  keyValue, options).pipe(
+      map((result: any) => {
+        this.getByCaseId(caseId)
+        }
+      ),
+    );
+  }
+
   getAllCases(searchTerms):  Observable<CaseRecordApiResponse> {
     let options = {};
     if(searchTerms && searchTerms.length>0){
