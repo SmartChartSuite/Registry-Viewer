@@ -5,6 +5,7 @@ import {CaseRecordApiResponse} from "../model/case.record.api.response";
 import {CaseRecord} from "../model/case.record";
 import {environment} from "../../environments/environment";
 import {ChronologicalCaseRecord} from "../model/chronological.case.record";
+import {Annotation} from "../model/annotation";
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +90,7 @@ export class CaseRecordsService {
         caseRecordChronologicalData.question = element.question;
         caseRecordChronologicalData.flag = element.flag;
         caseRecordChronologicalData.details = element.details[0]?.value;
+        caseRecordChronologicalData.annotation = this.getAnnotation(element);
         return caseRecordChronologicalData;
       }
     );
@@ -102,7 +104,27 @@ export class CaseRecordsService {
         sections.push(element.section);
       }
     });
-    console.log(sections);
     return sections;
+  }
+
+  private getAnnotation(element: any) {
+    let annotationList : Annotation[] = [];
+    if(!element.annotation?.length){
+      return annotationList;
+    }
+    else {
+      annotationList = element.annotation.map((element, i) => {
+        const annotation :Annotation = {
+          // TODO make sure the properties sent from the API match the key values we are using here.
+          // We also want to sort the annotations (assuming by date).
+          position: i,
+          updated: element?.updated,
+          textValue: element.textValue,
+          expanded: true
+        }
+      })
+      return annotationList;
+    }
+
   }
 }

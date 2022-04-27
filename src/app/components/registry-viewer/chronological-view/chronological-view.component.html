@@ -38,9 +38,11 @@
     <mat-cell *matCellDef="let row"> {{row.value }} </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="flag">
+  <ng-container matColumnDef="annotation">
     <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-    <mat-cell *matCellDef="let row"> {{row.flag }} </mat-cell>
+    <mat-cell *matCellDef="let row">
+      <mat-icon *ngIf="row.annotation?.length > 0" matTooltip="Record Contains Annotation">edit_note</mat-icon>
+    </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

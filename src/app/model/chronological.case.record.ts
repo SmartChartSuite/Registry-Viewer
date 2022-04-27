@@ -1,3 +1,5 @@
+import {Annotation} from "./annotation";
+
 export class ChronologicalCaseRecord {
   contentId: number;
   section: string;
@@ -7,4 +9,5 @@ export class ChronologicalCaseRecord {
   question: string;
   flag: string;
   details: any;
+  annotation: Annotation [];
 }

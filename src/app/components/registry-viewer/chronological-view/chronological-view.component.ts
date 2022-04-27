@@ -31,7 +31,7 @@ export class ChronologicalViewComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns = ['contentId', 'date', 'question', 'value', 'section', 'category', 'flag'];
+  displayedColumns = ['contentId', 'date', 'question', 'value', 'section', 'category', 'annotation'];
   dataSource: MatTableDataSource<ChronologicalCaseRecord>;
   selectedSectionFormControl = new FormControl();
   selectedSections: any;

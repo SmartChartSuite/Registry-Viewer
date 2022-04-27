@@ -1,5 +1,5 @@
 export class Annotation {
-  flag: string;
+  //Remove unused keys from the class
   position: number;
   updated: string;
   textValue: string;
