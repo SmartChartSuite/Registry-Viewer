@@ -15,6 +15,7 @@ export class CaseRecordsService {
   caseRecordChronologicalData:  ChronologicalCaseRecord [];
   caseRecordChronologicalData$: BehaviorSubject<ChronologicalCaseRecord []>;
 
+
   sections: string[];
   sections$: BehaviorSubject<string[]>
 
@@ -25,18 +26,15 @@ export class CaseRecordsService {
   }
 
   updateCaseRecord(caseId: number, contentId: number, keyValue: any) : Observable<any>{
-    let options = {};
 
-    if(!!caseId){
-      const httpParams = new HttpParams().set('case-id', caseId);
-      options = { params: httpParams };
+    const obj = {
+      "flag": "flag1"
     }
-    if(!!contentId){
-      const httpParams = new HttpParams().set('content-id', contentId);
-      options = { params: httpParams };
-    }
+    const params = new HttpParams()
+      .set("case-id", caseId)
+      .set("content-id", contentId);
 
-    return this.http.put(environment.apiUrl + 'case-record',  keyValue, options).pipe(
+    return this.http.put(environment.apiUrl + 'case-record', obj, {params}).pipe(
       map((result: any) => {
         this.getByCaseId(caseId)
         }
@@ -129,7 +127,7 @@ export class CaseRecordsService {
 
   private getAnnotation(element: any) {
     let annotationList : Annotation[] = [];
-    if(!element.annotation?.length){
+    if(!element.annotation?.length || !Array.isArray(element.annotation)){
       return annotationList;
     }
     else {

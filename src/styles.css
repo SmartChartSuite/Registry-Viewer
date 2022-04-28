@@ -63,3 +63,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 .selected-row-background {
   background-color: #E8EAF6;
 }
+
+.mat-snack-bar-container {
+  margin-top: 10em !important;
+}

@@ -48,6 +48,7 @@ import {MatMultiSortModule} from "ngx-mat-multi-sort";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AddRecordDialogComponent} from './components/registry-viewer/addRecordDialog/add-record-dialog.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 @NgModule({
@@ -69,7 +70,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
     DetailsComponent,
     FlagComponent,
     AnnotationsComponent,
-    AddRecordDialogComponent
+    AddRecordDialogComponent,
   ],
     imports: [
         BrowserModule,
@@ -101,7 +102,8 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
         MatRadioModule,
         MatMultiSortModule,
         MatCheckboxModule,
-        MatButtonToggleModule
+        MatButtonToggleModule,
+        MatSnackBarModule
     ],
   providers: [SidenavService],
   bootstrap: [AppComponent]
