@@ -15,14 +15,31 @@ export class CaseRecordsService {
   caseRecordChronologicalData:  ChronologicalCaseRecord [];
   caseRecordChronologicalData$: BehaviorSubject<ChronologicalCaseRecord []>;
 
-
   sections: string[];
-  sections$: BehaviorSubject<string[]>
+  sections$: BehaviorSubject<string[]>;
 
+  caseRecords: CaseRecord[];
+  caseRecords$: BehaviorSubject<CaseRecord[]>;
 
   constructor(private http: HttpClient) {
     this.caseRecordChronologicalData$ = new BehaviorSubject(this.caseRecordChronologicalData);
     this.sections$ = new BehaviorSubject(this.sections);
+    this.caseRecords$ = new BehaviorSubject(this.caseRecords);
+  }
+
+  getCaseRecordByIdAndSection(caseId, section): Observable<any>{
+    let options = {};
+
+    const httpParams = new HttpParams()
+      .set("case-id", 13)
+      .set("sections", "Demographics");
+
+    options = { params: httpParams };
+
+    return this.http.get(environment.apiUrl + 'case-record', options).pipe(
+      map((result: any) => {return result}
+      ),
+    );
   }
 
   updateCaseRecord(caseId: number, contentId: number, keyValue: any) : Observable<any>{
@@ -33,7 +50,6 @@ export class CaseRecordsService {
 
     return this.http.put(environment.apiUrl + 'case-record', keyValue, {params}).pipe(
       map((result: any) => {
-        console.log("I am getting the case");
         this.getByCaseId(caseId).subscribe();
         }
       ),
