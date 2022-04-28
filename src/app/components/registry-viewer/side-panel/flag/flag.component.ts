@@ -4,6 +4,7 @@ import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {SidenavService} from "../../../../service/sidenav.service";
 import {UtilsService} from "../../../../service/utils.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-flag',
@@ -12,8 +13,8 @@ import {UtilsService} from "../../../../service/utils.service";
 })
 export class FlagComponent implements OnInit {
 
-  flagChecked: true;
-  flag: string;
+  flagChecked: boolean;
+  selectedEntry$: Observable<any>;
 
   constructor(
     private caseRecordsService: CaseRecordsService,
@@ -23,20 +24,21 @@ export class FlagComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.selectedEntry$ = this.sidenavService.data$;
   }
 
   onFlagChanged($event: MatCheckboxChange) {
-    console.log($event);
     const caseId =  this.route.snapshot.params['id'];
-    let flagValue = '';
-    // if($event.checked){
-      flagValue = this.flag;
-    //}
+    let flagValue = null;
+    if($event.checked){
+     flagValue = "Invalid Entry";
+    }
     const contentId = this.sidenavService.data$.getValue().contentId;
     this.caseRecordsService.updateCaseRecord(caseId, contentId,{'flag': flagValue}).subscribe(
       {
-        next: value => this.utilsService.showErrorMessage("Flag updated successfully"),
-        error: (err)=> {console.error(err); this.utilsService.showErrorMessage("Unable to upload the record. Server error.")}
+        next: value => this.utilsService.showSuccessMessage("Flag updated successfully"),
+        error: (err)=> {console.error(err); this.utilsService.showErrorMessage("Unable to upload the record. Server error.")
+        }
       }
     );
   }

@@ -27,16 +27,14 @@ export class CaseRecordsService {
 
   updateCaseRecord(caseId: number, contentId: number, keyValue: any) : Observable<any>{
 
-    const obj = {
-      "flag": "flag1"
-    }
     const params = new HttpParams()
       .set("case-id", caseId)
       .set("content-id", contentId);
 
-    return this.http.put(environment.apiUrl + 'case-record', obj, {params}).pipe(
+    return this.http.put(environment.apiUrl + 'case-record', keyValue, {params}).pipe(
       map((result: any) => {
-        this.getByCaseId(caseId);
+        console.log("I am getting the case");
+        this.getByCaseId(caseId).subscribe();
         }
       ),
     );

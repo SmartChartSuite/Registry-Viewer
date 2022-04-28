@@ -1,3 +1,3 @@
-<mat-checkbox [checked]="flag === 'Invalid Entry'" (change)="onFlagChanged($event)">
+<mat-checkbox [checked]="(selectedEntry$ | async)?.flag === 'Invalid Entry'" (change)="onFlagChanged($event)">
   Invalid Entry
 </mat-checkbox>

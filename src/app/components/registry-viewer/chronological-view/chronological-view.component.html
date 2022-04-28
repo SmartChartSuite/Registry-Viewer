@@ -48,8 +48,9 @@
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"(click)="onSelectRow(row)"
            class="example-element-row"
-           style="cursor:pointer;"
-           [ngClass]="{'selected-row-background': row.contentId === selectedRow?.contentId}">
+           style="cursor:pointer"
+           [ngClass]="{'selected-row-background': row.contentId === selectedRow?.contentId,
+              'flagged-row': row.flag === 'Invalid Entry' && !(row.contentId === selectedRow?.contentId)}">
   </mat-row>
 </mat-table>
 

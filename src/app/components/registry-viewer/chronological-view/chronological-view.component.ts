@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {SidenavService} from "../../../service/sidenav.service";
 import {MatSidenav} from "@angular/material/sidenav";
 import {ChronologicalCaseRecord} from "../../../model/chronological.case.record";
@@ -20,8 +20,7 @@ export class Record {
   styleUrls: ['./chronological-view.component.css']
 })
 
-
-export class ChronologicalViewComponent implements AfterViewInit {
+export class ChronologicalViewComponent implements AfterViewInit, OnChanges {
   selectedRow: ChronologicalCaseRecord;
 
   @Input() caseRecordChronologicalData: ChronologicalCaseRecord[];
@@ -39,7 +38,16 @@ export class ChronologicalViewComponent implements AfterViewInit {
   constructor(
     private sidenavService: SidenavService,
   ) {
-  };
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if(this.dataSource?.data && changes['caseRecordChronologicalData'].currentValue){
+      this.dataSource.data =changes['caseRecordChronologicalData'].currentValue;
+    }
+    if(changes['sections'].currentValue){
+      this.sections =changes['sections'].currentValue;
+    }
+  }
+
 
   onCategorySelected(section: string){
     console.log(section);
