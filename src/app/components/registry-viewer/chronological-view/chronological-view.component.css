@@ -2,6 +2,6 @@ table {
   width: 100%;
 }
 
-.flagged-row{
-  background: #eceff1
+.flagged{
+  color: #9e9e9e;
 }
