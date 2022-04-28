@@ -1,22 +1,22 @@
 <mat-grid-list cols="{{cols}}" rowHeight="{{width}}">
   <mat-grid-tile>
     <div class="tile">
-      DOB: {{demographicData.dob}}<br/>
-      Gender: {{demographicData.gender}}
+      DOB: {{demographicsData?.dob}}<br/>
+      Gender: {{demographicsData?.gender}}
     </div>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <div class="tile">
     Address:<br/>
-    {{demographicData.address.street}}<br/>
-    {{demographicData.address.city}} {{demographicData.address.state}} {{demographicData.address.zip}}<br/>
+    {{demographicsData?.street}}<br/>
+    {{demographicsData?.city}} {{demographicsData?.address?.state}} {{demographicsData?.address?.zip}}<br/>
     </div>
   </mat-grid-tile>
 
   <mat-grid-tile>
     <div class="tile">
-      Phone {{demographicData.phone}}<br/>
+      Phone {{demographicsData?.phone}}<br/>
       Other: other info<br/>
     </div>
   </mat-grid-tile>
