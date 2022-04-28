@@ -36,7 +36,7 @@ export class CaseRecordsService {
 
     return this.http.put(environment.apiUrl + 'case-record', obj, {params}).pipe(
       map((result: any) => {
-        this.getByCaseId(caseId)
+        this.getByCaseId(caseId);
         }
       ),
     );
