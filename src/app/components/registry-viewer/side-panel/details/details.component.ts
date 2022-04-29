@@ -26,13 +26,18 @@ export class DetailsComponent implements OnInit {
   ignoreProperties: string[] = ['query', 'tableDisplayText', 'type'];
 
   formatKeyToString(key: string): string{
+    // Nothing like regex without comments :-)
+    // We do two operations here
+    // 1. separate the camelCase from the keys -> camelCase -> camel Case
+    // 2. convert the camel Case to Title Case -> camel Case -> Camel Case
      return key.replace(/([a-z])([A-Z])/g, '$1 $2')    // to split camel Case
-      .toLowerCase().replace(/\w{3,}/g,                     // to Title String
+      .toLowerCase().replace(/\w{3,}/g,                           // to Title String
       (match) => match.replace(/\w/, (m) => m.toUpperCase()))
   }
 
   highlightText(text : string, query: string): string{
     let re = new RegExp(query, 'gi')
+    // Angular refused to apply class, so I had to go with style tage here. I wonder why.
     return text.replace(re, '<span style="background-color: #fff59d">' + query + '</span>')
   }
 
@@ -47,6 +52,7 @@ export class DetailsComponent implements OnInit {
         for (const key in details) {
           if(details[key] &&  this.ignoreProperties.indexOf(details[key]) === -1){
             if(key === 'date' || key === 'startDate' || key === 'endDate'){
+              // If we find dates we need to render them appropriately
               this.htmlString =
                 this.htmlString
                 + '<p>'
@@ -56,6 +62,7 @@ export class DetailsComponent implements OnInit {
                 + '</p>';
             }
             else if(this.query && key== 'noteText' && details['type'] === "DetailNote"){
+              // If there is text we need to highlight this is where we do it.
               this.htmlString =
                 this.htmlString
                 + '<p>'
@@ -65,6 +72,7 @@ export class DetailsComponent implements OnInit {
                 + '</p>';
             }
             else {
+              // The rest of it we just render as paragraphs.
               this.htmlString =
                 this.htmlString
                 + '<p>'
