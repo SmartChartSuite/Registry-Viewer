@@ -38,6 +38,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   background-color: #9fa8da;
 }
 
+/* Color Shades */
+.primary-extra-light {
+  background-color: #e8eaf6;
+}
+
+
 .top-spacer{
   padding-top: 15px;
 }

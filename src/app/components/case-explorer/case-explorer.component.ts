@@ -33,7 +33,7 @@ export class CaseExplorerComponent implements OnInit {
 
   getCaseRecords(searchTerms?: string[]): void {
     this.isLoading = true;
-    this.caseRecordsService.getAllCases(searchTerms).subscribe(
+    this.caseRecordsService.searchCases(searchTerms).subscribe(
       (response: CaseRecordApiResponse) => {
         this.dataSource = new MatTableDataSource(response.data);
         this.isLoading = false;

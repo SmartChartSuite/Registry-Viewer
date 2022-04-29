@@ -27,21 +27,6 @@ export class CaseRecordsService {
     this.caseRecords$ = new BehaviorSubject(this.caseRecords);
   }
 
-  getCaseRecordByIdAndSection(caseId, section): Observable<any>{
-    let options = {};
-
-    const httpParams = new HttpParams()
-      .set("case-id", 13)
-      .set("sections", "Demographics");
-
-    options = { params: httpParams };
-
-    return this.http.get(environment.apiUrl + 'case-record', options).pipe(
-      map((result: any) => {return result}
-      ),
-    );
-  }
-
   updateCaseRecord(caseId: number, contentId: number, keyValue: any) : Observable<any>{
 
     const params = new HttpParams()
@@ -56,11 +41,14 @@ export class CaseRecordsService {
     );
   }
 
-  getAllCases(searchTerms):  Observable<CaseRecordApiResponse> {
+  searchCases(searchTerms?: string[], fieldsList? : string[]):  Observable<CaseRecordApiResponse> {
     let options = {};
-    if(searchTerms && searchTerms.length>0){
+    if(searchTerms?.length>0 ||fieldsList?.length> 0){
       const terms: string = searchTerms.join(', ');
-      const httpParams = new HttpParams().set('terms', terms);
+      const fields: string = fieldsList.join(', ');
+      const httpParams = new HttpParams()
+        .set('terms', terms)
+        .set('fields', fields)
       options = { params: httpParams };
     }
 

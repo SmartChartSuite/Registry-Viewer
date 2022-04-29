@@ -1,24 +1,17 @@
-<mat-grid-list cols="{{cols}}" rowHeight="{{width}}">
-  <mat-grid-tile>
-    <div class="tile">
-      DOB: {{demographicsData?.dob}}<br/>
-      Gender: {{demographicsData?.gender}}
-    </div>
-  </mat-grid-tile>
+<mat-toolbar-row style="align-items: flex-start !important;">
+  <div style="margin-top: 0.8em;">{{demographicsData?.givenName}} {{demographicsData?.lastName}}</div>
+  <div class="demographics">
+    <div>Dob: {{demographicsData?.dob | date}} </div>
+    <div>Gender: {{demographicsData?.gender}}</div>
+  </div>
 
-  <mat-grid-tile>
-    <div class="tile">
-    Address:<br/>
-    {{demographicsData?.street}}<br/>
-    {{demographicsData?.city}} {{demographicsData?.address?.state}} {{demographicsData?.address?.zip}}<br/>
-    </div>
-  </mat-grid-tile>
+  <div class="demographics">
+    Status: {{demographicsData?.status}}
+  </div>
 
-  <mat-grid-tile>
-    <div class="tile">
-      Phone {{demographicsData?.phone}}<br/>
-      Other: other info<br/>
-    </div>
-  </mat-grid-tile>
-
-</mat-grid-list>
+  <div class="demographics">
+    <div *ngIf="demographicsData?.phone"> {{demographicsData?.phone}} </div>
+    <div> {{demographicsData?.street}} </div>
+    <div> {{demographicsData?.state}} <span *ngIf="demographicsData?.zip">,  {{demographicsData?.zip}}</span></div>
+  </div>
+</mat-toolbar-row>

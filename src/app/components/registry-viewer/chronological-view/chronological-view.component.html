@@ -39,7 +39,7 @@
   </ng-container>
 
   <ng-container matColumnDef="annotation">
-    <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
     <mat-cell *matCellDef="let row" [ngClass]="{'flagged': !!row.flag}">
       <mat-icon *ngIf="row.annotation?.length > 0" matTooltip="Record Contains Annotation">edit_note</mat-icon>
     </mat-cell>
