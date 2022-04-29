@@ -5,3 +5,8 @@ table {
 .flagged{
   color: #9e9e9e;
 }
+
+.mat-column-value {
+  flex: 0 0 40%;
+}
+

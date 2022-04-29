@@ -30,8 +30,8 @@ export class CaseRecordsService {
   updateCaseRecord(caseId: number, contentId: number, keyValue: any) : Observable<any>{
 
     const params = new HttpParams()
-      .set("case-id", caseId)
-      .set("content-id", contentId);
+      .set("caseId", caseId)
+      .set("contentId", contentId);
 
     return this.http.put(environment.apiUrl + 'case-record', keyValue, {params}).pipe(
       map((result: any) => {
@@ -85,7 +85,7 @@ export class CaseRecordsService {
   getByCaseId (caseId):  Observable<any> {
     let options = {};
     if(!!caseId){
-      const httpParams = new HttpParams().set('case-id', caseId);
+      const httpParams = new HttpParams().set('caseId', caseId);
       options = { params: httpParams };
     }
     return this.http.get(environment.apiUrl + 'case-record',  options).pipe(
@@ -106,7 +106,8 @@ export class CaseRecordsService {
         caseRecordChronologicalData.section = element.section;
         caseRecordChronologicalData.category = element.category
         caseRecordChronologicalData.date = element.date;
-        caseRecordChronologicalData.value = element?.derivedValue?.value;
+        caseRecordChronologicalData.value = element.details[0]?.tableDisplayText;
+        //caseRecordChronologicalData.value = element.details[0]?.tableDisplayText || element?.derivedValue?.value;
         caseRecordChronologicalData.question = element.question;
         caseRecordChronologicalData.flag = element.flag;
         caseRecordChronologicalData.details = element.details[0]?.value;
