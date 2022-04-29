@@ -23,11 +23,11 @@ export class Diagnosis {
 // This is the example we follow https://stackblitz.com/edit/angular-material-table-row-grouping-expand-sort
 
 @Component({
-  selector: 'app-diagnostics',
-  templateUrl: './diagnostics.component.html',
-  styleUrls: ['./diagnostics.component.css', '../../registry-viewer.component.css']
+  selector: 'app-diagnoses',
+  templateUrl: './diagnoses.component.html',
+  styleUrls: ['./diagnoses.component.css', '../../registry-viewer.component.css']
 })
-export class DiagnosticsComponent implements OnInit {
+export class DiagnosesComponent implements OnInit {
 
   @Input() matCardContentHeight: number;
 

@@ -30,7 +30,7 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
 import { LabResultsComponent } from './components/registry-viewer/details-view/lab-results/lab-results.component';
-import { DiagnosticsComponent } from './components/registry-viewer/details-view/diagnostics/diagnostics.component';
+import { DiagnosesComponent } from './components/registry-viewer/details-view/diagnoses/diagnoses.component';
 import { TreatmentComponent } from './components/registry-viewer/details-view/treatment/treatment.component';
 import { OtherHistoryComponent } from './components/registry-viewer/details-view/other-history/other-history.component';
 import { DemographicDataComponent } from './components/registry-viewer/demographic-data/demographic-data.component';
@@ -61,7 +61,7 @@ import {DatePipe} from "@angular/common";
     RegistryViewerComponent,
     TestComponent,
     LabResultsComponent,
-    DiagnosticsComponent,
+    DiagnosesComponent,
     TreatmentComponent,
     OtherHistoryComponent,
     DemographicDataComponent,
