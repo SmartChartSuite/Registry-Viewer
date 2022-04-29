@@ -28,19 +28,6 @@ export class DemographicDataComponent implements OnInit {
       next: value => this.demographicsData = value?.data[0]
       }
     );
-
-    this.responsive.observe([
-      Breakpoints.XSmall,
-    ])
-      .subscribe(result => {
-        this.cols = 3;
-        this.width = "8em";
-        if (result.matches) {
-          this.cols = 1;
-          this.width = "6em";
-        }
-      });
-
   }
 
 }
