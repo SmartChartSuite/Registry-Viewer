@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, Pipe, PipeTransform} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SidenavService} from "../../../../service/sidenav.service";
 import {Observable} from "rxjs";
 import { DatePipe } from '@angular/common';
