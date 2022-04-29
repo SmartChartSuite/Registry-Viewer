@@ -49,6 +49,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AddRecordDialogComponent} from './components/registry-viewer/addRecordDialog/add-record-dialog.component';
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {DatePipe} from "@angular/common";
 
 
 @NgModule({
@@ -105,7 +106,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         MatButtonToggleModule,
         MatSnackBarModule
     ],
-  providers: [SidenavService],
+  providers: [SidenavService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

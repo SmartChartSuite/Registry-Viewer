@@ -68,7 +68,7 @@ export class CaseRecordsService {
               status: element.status,
               street: element.street,
               zip: element.zip,
-              specimenCollectionDate: null
+              initialReportDate: element.initialReportDate
             };
             return parsedCase;
         });
@@ -110,7 +110,8 @@ export class CaseRecordsService {
         //caseRecordChronologicalData.value = element.details[0]?.tableDisplayText || element?.derivedValue?.value;
         caseRecordChronologicalData.question = element.question;
         caseRecordChronologicalData.flag = element.flag;
-        caseRecordChronologicalData.details = element.details[0]?.value;
+        caseRecordChronologicalData.details = element.details[0];
+        caseRecordChronologicalData.details.query = element.derivedValue.value;
         caseRecordChronologicalData.annotation = this.getAnnotation(element);
         return caseRecordChronologicalData;
       }

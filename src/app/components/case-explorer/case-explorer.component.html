@@ -69,8 +69,11 @@
       <ng-container matColumnDef="address">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
         <td mat-cell *matCellDef="let caseRecord">
-            <div>{{caseRecord.streetAddress}}</div>
-          <div>{{caseRecord.city}}<span *ngIf="!!caseRecord.city && caseRecord.state">,</span> {{caseRecord.state}} {{caseRecord.zip}}</div>
+            <div>{{caseRecord.street}}</div>
+            <div>{{caseRecord.city}}
+              <span *ngIf="!!caseRecord.city && caseRecord.state">,</span>
+              {{caseRecord.state}} {{caseRecord.zip}}
+            </div>
         </td>
       </ng-container>
 
@@ -79,9 +82,9 @@
         <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.phone}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="specimenCollectionDate">
+      <ng-container matColumnDef="initialReportDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Specimen Collected </th>
-        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.specimenCollectionDate | date:'mediumDate'}} </td>
+        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.initialReportDate | date:'mediumDate'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">

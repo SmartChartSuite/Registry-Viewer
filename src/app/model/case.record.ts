@@ -9,5 +9,5 @@ export class CaseRecord {
   status: string;
   street: string;
   zip: string;
-  specimenCollectionDate: string;
+  initialReportDate: string;
 }

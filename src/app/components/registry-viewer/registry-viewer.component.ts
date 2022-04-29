@@ -22,19 +22,6 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   isDefaultViewActive = true;
   sections$: Observable<string[]>;
 
-  //TODO this data should be retrieved from the backend
-  demographicData = {
-    address:  {
-      street: "7985 Waxwing Pass",
-      city: "Columbus",
-      state: "OH",
-      zip: "87913"
-    },
-    phone: "770-123-9876",
-    dob: "Dec 31, 1923",
-    gender: "other"
-  }
-
   constructor(private sidenavService: SidenavService,
               private caseRecordsService: CaseRecordsService,
               private route: ActivatedRoute,) {
