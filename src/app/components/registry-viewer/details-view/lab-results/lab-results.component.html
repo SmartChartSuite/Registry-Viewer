@@ -40,7 +40,8 @@
 
               <tr mat-header-row *matHeaderRowDef="innerTableDisplayColumns"></tr>
               <tr mat-row *matRowDef="let detailsRow; columns: innerTableDisplayColumns;"
-                  (click)="onRowClick( detailsRow )" style="cursor: pointer">
+                  (click)="onRowClick( detailsRow )" style="cursor: pointer"
+                  [ngClass]="{'selected-row-background': detailsRow.contentId === selectedRow?.contentId}">
               </tr>
 
             </table>
@@ -58,7 +59,7 @@
       ></tr>
       <tr
         mat-row
-        *matRowDef="let row; columns: ['expandedRow']"
+        *matRowDef="let categoryRow; columns: ['expandedRow']"
         class="case-record-detail-row"
       ></tr>
 

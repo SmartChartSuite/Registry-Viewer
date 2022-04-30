@@ -33,6 +33,7 @@ export class LabResultsComponent implements OnInit{
   expandedRow: any | null;
   dataSource: MatTableDataSource<ChronologicalCaseRecord>;
   innerTableDisplayColumns = ['date', 'question'];
+  selectedRow: any;
 
   private extractCategories(data: any, key: string): string[]{
     let result : string[] = [];
@@ -87,8 +88,9 @@ export class LabResultsComponent implements OnInit{
   }
 
 
-  onRowClick(element: any) {
+  onRowClick(row: any) {
+    this.selectedRow = row;
     this.sidenavService.open();
-    this.sidenavService.setSidenavData(element);
+    this.sidenavService.setSidenavData(row);
   }
 }

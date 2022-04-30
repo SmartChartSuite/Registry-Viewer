@@ -53,4 +53,8 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
     this.sidenavService.setSidenav(this.resultViewerSidenav);
   }
 
+  onViewSelected(isDefaultView: boolean) {
+    this.isDefaultViewActive = isDefaultView;
+    //this.sidenavService.close();
+  }
 }

@@ -13,9 +13,9 @@
     <div class="centered-content" style="margin-top: 2em; margin-bottom: 2em">
 
       <mat-button-toggle-group >
-        <mat-button-toggle checked="isDefaultViewActive"  (click)="isDefaultViewActive = true">Summary View
+        <mat-button-toggle checked="isDefaultViewActive"  (click)="onViewSelected(true);">Summary View
         </mat-button-toggle>
-        <mat-button-toggle (click)="isDefaultViewActive = false">
+        <mat-button-toggle (click)="onViewSelected(true);">
           Chronological View
         </mat-button-toggle>
       </mat-button-toggle-group>
