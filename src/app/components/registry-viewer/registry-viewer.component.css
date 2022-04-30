@@ -5,26 +5,26 @@ mat-card {
   margin-right:auto;
 }
 
-table {
-  width: 90%;
-  margin: 30px auto;
-  text-align: left;
-}
+/*table {*/
+/*  width: 90%;*/
+/*  margin: 30px auto;*/
+/*  text-align: left;*/
+/*}*/
 
-table th {
-  border-bottom:1px solid #e0e0e0;
-  font-size: 11px;
-}
+/*table th {*/
+/*  border-bottom:1px solid #e0e0e0;*/
+/*  font-size: 11px;*/
+/*}*/
 
-table td {
-  border-bottom:1px solid #e0e0e0;
-  height: 40px;
-}
+/*table td {*/
+/*  border-bottom:1px solid #e0e0e0;*/
+/*  height: 40px;*/
+/*}*/
 
-.data-cell{
-  font-size: 11px;
-  cursor: pointer;
-}
+/*.data-cell{*/
+/*  font-size: 11px;*/
+/*  cursor: pointer;*/
+/*}*/
 
 .registry-viewer-sidenav {
   width: 25%;
