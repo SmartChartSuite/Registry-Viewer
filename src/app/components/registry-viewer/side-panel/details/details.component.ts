@@ -3,6 +3,7 @@ import {SidenavService} from "../../../../service/sidenav.service";
 import {Observable} from "rxjs";
 import { DatePipe } from '@angular/common';
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {CaseRecordsService} from "../../../../service/case-records.service";
 
 @Component({
   selector: 'app-details',
@@ -11,7 +12,10 @@ import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 })
 export class DetailsComponent implements OnInit {
 
-  constructor (private sidenavService: SidenavService, private datePipe: DatePipe, private sanitized: DomSanitizer) { }
+  constructor (private sidenavService: SidenavService,
+               private datePipe: DatePipe,
+               private sanitized: DomSanitizer,
+               private caseRecordsService: CaseRecordsService) { }
 
   safeHtml: SafeHtml;
 
@@ -43,7 +47,7 @@ export class DetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.details$ = this.sidenavService.data$;
+    this.details$ = this.caseRecordsService.selectedCaseRecord$;
     this.details$.subscribe({
       next: value => {
         this.query = value?.details?.query;

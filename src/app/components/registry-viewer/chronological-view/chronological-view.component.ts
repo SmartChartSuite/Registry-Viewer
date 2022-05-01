@@ -6,6 +6,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort, MatSortable} from "@angular/material/sort";
 import {FormControl} from "@angular/forms";
+import {CaseRecordsService} from "../../../service/case-records.service";
 
 export class Record {
   section: string;
@@ -37,6 +38,7 @@ export class ChronologicalViewComponent implements AfterViewInit, OnChanges {
 
   constructor(
     private sidenavService: SidenavService,
+    private caseRecordsService: CaseRecordsService
   ) {
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -48,15 +50,10 @@ export class ChronologicalViewComponent implements AfterViewInit, OnChanges {
     }
   }
 
-
-  onCategorySelected(section: string){
-    console.log(section);
-  }
-
   onSelectRow(row) {
     this.sidenavService.open();
     this.selectedRow = row;
-    this.sidenavService.setSidenavData(row);
+    this.caseRecordsService.setSelectedRecord(row);
   }
 
   ngAfterViewInit(): void {

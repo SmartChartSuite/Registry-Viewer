@@ -91,6 +91,6 @@ export class LabResultsComponent implements OnInit{
   onRowClick(row: any) {
     this.selectedRow = row;
     this.sidenavService.open();
-    this.sidenavService.setSidenavData(row);
+    this.caseRecordsService.setSelectedRecord(row);
   }
 }

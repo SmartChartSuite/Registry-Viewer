@@ -18,13 +18,17 @@ export class CaseRecordsService {
   sections: string[];
   sections$: BehaviorSubject<string[]>;
 
-  caseRecords: CaseRecord[];
-  caseRecords$: BehaviorSubject<CaseRecord[]>;
+  selectedCaseRecord: any;
+  selectedCaseRecord$: BehaviorSubject<any>;
 
   constructor(private http: HttpClient) {
     this.caseRecordChronologicalData$ = new BehaviorSubject(this.caseRecordChronologicalData);
     this.sections$ = new BehaviorSubject(this.sections);
-    this.caseRecords$ = new BehaviorSubject(this.caseRecords);
+    this.selectedCaseRecord$ = new BehaviorSubject(this.sections);
+  }
+
+  setSelectedRecord(selectedCaseRecord) {
+    this.selectedCaseRecord$.next(selectedCaseRecord);
   }
 
   updateCaseRecord(caseId: number, contentId: number, keyValue: any) : Observable<any>{
@@ -90,7 +94,14 @@ export class CaseRecordsService {
     }
     return this.http.get(environment.apiUrl + 'case-record',  options).pipe(
       map((result: any) => {
-        this.caseRecordChronologicalData$.next(this.createCaseRecordChronologicalData(result));
+        const mappedCaseRecords = this.createCaseRecordChronologicalData(result);
+        if(this.selectedCaseRecord$?.value?.contentId && mappedCaseRecords.length > 0){
+          const updatedSelectedRecord = mappedCaseRecords.find(
+            record => record.contentId === this.selectedCaseRecord$?.value?.contentId
+          );
+          this.setSelectedRecord(updatedSelectedRecord);
+        }
+        this.caseRecordChronologicalData$.next(mappedCaseRecords);
         this.sections$.next(this.extractSectionList(result))
         return result;
         }

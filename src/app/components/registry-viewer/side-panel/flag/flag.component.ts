@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
@@ -15,6 +15,7 @@ export class FlagComponent implements OnInit {
 
   flagChecked: boolean;
   selectedEntry$: Observable<any>;
+  selectedCaseRecord: any;
 
   constructor(
     private caseRecordsService: CaseRecordsService,
@@ -24,7 +25,9 @@ export class FlagComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.selectedEntry$ = this.sidenavService.data$;
+    this.caseRecordsService.selectedCaseRecord$.subscribe(
+      {next: value => this.selectedCaseRecord = value}
+    );
   }
 
   onFlagChanged($event: MatCheckboxChange) {
@@ -33,8 +36,7 @@ export class FlagComponent implements OnInit {
     if($event.checked){
      flagValue = "Invalid Entry";
     }
-    const contentId = this.sidenavService.data$.getValue().contentId;
-    this.caseRecordsService.updateCaseRecord(caseId, contentId,{'flag': flagValue}).subscribe(
+    this.caseRecordsService.updateCaseRecord(caseId, this.selectedCaseRecord?.contentId,{'flag': flagValue}).subscribe(
       {
         next: value => this.utilsService.showSuccessMessage("Flag updated successfully"),
         error: (err)=> {console.error(err); this.utilsService.showErrorMessage("Unable to upload the record. Server error.")
