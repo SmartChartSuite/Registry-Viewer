@@ -46,7 +46,7 @@ export class LabResultsComponent implements OnInit{
   }
 
 
-  private groupByCategories(categories: string[], data: ChronologicalCaseRecord[]): any[] {
+  groupByCategories(categories: string[], data: ChronologicalCaseRecord[]): any[] {
     let groupedData = [];
     categories.forEach(category => {
       let obj : any = {};
@@ -63,7 +63,6 @@ export class LabResultsComponent implements OnInit{
     })
     return groupedData;
   }
-
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource([]);
@@ -83,10 +82,6 @@ export class LabResultsComponent implements OnInit{
       }
     )
   }
-
-  onViewDetails(value: any): void {
-  }
-
 
   onRowClick(row: any) {
     this.selectedRow = row;

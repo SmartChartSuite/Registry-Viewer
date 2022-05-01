@@ -28,6 +28,7 @@ export class CaseRecordsService {
   }
 
   setSelectedRecord(selectedCaseRecord) {
+    console.log(selectedCaseRecord);
     this.selectedCaseRecord$.next(selectedCaseRecord);
   }
 

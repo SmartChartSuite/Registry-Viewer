@@ -3,7 +3,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
-  selector: 'app-addRecordDialog',
+  selector: 'app-add-record-dialog',
   templateUrl: './add-record-dialog.component.html',
   styleUrls: ['./add-record-dialog.component.css']
 })

@@ -1,11 +1,12 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MatSort, Sort} from "@angular/material/sort";
-import {DiagnosticsService} from "../../../../service/diagnostics.service";
 import {SidenavService} from "../../../../service/sidenav.service";
 import {MatDialog} from "@angular/material/dialog";
-import {openAnnotationDialog} from "../../addRecordDialog/add-record-dialog.component";
+import {openAnnotationDialog} from "../../add-record-dialog/add-record-dialog.component";
 import {filter} from "rxjs";
+import {CaseRecordsService} from "../../../../service/case-records.service";
+import {ChronologicalCaseRecord} from "../../../../model/chronological.case.record";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 export class Group {
   level = 0;
@@ -25,237 +26,87 @@ export class Diagnosis {
 @Component({
   selector: 'app-diagnoses',
   templateUrl: './diagnoses.component.html',
-  styleUrls: ['./diagnoses.component.css', '../../registry-viewer.component.css']
+  styleUrls: ['./diagnoses.component.css', '../../registry-viewer.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class DiagnosesComponent implements OnInit {
 
   @Input() matCardContentHeight: number;
 
-  public dataSource = new MatTableDataSource<any | Group>([]);
-
-  columns: any[];
-  displayedColumns: string[];
-  groupByColumns: string[] = [];
-  allData: any[];
-  _allGroup: any[];
-
-  expandedDiagnose: any[] = [];
-  expandedSubDiagnose: Diagnosis[] = [];
-  isExpandAllActive = false;
-  isCollapseAllActive = false;
-
-  @ViewChild(MatSort) sort: MatSort;
+  panelOpenState = false;
 
   constructor(
-    protected dataSourceService: DiagnosticsService,
+    private caseRecordsService: CaseRecordsService,
     private sidenavService: SidenavService,
     private dialog: MatDialog
-  ) {
+  ) { }
 
-    this.columns = [
-      {
-        field: 'date'
-      },
-      {
-        field: 'condition'
-      },
-    ];
-    this.displayedColumns = this.columns.map(column => column.field);
-    this.groupByColumns = ['name'];
+  data: ChronologicalCaseRecord[];
+  columnsToDisplay = ['category'];
+  expandedRow: any | null;
+  dataSource: MatTableDataSource<ChronologicalCaseRecord>;
+  innerTableDisplayColumns = ['date', 'question'];
+  selectedRow: any;
 
-  }
-
-// .subscribe({
-//              next(data: any) {
-//   this.dataSource = data.data;
-//   console.log(this.dataSource);
-// },
-// error(err) {
-//   console.error('something wrong occurred: ' + err);
-// },
-// }
-// );
-// }
-
-  // ngOnInit() {
-  //   this.dataSourceService.getAllData()
-  //     .subscribe(
-  //       (data: any) => {
-  //         data.data.forEach((item, index) => {
-  //           item.id = index + 1;
-  //         });
-  //         this.allData = data.data;
-  //         this.dataSource.data = this.getGroups(this.allData, this.groupByColumns);
-  //       },
-  //       (err: any) => console.log(err)
-  //     );
-  // }
-
-
-  ngOnInit() {
-    this.dataSourceService.getAllData()
-      .subscribe({
-        next: (data: any) => {
-          data.data.forEach((item, index) => {
-            item.id = index + 1;
-          });
-          this.allData = data.data;
-          this.dataSource.data = this.getGroups(this.allData, this.groupByColumns);
-          this.onExpandAll();
-        },
-        error(err: any) {
-          console.log(err)
-        }
-      })
-  }
-
-
-  onExpandAll() {
-    this.isExpandAllActive = true;
-    this.isCollapseAllActive = true;
-    this.dataSource.data = this.addGroupsNew(this._allGroup, this.allData, this.groupByColumns, this.dataSource.data[0]);
-    this.expandedDiagnose = this.dataSource.data[0];
-  }
-
-  onCollapseAll() {
-    this.isExpandAllActive = false;
-    this.isCollapseAllActive = true;
-    this.dataSource.data = this.getGroups(this.allData, this.groupByColumns);
-  }
-
-
-  groupHeaderClick(row) {
-    this.isExpandAllActive = false;
-    this.isCollapseAllActive = false;
-    if (row.expanded) {
-      row.expanded = false;
-      this.dataSource.data = this.getGroups(this.allData, this.groupByColumns);
-    } else {
-      row.expanded = true;
-      this.expandedDiagnose = row;
-      this.dataSource.data = this.addGroupsNew(this._allGroup, this.allData, this.groupByColumns, row);
-    }
-  }
-
-  getGroups(data: any[], groupByColumns: string[]): any[] {
-    const rootGroup = new Group();
-    rootGroup.expanded = false;
-    return this.getGroupList(data, 0, groupByColumns);
-  }
-
-  getGroupList(data: any[], level: number = 0, groupByColumns: string[]): any[] {
-    if (level >= groupByColumns.length) {
-      return data;
-    }
-    let groups = this.uniqueBy(
-      data.map(
-        row => {
-          const result = new Group();
-          result.level = level + 1;
-          for (let i = 0; i <= level; i++) {
-            result[groupByColumns[i]] = row[groupByColumns[i]];
-          }
-          return result;
-        }
-      ),
-      JSON.stringify);
-
-    const currentColumn = groupByColumns[level];
-    groups.forEach(group => {
-      group.totalCounts = data.filter(row => group[currentColumn] === row[currentColumn]).length;
-      this.expandedSubDiagnose = [];
-    });
-    groups = groups.sort((a: Diagnosis, b: Diagnosis) => {
-      const isAsc = 'asc';
-      return this.compare(a.condition, b.condition, isAsc);
-
-    });
-    this._allGroup = groups;
-    return groups;
-  }
-
-  addGroupsNew(allGroup: any[], data: any[], groupByColumns: string[], dataRow: any): any[] {
-    const rootGroup = new Group();
-    rootGroup.expanded = true;
-    return this.getSublevelNew(allGroup, data, 0, groupByColumns, rootGroup, dataRow);
-  }
-
-  getSublevelNew(allGroup: any[], data: any[], level: number, groupByColumns: string[], parent: Group, dataRow: any): any[] {
-    if (level >= groupByColumns.length) {
-      return data;
-    }
-    const currentColumn = groupByColumns[level];
-    let subGroups = [];
-    allGroup.forEach(group => {
-      const rowsInGroup = data.filter(row => group[currentColumn] === row[currentColumn]);
-      group.totalCounts = rowsInGroup.length;
-
-      if (this.isExpandAllActive || group.name == dataRow.name.toString()) {
-        group.expanded =  dataRow.expanded;
-        const subGroup = this.getSublevelNew(allGroup, rowsInGroup, level + 1, groupByColumns, group, dataRow.name.toString());
-        this.expandedSubDiagnose = subGroup;
-        subGroup.unshift(group);
-        subGroups = subGroups.concat(subGroup);
-      }
-      else {
-        subGroups = subGroups.concat(group);
+  private extractCategories(data: any, key: string): string[]{
+    let result : string[] = [];
+    data.forEach((element: any)=> {
+      if(result.indexOf(element[key]) === -1){
+        result.push(element[key]);
       }
     });
-    return subGroups;
+    return result;
   }
 
-  uniqueBy(a, key) {
-    const seen = {};
-    return a.filter((item) => {
-      const k = key(item);
-      return seen.hasOwnProperty(k) ? false : (seen[k] = true);
-    });
-  }
 
-  isGroup(index, item): boolean {
-    return item.level;
-  }
-
-  onSortData(sort: Sort) {
-    let data = this.allData;
-    const index = data.findIndex(x => x['level'] == 1);
-    if (sort.active && sort.direction !== '') {
-      if (index > -1) {
-        data.splice(index, 1);
-      }
-
-      data = data.sort((a: Diagnosis, b: Diagnosis) => {
-        const isAsc = sort.direction === 'asc';
-        switch (sort.active) {
-          case 'name':
-            return this.compare(a.name, b.name, isAsc);
-          case 'date':
-            return this.compare(a.date, b.date, isAsc);
-          case 'condition':
-            return this.compare(a.condition, b.condition, isAsc);
-          default:
-            return 0;
+  private groupByCategories(categories: string[], data: ChronologicalCaseRecord[]): any[] {
+    let groupedData = [];
+    categories.forEach(category => {
+      let obj : any = {};
+      obj.category = category;
+      obj.data = []
+      this.data.forEach(element => {
+        if(element.category === category){
+          obj.data.push(element);
         }
       });
-    }
-    this.dataSource.data = this.addGroupsNew(this._allGroup, data, this.groupByColumns, this.expandedDiagnose);
+      obj.count = obj.data.length;
+      obj.expanded = true;
+      groupedData.push(obj);
+    })
+    return groupedData;
   }
 
-  private compare(a, b, isAsc) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  ngOnInit(): void {
+    this.dataSource = new MatTableDataSource([]);
+
+    this.caseRecordsService.caseRecordChronologicalData$.subscribe({
+        next: value => {
+          this.data = value;
+          if (this.data?.length > 0) {
+            this.dataSource = new MatTableDataSource(this.data);
+            this.data = value?.filter(element => element.section === 'Diagnoses');
+            this.data = this.data?.sort((a, b) => (a.date < b.date) ? 1 : -1);
+            const categories = this.extractCategories(this.data, 'category');
+            const categorised = this.groupByCategories(categories, this.data);
+            this.dataSource.data = categorised;
+          }
+        }
+      }
+    )
   }
 
-  onRowSelected(row) {
-    console.log(row);
+  onRowClick(row: any) {
+    this.selectedRow = row;
     this.sidenavService.open();
+    this.caseRecordsService.setSelectedRecord(row);
   }
-
-  // onAddDiagnose(): void {
-  //   openDetailsDialog(this.dialog, {key: "value"})
-  //     .subscribe(
-  //       val=> console.log(val)
-  //     )
-  // }
 
   onAddDiagnose(): void {
     openAnnotationDialog(this.dialog, {category: "One", description: "Sample annotation text"})

@@ -1,49 +1,79 @@
 <mat-card>
-
   <mat-card-header>
     <mat-card-title>Diagnoses</mat-card-title>
   </mat-card-header>
 
   <mat-card-content style="margin-top:20px" [style.overflow]="'auto'" [style.height.%]="matCardContentHeight">
-    <button *ngIf=!isExpandAllActive mat-stroked-button (click)="onExpandAll()">Expand All</button>
-    <button *ngIf=isExpandAllActive mat-stroked-button (click)="onCollapseAll()">Collapse All</button>
-    <mat-table [dataSource]="dataSource" matSort (matSortChange)= "onSortData($event)">
 
-      <ng-container *ngFor="let column of columns; let i = index" matColumnDef="{{ column.field }}">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          {{ column.field }}
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row" (click)="onRowSelected(row)" style="cursor: pointer">
-          <span *ngIf="column.field === 'date'">{{row[column.field] | date}}</span>
-          <span *ngIf="column.field === 'name' || column.field === 'condition'">{{row[column.field]}}</span>
-        </mat-cell>
-        <mat-cell *matCellDef="let row">
-          {{row[column.field]}}
-        </mat-cell>
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <b>{{row.category}} ({{row.count}})</b>
+        </td>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedRow">
+        <td mat-cell
+            *matCellDef="let categoryRow"
+            [attr.colspan]="columnsToDisplay.length">
+<!--          <div class="case-record-detail"-->
+<!--               [@detailExpand]="categoryRow != expandedRow ? 'expanded' : 'collapsed'">-->
 
-      <!-- Group header -->
-      <ng-container matColumnDef="groupHeader">
-        <mat-cell colspan="999" *matCellDef="let group"  style="cursor: pointer">
-          <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
-          <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
-          <strong>{{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong>
-          <span class="spacer"></span>
-        </mat-cell>
+<!--            <div class="case-record-detail"-->
+<!--                 [@detailExpand]="categoryRow.expanded ? 'expanded' : 'collapsed'">-->
+              <div class="case-record-detail"
+                   [@detailExpand]="categoryRow.expanded ? 'expanded' : 'collapsed'">
+
+            <table mat-table [dataSource]="categoryRow.data">-->
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let detailsRow"
+                    [ngClass]="{'flagged': !!detailsRow.flag}">
+                  {{detailsRow.date | date}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="question">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let detailsRow"
+                    [ngClass]="{'flagged': !!detailsRow.flag}">
+                  {{detailsRow?.details?.tableDisplayText}}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="innerTableDisplayColumns"></tr>
+              <tr mat-row *matRowDef="let detailsRow; columns: innerTableDisplayColumns;"
+                  (click)="onRowClick( detailsRow )" style="cursor: pointer"
+                  [ngClass]="{'selected-row-background': detailsRow.contentId === selectedRow?.contentId}">
+              </tr>
+            </table>
+          </div>
+
+        </td>
       </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr
+        mat-row
+        *matRowDef="let categoryRow; columns: columnsToDisplay;"
+        class="case-record-row"
+        [class.example-expanded-row]="expandedRow === categoryRow"
+        (click)="categoryRow.expanded = !categoryRow.expanded"
+      ></tr>
+      <tr
+        mat-row
+        *matRowDef="let categoryRow; columns: ['expandedRow']"
+        class="case-record-detail-row"
+      ></tr>
 
-      <mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup;" (click)="groupHeaderClick(row)"> </mat-row>
-
-    </mat-table>
+    </table>
   </mat-card-content>
 
   <mat-card-actions align="end">
     <button mat-raised-button color="primary" (click)="onAddDiagnose();">
       <mat-icon>add</mat-icon>
-      Add Diagnose
+      Add Diagnoses
     </button>
   </mat-card-actions>
 

@@ -43,14 +43,11 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
   padding-right: 5px;
 }
 
-.mat-column-date {
-  padding-right: 16px;
-}
-
 .flagged{
   color: #9e9e9e;
 }
 
 .mat-column-date {
-  padding-right: 16px;
+  width: 100px;
+  max-width: 100px;
 }
