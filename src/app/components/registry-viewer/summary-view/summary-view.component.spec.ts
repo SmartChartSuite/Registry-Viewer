@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailsViewComponent } from './details-view.component';
+import { SummaryViewComponent } from './details-view.component';
 
 describe('DefaultViewComponent', () => {
-  let component: DetailsViewComponent;
-  let fixture: ComponentFixture<DetailsViewComponent>;
+  let component: SummaryViewComponent;
+  let fixture: ComponentFixture<SummaryViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DetailsViewComponent ]
+      declarations: [ SummaryViewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DetailsViewComponent);
+    fixture = TestBed.createComponent(SummaryViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

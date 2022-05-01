@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-details-view',
-  templateUrl: './details-view.component.html',
-  styleUrls: ['./details-view.component.css']
+  selector: 'app-summary-view',
+  templateUrl: './summary-view.component.html',
+  styleUrls: ['./summary-view.component.css']
 })
-export class DetailsViewComponent implements OnInit {
+export class SummaryViewComponent implements OnInit {
 
   breakpoint: number;
   matCardContentHeight: number;
@@ -18,7 +18,7 @@ export class DetailsViewComponent implements OnInit {
     }
     else {
       this.matCardContentHeight = 70;
-    }
+    }5
   }
 
   onResize(event: any) {

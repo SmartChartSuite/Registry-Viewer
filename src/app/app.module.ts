@@ -29,12 +29,12 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
-import { LabResultsComponent } from './components/registry-viewer/details-view/lab-results/lab-results.component';
-import { DiagnosesComponent } from './components/registry-viewer/details-view/diagnoses/diagnoses.component';
-import { TreatmentComponent } from './components/registry-viewer/details-view/treatment/treatment.component';
-import { OtherHistoryComponent } from './components/registry-viewer/details-view/other-history/other-history.component';
+import { LabResultsComponent } from './components/registry-viewer/summary-view/lab-results/lab-results.component';
+import { DiagnosesComponent } from './components/registry-viewer/summary-view/diagnoses/diagnoses.component';
+import { TreatmentComponent } from './components/registry-viewer/summary-view/treatment/treatment.component';
+import { OtherHistoryComponent } from './components/registry-viewer/summary-view/other-history/other-history.component';
 import { DemographicDataComponent } from './components/registry-viewer/demographic-data/demographic-data.component';
-import { DetailsViewComponent } from './components/registry-viewer/details-view/details-view.component';
+import { SummaryViewComponent } from './components/registry-viewer/summary-view/summary-view.component';
 import { ChronologicalViewComponent } from './components/registry-viewer/chronological-view/chronological-view.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
@@ -65,7 +65,7 @@ import {DatePipe} from "@angular/common";
     TreatmentComponent,
     OtherHistoryComponent,
     DemographicDataComponent,
-    DetailsViewComponent,
+    SummaryViewComponent,
     ChronologicalViewComponent,
     SidePanelComponent,
     DetailsComponent,
