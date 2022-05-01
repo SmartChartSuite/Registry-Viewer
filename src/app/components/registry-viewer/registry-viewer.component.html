@@ -30,6 +30,11 @@
       >
       </app-chronological-view>
 
+      <app-test
+        *ngIf="!isDefaultViewActive"
+        [sections]="sections$ | async">
+      </app-test>
+
       <app-summary-view *ngIf="isDefaultViewActive"></app-summary-view>
 
     </div>

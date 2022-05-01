@@ -1,7 +1,20 @@
-mat-card {
-  width: 80%;
-  height: 80%;
-  margin-left:auto;
-  margin-right:auto;
-  vertical-align:middle;
+table {
+  width: 100%;
 }
+
+.flagged{
+  color: #9e9e9e;
+}
+
+.mat-column-value {
+  flex: 0 0 40%;
+}
+
+.mat-column-question {
+  padding-right: 1em;
+}
+
+.mat-column-date {
+  padding-right: 1em;
+}
+

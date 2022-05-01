@@ -22,8 +22,6 @@ export class Record {
 })
 
 export class ChronologicalViewComponent implements AfterViewInit, OnChanges {
-  selectedRow: ChronologicalCaseRecord;
-
   @Input() caseRecordChronologicalData: ChronologicalCaseRecord[];
   @Input() sections: string[];
 
@@ -35,6 +33,7 @@ export class ChronologicalViewComponent implements AfterViewInit, OnChanges {
   dataSource: MatTableDataSource<ChronologicalCaseRecord>;
   selectedSectionFormControl = new FormControl();
   selectedSections: any;
+  selectedRow: ChronologicalCaseRecord;
 
   constructor(
     private sidenavService: SidenavService,

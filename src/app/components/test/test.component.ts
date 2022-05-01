@@ -1,4 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import {MatMultiSort, MatMultiSortTableDataSource, TableData} from "ngx-mat-multi-sort";
+import {CaseRecordsService} from "../../service/case-records.service";
+import {FormControl} from "@angular/forms";
+import {ChronologicalCaseRecord} from "../../model/chronological.case.record";
+import {SidenavService} from "../../service/sidenav.service";
 
 export interface PeriodicElement {
   id: number;
@@ -12,126 +25,115 @@ export interface PeriodicElement {
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.css']
 })
-export class TestComponent implements OnInit {
+export class TestComponent implements OnInit, OnChanges, AfterViewInit {
+  table: TableData<any>;
+  selectedSectionFormControl = new FormControl();
+  selectedSections: any;
+  selectedRow: ChronologicalCaseRecord;
+  caseRecordChronologicalData: ChronologicalCaseRecord[];
+  filterList = [];
 
-  displayedColumns = [ "name", "descriptions"];
+  @ViewChild(MatMultiSort) sort: MatMultiSort;
+  @Input() sections: string[];
 
-  dataSource = formattedData;
-
-  labResults3 = [
-    {
-      "group": "syphilis",
-      "results" : [
-        {
-          "date": "2022-01-14T05:00:00.000Z",
-          "test": "Reagin Ab [Presence] in Serum by RPR",
-          "result": "Reactive"
-        },
-        {
-          "date": "2022-01-14T05:00:00.000Z",
-          "test": "Reagin Ab [Titer] in Serum by RPR",
-          "result": "1:4"
-        },
-        {
-          "date": "2021-07-10T04:00:00.000Z",
-          "test": "Reagin Ab [Titer] in Serum by RPR",
-          "result": "1:64"
-        }
-      ],
-    },
-    {
-      "group": "hiv",
-      "results" : [
-        {
-          "date": "2022-01-14T05:00:00.000Z",
-          "test": "HIV 1+2 Ab [Presence] in Serum",
-          "result": "Negative"
-        }
-      ],
-    },
-
-  ]
-
-  dataList = [
-    {
-      pname: "abc",
-      numbers: [123, 234]
-    },
-    {
-      pname: "mno",
-      numbers: [125,  237]
-    }
-  ]
-
-
-
-  rowSpanData = [2, 3, 2, 3, 1, 3, 1, 1, 3, 3]
-
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private caseRecordsService: CaseRecordsService,
+    private sidenavService: SidenavService
+  ) {
+    this.table = new TableData<any>([
+      { id: "contentId", name: "contentId" },
+      { id: "date", name: "date" },
+      { id: "question", name: "question" },
+      { id: "value", name: "value" },
+      { id: "section", name: "section" },
+      { id: "category", name: "category" },
+      { id: "annotation", name: "annotation" },
+    ], { defaultSortParams: ['date'], defaultSortDirs: ['desc'] });
   }
 
+  ngOnInit() {
+    this.table.nextObservable.subscribe(() => {
+      this.getData(this.filterList);
+    });
+    this.table.sortObservable.subscribe(() => {
+      this.getData(this.filterList);
+    });
+    this.table.previousObservable.subscribe(() => {
+      this.getData(this.filterList);
+    });
+    this.table.sizeObservable.subscribe(() => {
+      this.getData(this.filterList);
+    });
 
+    setTimeout(() => {
+      this.initData();
+    }, 0);
+  }
 
+  initData() {
+    this.table.dataSource = new MatMultiSortTableDataSource(
+      this.sort,
+    );
+    this.table.pageSize = 50;
+    this.getData(this.filterList);
+  }
+
+  onSectionSelectionChange() {
+    this.filterList = this.selectedSections.filter(element => element.selected).map(element => element.name);
+    if(this.filterList.length === 0){
+      // when no filters are selected the data source filter does not run, and we need to empty the table manually
+      this.table.data = [];
+      this.table.totalElements = 0;
+    }
+    else {
+      this.getData(this.filterList);
+    }
+  }
+
+  setTableData(data){
+    this.table.data = data;
+  }
+
+  getData(filterList: string[]) {
+    this.caseRecordsService.caseRecordChronologicalData$.subscribe({
+      next: value => {
+        let data = value;
+        if(filterList?.length>0){
+          data = value.filter((caseRecord)=> filterList.indexOf(caseRecord.section) != -1);
+        }
+        if(data && data.length){
+          this.caseRecordChronologicalData = data;
+          const res = this.caseRecordsService.list(
+            this.table.sortParams,
+            this.table.sortDirs,
+            this.table.pageIndex,
+            this.table.pageSize,
+            data
+          );
+          this.table.totalElements = res.totalElements;
+          this.table.pageIndex = res.page;
+          this.table.pageSize = res.pagesize;
+          this.table.data = res.users;
+      }
+    }})
+  }
+
+  onSelectRow(row) {
+    this.sidenavService.open();
+    this.selectedRow = row;
+    this.caseRecordsService.setSelectedRecord(row);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes['sections'].currentValue){
+      this.sections =changes['sections'].currentValue;
+    }
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.selectedSectionFormControl.patchValue(this.sections);
+      this.selectedSections = this.sections?.map((element) => ({name: element, selected: true}));
+    })
+  }
 }
-
-const originalData = [
-  {  name: 'Hydrogen', descriptions: ['row1', 'row2'] },
-  {  name: 'Helium',  descriptions: ['row1', 'row2'] },
-  {  name: 'Lithium',  descriptions: ['row1', 'row2'] },
-  {  name: 'Beryllium', descriptions: ['row1', 'row2'] },
-  {  name: 'Boron',  descriptions: ['row1', 'row2'] },
-  {  name: 'Carbon',  descriptions: ['row1', 'row2'] },
-  {  name: 'Nitrogen',  descriptions: ['row1', 'row2'] },
-  {  name: 'Oxygen',  descriptions: ['row1', 'row2'] },
-  {  name: 'Fluorine',  descriptions: ['row1', 'row2'] },
-  {  name: 'Neon',  descriptions: ['row1', 'row2'] },
-]
-
-const rowSpanData = [2, 3, 2, 3, 1, 3, 1, 1, 3, 3]
-
-const formattedData = [
-  {
-    "name": "Hydrogen",
-    "description": "row1"
-  },
-  {
-    "description": "row2"
-  },
-  {
-    "name": "Hydrogen",
-    "description": "row1"
-  },
-  {
-    "description": "row2"
-  },
-  {
-    "name": "Lithium",
-    "description": "row1"
-  },
-  {
-    "description": "row2"
-  },
-  {
-    "name": "Beryllium",
-    "description": "row1"
-  },
-  {
-    "description": "row2"
-  },
-  {
-    "name": "Boron",
-    "description": "row1"
-  },
-  {
-    "description": "row2"
-  },
-  {
-    "name": "Carbon",
-    "description": "row1"
-  },
-  {
-    "description": "row2"
-  },
-]
