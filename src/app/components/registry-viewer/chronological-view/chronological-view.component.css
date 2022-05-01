@@ -10,3 +10,14 @@ table {
   flex: 0 0 40%;
 }
 
+.mat-column-question {
+  padding-right: 1em;
+}
+
+.mat-column-date {
+  padding-right: 1em;
+}
+
+
+
+
