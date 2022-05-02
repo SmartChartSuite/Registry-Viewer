@@ -18,9 +18,7 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
 
   breakpoint: number;
   matCardContentHeight: number;
-  caseRecordChronologicalData$: Observable<ChronologicalCaseRecord[]>;
   isDefaultViewActive = true;
-  sections$: Observable<string[]>;
 
   constructor(private sidenavService: SidenavService,
               private caseRecordsService: CaseRecordsService,
@@ -45,8 +43,6 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
     this.caseRecordsService.getByCaseId(this.route.snapshot.paramMap.get('id')).subscribe();
-    this.caseRecordChronologicalData$ = this.caseRecordsService.caseRecordChronologicalData$;
-    this.sections$ = this.caseRecordsService.sections$;
   }
 
   ngAfterViewInit(): void {

@@ -1,7 +1,9 @@
 <mat-toolbar class="subject-header primary-extra-light">
-  <mat-toolbar-row><app-demographic-data></app-demographic-data>
+  <mat-toolbar-row>
+    <app-demographic-data></app-demographic-data>
   </mat-toolbar-row>
 </mat-toolbar>
+
 <mat-sidenav-container hasBackdrop="false">
 
   <mat-sidenav #resultViewerSidenav class="registry-viewer-sidenav" mode="side" position="end" disableClose closed>
@@ -12,32 +14,25 @@
 
     <div class="centered-content" style="margin-top: 2em; margin-bottom: 2em">
 
-      <mat-button-toggle-group >
-        <mat-button-toggle checked="isDefaultViewActive"  (click)="onViewSelected(true);">Summary View
+      <mat-button-toggle-group>
+
+        <mat-button-toggle checked="isDefaultViewActive" (click)="onViewSelected(true);">
+          Summary View
         </mat-button-toggle>
+
         <mat-button-toggle (click)="onViewSelected(false);">
           Chronological View
         </mat-button-toggle>
+
       </mat-button-toggle-group>
 
     </div>
 
     <div style="max-width: 85%; margin: auto">
-      <app-chronological-view
-        *ngIf="!isDefaultViewActive"
-        [caseRecordChronologicalData]="caseRecordChronologicalData$ | async"
-        [sections]="sections$ | async"
-      >
-      </app-chronological-view>
-
-      <app-test
-        *ngIf="!isDefaultViewActive"
-        [sections]="sections$ | async">
-      </app-test>
-
+      <app-chronological-view *ngIf="!isDefaultViewActive"></app-chronological-view>
       <app-summary-view *ngIf="isDefaultViewActive"></app-summary-view>
-
     </div>
+
   </mat-sidenav-content>
 
 </mat-sidenav-container>

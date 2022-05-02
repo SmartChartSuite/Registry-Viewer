@@ -1,52 +1,131 @@
-import {AfterViewInit, Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {SidenavService} from "../../../service/sidenav.service";
-import {MatSidenav} from "@angular/material/sidenav";
-import {ChronologicalCaseRecord} from "../../../model/chronological.case.record";
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort, MatSortable} from "@angular/material/sort";
-import {FormControl} from "@angular/forms";
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {MatMultiSort, MatMultiSortTableDataSource, TableData} from "ngx-mat-multi-sort";
 import {CaseRecordsService} from "../../../service/case-records.service";
+import {FormControl} from "@angular/forms";
+import {ChronologicalCaseRecord} from "../../../model/chronological.case.record";
+import {SidenavService} from "../../../service/sidenav.service";
+import {Subscription} from "rxjs";
+import {MultiSortTableService} from "../../../service/multi-sort-table.service";
 
-export class Record {
-  section: string;
-  category: string;
-  date: string;
-  value: string;
-}
 
 @Component({
   selector: 'app-chronological-view',
   templateUrl: './chronological-view.component.html',
   styleUrls: ['./chronological-view.component.css']
 })
+export class ChronologicalViewComponent implements OnInit, OnDestroy{
 
-export class ChronologicalViewComponent implements AfterViewInit, OnChanges {
-  @Input() caseRecordChronologicalData: ChronologicalCaseRecord[];
-  @Input() sections: string[];
+  /**
+   * The multi-sort table is not supported by google and is a 3rd party widget.
+   * The code for the multi-sort table is here: https://github.com/Maxl94/ngx-multi-sort-table
+   * This is the example provided by the developers how to use the code:
+   * https://stackblitz.com/edit/angular-vf7brq?file=src%2Fapp%2Ftable-sorting-example.html
+   * While I am skeptical about the reliability of the implementation, the users requested the feature and
+   * our team implemented it. The implementation could easily be reverted to using the Angular material table.
+   */
 
-  @ViewChild('resultViewerSidenav') public resultViewerSidenav: MatSidenav;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
-  displayedColumns = ['contentId', 'date', 'question', 'value', 'section', 'category', 'annotation'];
-  dataSource: MatTableDataSource<ChronologicalCaseRecord>;
+  @ViewChild(MatMultiSort) sort: MatMultiSort;
+  caseRecordsSubscription$: Subscription;
+  table: TableData<any>;
   selectedSectionFormControl = new FormControl();
   selectedSections: any;
   selectedRow: ChronologicalCaseRecord;
+  caseRecordChronologicalData: ChronologicalCaseRecord[];
+  filterList = [];
+  sections$: Subscription;
+  sections: string[];
 
   constructor(
+    private caseRecordsService: CaseRecordsService,
     private sidenavService: SidenavService,
-    private caseRecordsService: CaseRecordsService
+    private multiSortTableService: MultiSortTableService
   ) {
+    this.table = new TableData<any>([
+      { id: "contentId", name: "contentId" },
+      { id: "date", name: "date" },
+      { id: "question", name: "question" },
+      { id: "value", name: "value" },
+      { id: "section", name: "section" },
+      { id: "category", name: "category" },
+      { id: "annotation", name: "annotation" },
+    ], { defaultSortParams: ['date'], defaultSortDirs: ['desc'] });
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if(this.dataSource?.data && changes['caseRecordChronologicalData'].currentValue){
-      this.dataSource.data =changes['caseRecordChronologicalData'].currentValue;
+
+  initTableObservables(): void {
+    this.table.nextObservable.subscribe(() => {
+      this.getData(this.filterList);
+    });
+    this.table.sortObservable.subscribe(() => {
+      this.getData(this.filterList);
+    });
+    this.table.previousObservable.subscribe(() => {
+      this.getData(this.filterList);
+    });
+    this.table.sizeObservable.subscribe(() => {
+      this.getData(this.filterList);
+    });
+    setTimeout(() => {
+      this.initData();
+    }, 0);
+  }
+
+  ngOnInit() {
+    this.sections$ = this.caseRecordsService.sections$.subscribe(
+      value => {
+        this.sections = value;
+        this.selectedSectionFormControl.patchValue(this.sections);
+        this.selectedSections = this.sections?.map((element) => ({name: element, selected: true}));
+      });
+    this.initTableObservables();
+  }
+
+  initData() {
+    this.table.dataSource = new MatMultiSortTableDataSource(
+      this.sort,
+    );
+    this.table.pageSize = 50;
+    this.getData(this.filterList);
+  }
+
+  onSectionSelectionChange() {
+    this.filterList = this.selectedSections.filter(element => element.selected).map(element => element.name);
+    if(this.filterList.length === 0){
+      // when no filters are selected the data source filter does not run, and we need to empty the table manually
+      this.table.data = [];
+      this.table.totalElements = 0;
     }
-    if(changes['sections'].currentValue){
-      this.sections =changes['sections'].currentValue;
+    else {
+      this.getData(this.filterList);
     }
+  }
+
+  setTableData(data){
+    this.table.data = data;
+  }
+
+  getData(filterList: string[]) {
+    this.caseRecordsSubscription$ = this.caseRecordsService.caseRecordChronologicalData$.subscribe({
+      next: value => {
+        let data = value;
+        if(filterList?.length > 0) {
+          // the multi-sort table does not inherit the filters for the mat table, but filtering our data is quite trivial.
+          data = value.filter((caseRecord)=> filterList.indexOf(caseRecord.section) != -1);
+        }
+        if(data && data.length) {
+          this.caseRecordChronologicalData = data;
+          const res = this.multiSortTableService.list(
+            this.table.sortParams,
+            this.table.sortDirs,
+            this.table.pageIndex,
+            this.table.pageSize,
+            data
+          );
+          this.table.totalElements = res.totalElements;
+          this.table.pageIndex = res.page;
+          this.table.pageSize = res.pagesize;
+          this.table.data = res.tableData;
+      }
+    }});
   }
 
   onSelectRow(row) {
@@ -55,44 +134,8 @@ export class ChronologicalViewComponent implements AfterViewInit, OnChanges {
     this.caseRecordsService.setSelectedRecord(row);
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(()=>{
-      this.dataSource = new MatTableDataSource(this.caseRecordChronologicalData);
-      this.sort.sort(({ id: 'date', start: 'desc'}) as MatSortable);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.paginator.pageSize = 50;
-      this.dataSource.sort = this.sort;
-      this.dataSource.filterPredicate = this.getFilterPredicate();
-      this.selectedSectionFormControl.patchValue(this.sections);
-      this.selectedSections = this.sections?.map((element) => ({name: element, selected: true}));
-    })
+  ngOnDestroy(): void {
+    this.caseRecordsSubscription$.unsubscribe();
+    this.sections$.unsubscribe();
   }
-
-  private getFilterPredicate() {
-    return function (row: any, filters: string) {
-      let matchFilter: boolean = false;
-      const filterArray = filters.split(',');
-      filterArray.forEach((filter: string) => {
-          if(row.section.indexOf(filter) != -1){
-            matchFilter = true;
-          }
-        }
-      )
-      return matchFilter;
-    };
-  }
-
-  onSectionSelectionChange() {
-    const filterList = this.selectedSections.filter(element => element.selected).map(element => element.name);
-    if(filterList.length === 0){
-      // when no filters are selected the data source filter does not run, and we need to empty the table manually
-      this.dataSource.data = [];
-    }
-    else {
-      // else just set back the data source data to what it needs to be (in case emptied at any time before)
-      this.dataSource.data = this.caseRecordChronologicalData;
-    }
-    this.dataSource.filter = filterList.join(',');
-  }
-
 }

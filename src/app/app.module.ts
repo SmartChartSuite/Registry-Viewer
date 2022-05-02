@@ -22,7 +22,6 @@ import {RegistryViewerComponent} from './components/registry-viewer/registry-vie
 import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatListModule} from "@angular/material/list";
-import {TestComponent} from './components/test/test.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -59,7 +58,7 @@ import {DatePipe} from "@angular/common";
     AboutComponent,
     CaseExplorerComponent,
     RegistryViewerComponent,
-    TestComponent,
+    ChronologicalViewComponent,
     LabResultsComponent,
     DiagnosesComponent,
     TreatmentComponent,
