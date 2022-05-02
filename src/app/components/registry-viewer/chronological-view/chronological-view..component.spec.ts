@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ChronologicalViewComponent} from "./chronological-view.component";
 
-import { ChronologicalViewComponent } from './test.component';
 
 describe('TestComponent', () => {
   let component: ChronologicalViewComponent;
