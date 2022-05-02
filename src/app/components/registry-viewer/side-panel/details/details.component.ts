@@ -54,7 +54,7 @@ export class DetailsComponent implements OnInit {
         this.htmlString = '';
         const details = value?.details;
         for (const key in details) {
-          if(details[key] &&  this.ignoreProperties.indexOf(details[key]) === -1){
+          if(details[key] &&  this.ignoreProperties.indexOf(key) === -1){
             if(key === 'date' || key === 'startDate' || key === 'endDate'){
               // If we find dates we need to render them appropriately
               this.htmlString =
