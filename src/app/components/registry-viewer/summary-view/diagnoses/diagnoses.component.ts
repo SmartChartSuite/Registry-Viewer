@@ -1,9 +1,9 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {SidenavService} from "../../../../service/sidenav.service";
 import {MatDialog} from "@angular/material/dialog";
 import {openAnnotationDialog} from "../../add-record-dialog/add-record-dialog.component";
-import {filter} from "rxjs";
+import {filter, Subscription} from "rxjs";
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ChronologicalCaseRecord} from "../../../../model/chronological.case.record";
 import {animate, state, style, transition, trigger} from "@angular/animations";
@@ -35,7 +35,7 @@ export class Diagnosis {
     ]),
   ],
 })
-export class DiagnosesComponent implements OnInit {
+export class DiagnosesComponent implements OnInit, OnDestroy {
 
   @Input() matCardContentHeight: number;
 
@@ -53,6 +53,8 @@ export class DiagnosesComponent implements OnInit {
   dataSource: MatTableDataSource<ChronologicalCaseRecord>;
   innerTableDisplayColumns = ['date', 'question'];
   selectedRow: any;
+  selectedRowSubscription$: Subscription;
+  caseRecordSubscription$: Subscription;
 
   private extractCategories(data: any, key: string): string[]{
     let result : string[] = [];
@@ -86,20 +88,23 @@ export class DiagnosesComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource([]);
 
-    this.caseRecordsService.caseRecordChronologicalData$.subscribe({
+    this.caseRecordSubscription$ = this.caseRecordsService.caseRecordChronologicalData$.subscribe({
         next: value => {
           this.data = value;
-          if (this.data?.length > 0) {
-            this.dataSource = new MatTableDataSource(this.data);
-            this.data = value?.filter(element => element.section === 'Diagnoses');
-            this.data = this.data?.sort((a, b) => (a.date < b.date) ? 1 : -1);
-            const categories = this.extractCategories(this.data, 'category');
-            const categorised = this.groupByCategories(categories, this.data);
-            this.dataSource.data = categorised;
-          }
+          this.dataSource = new MatTableDataSource(this.data);
+          this.data = value?.filter(element => element.section === 'Diagnoses');
+          this.data = this.data?.sort((a, b) => (a.date < b.date) ? 1 : -1);
+          const categories = this.extractCategories(this.data, 'category');
+          const categorised = this.groupByCategories(categories, this.data);
+          this.dataSource.data = categorised;
         }
       }
-    )
+    );
+
+    this.selectedRowSubscription$ = this.caseRecordsService.selectedCaseRecord$.subscribe({
+      next: value => this.selectedRow = value
+    });
+
   }
 
   onRowClick(row: any) {
@@ -114,5 +119,10 @@ export class DiagnosesComponent implements OnInit {
       .subscribe(
         val=> console.log(val)
       )
+  }
+
+  ngOnDestroy(): void {
+    this.selectedRowSubscription$.unsubscribe();
+    this.caseRecordSubscription$.unsubscribe();
   }
 }
