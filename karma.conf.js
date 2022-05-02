@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/tr-state-syphilis-registry-ui'),
+      dir: require('path').join(__dirname, './coverage/SMART-PACER-Registry-Viewer'),
       subdir: '.',
       reporters: [
         { type: 'html' },

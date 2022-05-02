@@ -7,7 +7,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'tr-state-syphilis-registry-ui';
+  title = 'SMART-PACER-Registry-Viewer';
   private router: Router
   onTitleClick() {
     this.router.navigate(['/']);

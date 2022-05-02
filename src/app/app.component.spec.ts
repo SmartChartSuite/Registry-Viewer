@@ -23,13 +23,13 @@ describe('AppComponent', () => {
   it(`should have as title 'tr-state-syphilis-registry-ui'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('tr-state-syphilis-registry-ui');
+    expect(app.title).toEqual('SMART-PACER-Registry-Viewer');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('tr-state-syphilis-registry-ui app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('SMART-PACER-Registry-Viewer app is running!');
   });
 });
