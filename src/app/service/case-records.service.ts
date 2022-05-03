@@ -71,6 +71,7 @@ export class CaseRecordsService {
               state: element.state,
               status: element.status,
               street: element.street,
+              city: element.city,
               zip: element.zip,
               initialReportDate: element.initialReportDate
             };

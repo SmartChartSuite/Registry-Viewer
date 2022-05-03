@@ -10,6 +10,8 @@
       <ng-container matColumnDef="category">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
+          <mat-icon *ngIf="row.expanded">expand_less</mat-icon>
+          <mat-icon *ngIf="!row.expanded">expand_more</mat-icon>
           <b>{{row.category}} ({{row.count}})</b>
         </td>
       </ng-container>

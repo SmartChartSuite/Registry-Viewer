@@ -23,8 +23,6 @@ export class DetailsComponent implements OnInit {
 
   htmlString: string;
 
-  sanitizedHtml: any;
-
   query: string;
 
   ignoreProperties: string[] = ['query', 'tableDisplayText', 'type'];

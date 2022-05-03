@@ -12,6 +12,9 @@
   <div class="demographics">
     <div *ngIf="demographicsData?.phone"> {{demographicsData?.phone}} </div>
     <div> {{demographicsData?.street}} </div>
-    <div> {{demographicsData?.state}} <span *ngIf="demographicsData?.zip">,  {{demographicsData?.zip}}</span></div>
+    <div> {{demographicsData?.city}} {{demographicsData?.state}}
+      <span *ngIf="demographicsData?.zip">,</span>
+      {{demographicsData?.zip}}
+    </div>
   </div>
 </mat-toolbar-row>

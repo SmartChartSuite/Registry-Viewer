@@ -1,21 +1,20 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {SidenavService} from "../../../../service/sidenav.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {Observable} from "rxjs";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-flag',
   templateUrl: './flag.component.html',
   styleUrls: ['./flag.component.css']
 })
-export class FlagComponent implements OnInit {
+export class FlagComponent implements OnInit, OnDestroy {
 
-  flagChecked: boolean;
-  selectedEntry$: Observable<any>;
   selectedCaseRecord: any;
+  selectedCaseRecordSubscription$: Subscription;
 
   constructor(
     private caseRecordsService: CaseRecordsService,
@@ -25,7 +24,7 @@ export class FlagComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.caseRecordsService.selectedCaseRecord$.subscribe(
+    this.selectedCaseRecordSubscription$ = this.caseRecordsService.selectedCaseRecord$.subscribe(
       {next: value => this.selectedCaseRecord = value}
     );
   }
@@ -43,5 +42,9 @@ export class FlagComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.selectedCaseRecordSubscription$.unsubscribe();
   }
 }

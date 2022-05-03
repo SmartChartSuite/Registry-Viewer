@@ -8,7 +8,10 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
   title = 'SMART-PACER-Registry-Viewer';
-  private router: Router
+  constructor(
+    private router: Router,
+  ) {
+  }
   onTitleClick() {
     this.router.navigate(['/']);
   }
