@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {SidenavService} from "../../../../service/sidenav.service";
@@ -23,6 +23,8 @@ export class AnnotationsComponent implements OnInit {
   selectedCaseRecordSubscription$: Subscription;
   submitted = false;
 
+  @ViewChild('formDirective') formDirective: any;
+
   constructor(
     private caseRecordsService: CaseRecordsService,
     private route: ActivatedRoute,
@@ -32,7 +34,12 @@ export class AnnotationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedCaseRecordSubscription$ = this.caseRecordsService.selectedCaseRecord$.subscribe(
-      {next: value => {this.selectedCaseRecord = value; this.annotationList = this.selectedCaseRecord?.annotation}}
+      { next: value => {
+        this.selectedCaseRecord = value;
+        this.annotationList = this.selectedCaseRecord?.annotation;
+        this.formDirective?.resetForm();
+        this.form?.reset();
+        this.submitted = false;}}
     );
   }
 
@@ -72,7 +79,6 @@ export class AnnotationsComponent implements OnInit {
     if(this.form.valid){
       this.saveAnnotation(this.form.controls['annotation'].value);
     }
-
   }
 
   onCancelAddAnnotation() {

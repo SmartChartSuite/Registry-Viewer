@@ -100,7 +100,7 @@ export class SectionComponent implements OnInit, OnDestroy {
   }
 
   onAddDiagnose(): void {
-    openAnnotationDialog(this.dialog, {category: "One", description: "Sample annotation text"})
+    openAnnotationDialog(this.dialog, {section: this.section, description: "Sample annotation text"})
       .pipe(filter(val => !!val))
       .subscribe(
         val=> console.log(val)
@@ -129,7 +129,7 @@ export class SectionComponent implements OnInit, OnDestroy {
       return "Add Record";
     }
     else {
-      return section;
+      return "Add " + section;
     }
   }
 }

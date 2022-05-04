@@ -6,7 +6,7 @@
 <div *ngIf="isAddAnnotationInputVisible">
 
   <div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm" >
       <mat-form-field appearance="outline" [style.width.%]=100 (submit)="onSubmit()">
         <mat-label>Annotation Text</mat-label>
         <textarea rows="10" matInput placeholeder="Annotation Text" formControlName="annotation"

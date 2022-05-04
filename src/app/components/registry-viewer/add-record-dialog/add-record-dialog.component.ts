@@ -18,6 +18,7 @@ export class AddRecordDialogComponent implements OnInit {
   columnsToDisplay = ['flag', 'updated'];
   isAddAnnotationFormVisible = true;
   isExpandAllBtnVisible = true;
+  dialogTitle: string;
 
   constructor(private formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) private annotationData: any,
@@ -34,36 +35,19 @@ export class AddRecordDialogComponent implements OnInit {
     this.dialogRef.close(this.form.value);
   }
 
-  expandAll() {
-    this.dataSource.forEach((annotation: Annotation) => annotation.expanded = true);
-    this.isExpandAllBtnVisible = false;
-  }
-
-  collapseAll() {
-    this.dataSource.forEach((annotation: Annotation) => annotation.expanded = false);
-    this.isExpandAllBtnVisible = true;
-  }
 }
 
 
-export function openAnnotationDialog(dialog: MatDialog, annotationData: any) {
+export function openAnnotationDialog(dialog: MatDialog, data: any) {
   const config = new MatDialogConfig();
-
+  console.log(data)
   config.autoFocus = true;
-  config.width = "40em"
+  config.width = "40em";
 
   config.data = {
-    ...annotationData
+    ...data
   }
   const dialogRef = dialog.open(AddRecordDialogComponent, config);
 
   return dialogRef.afterClosed();
-}
-
-export interface Annotation {
-  flag: string;
-  position: number;
-  updated: string;
-  textValue: string;
-  expanded: boolean
 }
