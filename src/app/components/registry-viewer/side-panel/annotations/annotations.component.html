@@ -6,20 +6,24 @@
 <div *ngIf="isAddAnnotationInputVisible">
 
   <div>
-    <mat-form-field appearance="outline" [style.width.%]=100>
-      <mat-label>Annotation Text</mat-label>
-      <textarea rows="10" matInput placeholeder="Annotation Text"></textarea>
-    </mat-form-field>
-  </div>
-
-  <div align="right">
-    <button mat-raised-button (click)="isAddAnnotationInputVisible=false">Cancel</button>
-    <span style="margin-left: 1em">
-      <button mat-raised-button mat-raised-button color="primary">
-        <mat-icon matTooltip="Save annotation">save</mat-icon>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" [style.width.%]=100 (submit)="onSubmit()">
+        <mat-label>Annotation Text</mat-label>
+        <textarea rows="10" matInput placeholeder="Annotation Text" formControlName="annotation"
+                  [ngClass]="{'error': submitted && form.controls['annotation'].errors}"></textarea>
+      </mat-form-field>
+      <div class="invalid-feedback" *ngIf="submitted && form.controls['annotation'].errors">
+        Please enter annotation text
+      </div>
+      <div align="right">
+        <button mat-raised-button (click)="onCancelAddAnnotation()">Cancel</button>
+        <span style="margin-left: 1em">
+      <button mat-raised-button mat-raised-button color="primary" type="submit">
         Save
       </button>
     </span>
+      </div>
+    </form>
   </div>
 
 </div>
@@ -27,7 +31,7 @@
 <div *ngFor="let annotation of annotationList; index as i">
   <hr/>
   <div style="margin-top: 1em; margin-bottom: 0.5em">
-    {{annotation.updated | date:'mediumDate'}}
+    {{annotation.date | date:'mediumDate'}}<span style="margin-left: 2em">author: {{annotation.updatedBy}} </span>
   </div>
-  <div>{{annotation.textValue}}</div>
+  <div>{{annotation.text}}</div>
 </div>

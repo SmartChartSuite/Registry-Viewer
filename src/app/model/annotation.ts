@@ -1,7 +1,8 @@
 export class Annotation {
   //Remove unused keys from the class
-  position: number;
-  updated: string;
-  textValue: string;
-  expanded: boolean
+  annotationId: number;
+  date: string;
+  text: string;
+  expanded: boolean;
+  updatedBy: string;
 }

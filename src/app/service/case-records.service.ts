@@ -147,16 +147,18 @@ export class CaseRecordsService {
       return annotationList;
     }
     else {
-      annotationList = element.annotation.map((element, i) => {
-        const annotation :Annotation = {
+      annotationList = element.annotation.map((element) => {
+        return {
           // TODO make sure the properties sent from the API match the key values we are using here.
           // We also want to sort the annotations (assuming by date).
-          position: i,
-          updated: element?.updated,
-          textValue: element.textValue,
-          expanded: true
+          annotationId: element.annotationId,
+          date: element?.date,
+          text: element.text,
+          expanded: true,
+          updatedBy: 'John Doe'
         }
       })
+      annotationList = annotationList?.sort((a, b) => (a.date < b.date) ? 1 : -1);
       return annotationList;
     }
 

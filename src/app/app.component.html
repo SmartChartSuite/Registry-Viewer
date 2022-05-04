@@ -4,19 +4,14 @@
     <h1 (click)="onTitleClick();" style="cursor: pointer">
     TR State Syphilis Registry</h1>
   </span>
-  <a mat-button [routerLink]="'/'">
-    <mat-icon>search</mat-icon>
-    Search
-  </a>
 
   <span class="menu-spacer"></span>
 
-  <a mat-button [routerLink]="'/about'">
-    <mat-icon>info</mat-icon>
-    About
-  </a>
+  <button mat-raised-button color="accent" [routerLink]="'/'">
+    Search
+  </button>
 
-  <button mat-raised-button color="accent" [routerLink]="'/login'">
+  <button mat-button [routerLink]="'/login'">
     <mat-icon>account_circle</mat-icon>
     Login
   </button>
