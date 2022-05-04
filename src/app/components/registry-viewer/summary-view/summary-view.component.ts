@@ -9,6 +9,8 @@ export class SummaryViewComponent implements OnInit {
 
   breakpoint: number;
   matCardContentHeight: number;
+  sectionsList = ['Lab Results', 'Diagnoses', 'Treatment', 'Other Medical History'];
+
   constructor() {
   }
 

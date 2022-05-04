@@ -8,25 +8,10 @@ import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ChronologicalCaseRecord} from "../../../../model/chronological.case.record";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
-export class Group {
-  level = 0;
-  expanded = false;
-  totalCounts = 0;
-}
-
-export class Diagnosis {
-  name: string = '';
-  date: string = '';
-  condition: string = '';
-  expanded: boolean;
-}
-
-// This is the example we follow https://stackblitz.com/edit/angular-material-table-row-grouping-expand-sort
-
 @Component({
-  selector: 'app-diagnoses',
-  templateUrl: './diagnoses.component.html',
-  styleUrls: ['./diagnoses.component.css', '../../registry-viewer.component.css'],
+  selector: 'app-section',
+  templateUrl: './section.component.html',
+  styleUrls: ['./section.component.css', '../../registry-viewer.component.css'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -35,9 +20,10 @@ export class Diagnosis {
     ]),
   ],
 })
-export class DiagnosesComponent implements OnInit, OnDestroy {
+export class SectionComponent implements OnInit, OnDestroy {
 
   @Input() matCardContentHeight: number;
+  @Input() section: string;
 
   panelOpenState = false;
 
@@ -51,7 +37,7 @@ export class DiagnosesComponent implements OnInit, OnDestroy {
   columnsToDisplay = ['category'];
   expandedRow: any | null;
   dataSource: MatTableDataSource<ChronologicalCaseRecord>;
-  innerTableDisplayColumns = ['date', 'question'];
+  innerTableDisplayColumns = ['date', 'question', 'annotation'];
   selectedRow: any;
   selectedRowSubscription$: Subscription;
   caseRecordSubscription$: Subscription;
@@ -92,7 +78,7 @@ export class DiagnosesComponent implements OnInit, OnDestroy {
         next: value => {
           this.data = value;
           this.dataSource = new MatTableDataSource(this.data);
-          this.data = value?.filter(element => element.section === 'Diagnoses');
+          this.data = value?.filter(element => element.section === this.section);
           this.data = this.data?.sort((a, b) => (a.date < b.date) ? 1 : -1);
           const categories = this.extractCategories(this.data, 'category');
           const categorised = this.groupByCategories(categories, this.data);
@@ -124,5 +110,26 @@ export class DiagnosesComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.selectedRowSubscription$.unsubscribe();
     this.caseRecordSubscription$.unsubscribe();
+  }
+
+  getSectionName(section: string): string {
+    if(section === "Diagnoses"){
+      return "Diagnosis"
+    }
+    else {
+      return section;
+    }
+  }
+
+  getAddButtonName(section: string): string {
+    if(section === "Diagnoses"){
+      return " Add Diagnosis"
+    }
+    else if (section === "Other Medical History") {
+      return "Add Record";
+    }
+    else {
+      return section;
+    }
   }
 }

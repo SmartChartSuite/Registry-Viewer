@@ -28,10 +28,6 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSelectModule} from "@angular/material/select";
-import { LabResultsComponent } from './components/registry-viewer/summary-view/lab-results/lab-results.component';
-import { DiagnosesComponent } from './components/registry-viewer/summary-view/diagnoses/diagnoses.component';
-import { TreatmentComponent } from './components/registry-viewer/summary-view/treatment/treatment.component';
-import { OtherHistoryComponent } from './components/registry-viewer/summary-view/other-history/other-history.component';
 import { DemographicDataComponent } from './components/registry-viewer/demographic-data/demographic-data.component';
 import { SummaryViewComponent } from './components/registry-viewer/summary-view/summary-view.component';
 import { ChronologicalViewComponent } from './components/registry-viewer/chronological-view/chronological-view.component';
@@ -49,6 +45,7 @@ import {AddRecordDialogComponent} from './components/registry-viewer/add-record-
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {DatePipe} from "@angular/common";
+import { SectionComponent } from './components/registry-viewer/summary-view/section/section.component';
 
 
 @NgModule({
@@ -59,10 +56,6 @@ import {DatePipe} from "@angular/common";
     CaseExplorerComponent,
     RegistryViewerComponent,
     ChronologicalViewComponent,
-    LabResultsComponent,
-    DiagnosesComponent,
-    TreatmentComponent,
-    OtherHistoryComponent,
     DemographicDataComponent,
     SummaryViewComponent,
     ChronologicalViewComponent,
@@ -71,6 +64,7 @@ import {DatePipe} from "@angular/common";
     FlagComponent,
     AnnotationsComponent,
     AddRecordDialogComponent,
+    SectionComponent,
   ],
     imports: [
         BrowserModule,

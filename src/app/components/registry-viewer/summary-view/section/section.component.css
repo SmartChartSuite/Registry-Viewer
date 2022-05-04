@@ -23,10 +23,6 @@ tr.case-record-row:not(.example-expanded-row):active {
   display: flex;
 }
 
-.case-record-description {
-  padding: 16px;
-}
-
 .case-record-description-attribution {
   opacity: 0.5;
 }
@@ -55,4 +51,3 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
 .mat-icon {
   vertical-align: middle;
 }
-
