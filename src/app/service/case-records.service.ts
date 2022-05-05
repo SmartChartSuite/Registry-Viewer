@@ -117,14 +117,16 @@ export class CaseRecordsService {
         caseRecordChronologicalData.contentId = element.contentId;
         caseRecordChronologicalData.section = element.section;
         caseRecordChronologicalData.category = element.category
-        caseRecordChronologicalData.date = element.date;
+      //TODO we need to remove the code for parsing the date when the API responds with a
+        caseRecordChronologicalData.date = Date.parse(element.date).toString();
         caseRecordChronologicalData.value = element.details[0]?.tableDisplayText;
         //caseRecordChronologicalData.value = element.details[0]?.tableDisplayText || element?.derivedValue?.value;
         caseRecordChronologicalData.question = element.question;
         caseRecordChronologicalData.flag = element.flag;
-        caseRecordChronologicalData.details = element.details[0];
-        caseRecordChronologicalData.details.query = element.derivedValue.value;
+        caseRecordChronologicalData.details = element.details[0] || {};
+        caseRecordChronologicalData.details.query = element.derivedValue?.value;
         caseRecordChronologicalData.annotation = this.getAnnotation(element);
+        console.log(caseRecordChronologicalData);
         return caseRecordChronologicalData;
       }
     );

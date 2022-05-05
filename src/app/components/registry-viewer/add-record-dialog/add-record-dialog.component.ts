@@ -14,10 +14,7 @@ export class AddRecordDialogComponent implements OnInit {
     flag: [this.annotationData.flag, Validators.required],
   });
 
-  dataSource = [];
-  columnsToDisplay = ['flag', 'updated'];
   isAddAnnotationFormVisible = true;
-  isExpandAllBtnVisible = true;
   dialogTitle: string;
 
   constructor(private formBuilder: FormBuilder,
@@ -25,7 +22,21 @@ export class AddRecordDialogComponent implements OnInit {
               private dialogRef: MatDialogRef<any>) { }
 
   ngOnInit(): void {
+    this.setDialogTitle(this.annotationData?.section);
   }
+
+  setDialogTitle(section: string): void{
+    if(section === "Diagnoses"){
+      this.dialogTitle = "Add Diagnosis";
+    }
+    else if(section === "Other Medical History" || !section){
+      this.dialogTitle = "Add Record";
+    }
+    else {
+      this.dialogTitle = "Add " +  section;
+    }
+  }
+
 
   close() {
     this.dialogRef.close();
@@ -40,7 +51,6 @@ export class AddRecordDialogComponent implements OnInit {
 
 export function openAnnotationDialog(dialog: MatDialog, data: any) {
   const config = new MatDialogConfig();
-  console.log(data)
   config.autoFocus = true;
   config.width = "40em";
 
