@@ -81,7 +81,14 @@ export class SectionComponent implements OnInit, OnDestroy {
           this.data = value?.filter(element => element.section === this.section);
           this.data = this.data?.sort((a, b) => (a.date < b.date) ? 1 : -1);
           const categories = this.extractCategories(this.data, 'category');
-          const categorised = this.groupByCategories(categories, this.data);
+
+          // create groups and sort them alphabetically by category
+          const categorised = this.groupByCategories(categories, this.data)
+            .sort(function(a, b) {
+              const textA = a.category.toUpperCase();
+              const textB = b.category.toUpperCase();
+              return (textA < textB) ? -1 : (textA < textB) ? 1 : 0;
+            });
           this.dataSource.data = categorised;
         }
       }
