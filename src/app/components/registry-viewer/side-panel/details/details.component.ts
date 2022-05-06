@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SidenavService} from "../../../../service/sidenav.service";
+import {DrawerService} from "../../../../service/drawer.service";
 import {Observable} from "rxjs";
 import { DatePipe } from '@angular/common';
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
@@ -12,7 +12,7 @@ import {CaseRecordsService} from "../../../../service/case-records.service";
 })
 export class DetailsComponent implements OnInit {
 
-  constructor (private sidenavService: SidenavService,
+  constructor (private sidenavService: DrawerService,
                private datePipe: DatePipe,
                private sanitized: DomSanitizer,
                private caseRecordsService: CaseRecordsService) { }

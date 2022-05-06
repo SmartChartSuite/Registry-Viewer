@@ -4,13 +4,13 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
-<mat-sidenav-container hasBackdrop="false">
+<mat-drawer-container hasBackdrop="false">
 
-  <mat-sidenav #resultViewerSidenav class="registry-viewer-sidenav" mode="side" position="end" disableClose closed>
+  <mat-drawer #resultViewerSidenav class="registry-viewer-drawer" mode="side" position="end" disableClose closed>
     <app-side-panel></app-side-panel>
-  </mat-sidenav>
+  </mat-drawer>
 
-  <mat-sidenav-content>
+  <mat-drawer-content>
 
     <div class="centered-content" style="margin-top: 2em; margin-bottom: 2em">
 
@@ -33,6 +33,6 @@
       <app-summary-view *ngIf="isDefaultViewActive"></app-summary-view>
     </div>
 
-  </mat-sidenav-content>
+  </mat-drawer-content>
 
-</mat-sidenav-container>
+</mat-drawer-container>

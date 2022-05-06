@@ -3,7 +3,7 @@ import {MatMultiSort, MatMultiSortTableDataSource, TableData} from "ngx-mat-mult
 import {CaseRecordsService} from "../../../service/case-records.service";
 import {FormControl} from "@angular/forms";
 import {ChronologicalCaseRecord} from "../../../model/chronological.case.record";
-import {SidenavService} from "../../../service/sidenav.service";
+import {DrawerService} from "../../../service/drawer.service";
 import {Subscription} from "rxjs";
 import {MultiSortTableService} from "../../../service/multi-sort-table.service";
 
@@ -37,7 +37,7 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
 
   constructor(
     private caseRecordsService: CaseRecordsService,
-    private sidenavService: SidenavService,
+    private sidenavService: DrawerService,
     private multiSortTableService: MultiSortTableService
   ) {
 

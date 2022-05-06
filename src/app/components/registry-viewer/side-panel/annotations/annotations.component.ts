@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
-import {SidenavService} from "../../../../service/sidenav.service";
+import {DrawerService} from "../../../../service/drawer.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {Subscription} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -28,7 +28,7 @@ export class AnnotationsComponent implements OnInit {
   constructor(
     private caseRecordsService: CaseRecordsService,
     private route: ActivatedRoute,
-    private sidenavService: SidenavService,
+    private sidenavService: DrawerService,
     private utilsService: UtilsService
   ) { }
 

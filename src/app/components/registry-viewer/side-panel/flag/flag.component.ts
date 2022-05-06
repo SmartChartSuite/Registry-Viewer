@@ -2,7 +2,7 @@ import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/c
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
-import {SidenavService} from "../../../../service/sidenav.service";
+import {DrawerService} from "../../../../service/drawer.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {Subscription} from "rxjs";
 
@@ -19,7 +19,7 @@ export class FlagComponent implements OnInit, OnDestroy {
   constructor(
     private caseRecordsService: CaseRecordsService,
     private route: ActivatedRoute,
-    private sidenavService: SidenavService,
+    private sidenavService: DrawerService,
     private utilsService: UtilsService
   ) { }
 

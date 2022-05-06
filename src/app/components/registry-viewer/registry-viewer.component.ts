@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
-import {SidenavService} from "../../service/sidenav.service";
+import {DrawerService} from "../../service/drawer.service";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 
@@ -18,7 +18,7 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   matCardContentHeight: number;
   isDefaultViewActive = true;
 
-  constructor(private sidenavService: SidenavService,
+  constructor(private sidenavService: DrawerService,
               private caseRecordsService: CaseRecordsService,
               private route: ActivatedRoute,) {
   }
@@ -44,7 +44,7 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.sidenavService.setSidenav(this.resultViewerSidenav);
+    this.sidenavService.setDrawer(this.resultViewerSidenav);
   }
 
   onViewSelected(isDefaultView: boolean) {

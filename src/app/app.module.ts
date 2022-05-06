@@ -38,7 +38,7 @@ import { DetailsComponent } from './components/registry-viewer/side-panel/detail
 import { FlagComponent } from './components/registry-viewer/side-panel/flag/flag.component';
 import { AnnotationsComponent } from './components/registry-viewer/side-panel/annotations/annotations.component';
 import {MatRadioModule} from "@angular/material/radio";
-import {SidenavService} from "./service/sidenav.service";
+import {DrawerService} from "./service/drawer.service";
 import {MatMultiSortModule} from "ngx-mat-multi-sort";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AddRecordDialogComponent} from './components/registry-viewer/add-record-dialog/add-record-dialog.component';
@@ -99,7 +99,7 @@ import { SectionComponent } from './components/registry-viewer/summary-view/sect
         MatButtonToggleModule,
         MatSnackBarModule
     ],
-  providers: [SidenavService, DatePipe],
+  providers: [DrawerService, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

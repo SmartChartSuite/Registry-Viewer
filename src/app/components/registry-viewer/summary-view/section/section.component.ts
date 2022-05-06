@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {SidenavService} from "../../../../service/sidenav.service";
+import {DrawerService} from "../../../../service/drawer.service";
 import {MatDialog} from "@angular/material/dialog";
 import {openAnnotationDialog} from "../../add-record-dialog/add-record-dialog.component";
 import {filter, Subscription} from "rxjs";
@@ -30,7 +30,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   constructor(
     private caseRecordsService: CaseRecordsService,
-    private sidenavService: SidenavService,
+    private sidenavService: DrawerService,
     private dialog: MatDialog,
     private route: ActivatedRoute
   ) { }

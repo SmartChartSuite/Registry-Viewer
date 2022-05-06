@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {MatAccordion} from "@angular/material/expansion";
-import {SidenavService} from "../../../service/sidenav.service";
+import {DrawerService} from "../../../service/drawer.service";
 
 @Component({
   selector: 'app-side-panel',
@@ -13,7 +13,7 @@ export class SidePanelComponent {
   allPanelsExpanded = true;
 
   constructor(
-    private sidenavService: SidenavService
+    private sidenavService: DrawerService
   ) { }
 
   onClosePanel() {
