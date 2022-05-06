@@ -6,10 +6,12 @@ import {CaseRecord} from "../model/case.record";
 import {environment} from "../../environments/environment";
 import {ChronologicalCaseRecord} from "../model/chronological.case.record";
 import {Annotation} from "../model/annotation";
+import {Question} from "../model/question";
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class CaseRecordsService {
 
   caseRecordChronologicalData:  ChronologicalCaseRecord [] = [];
@@ -31,11 +33,13 @@ export class CaseRecordsService {
     this.selectedCaseRecord$.next(selectedCaseRecord);
   }
 
-  updateCaseRecord(caseId: number, contentId: number, keyValue: any) : Observable<any>{
+  updateCaseRecord(keyValue: any, caseId: number, contentId?: number) : Observable<any>{
 
-    const params = new HttpParams()
-      .set("caseId", caseId)
-      .set("contentId", contentId);
+    let params = new HttpParams().set("caseId", caseId);
+
+    if(contentId){
+      params = new HttpParams().set("caseId", caseId).set("contentId", contentId);
+    }
 
     return this.http.put(environment.apiUrl + 'case-record', keyValue, {params}).pipe(
       map((result: any) => {
@@ -110,6 +114,25 @@ export class CaseRecordsService {
     );
   };
 
+  getQuestions (section: string): Observable<Question[]> {
+
+    const httpParams = new HttpParams().set('section', section);
+    const options = { params: httpParams };
+
+    return this.http.get(environment.apiUrl + 'questions',  options).pipe(
+      map((result: any) => {
+          return result;
+        }
+      ),
+    );
+  };
+
+
+  /**
+   * Helper functions start here
+   */
+
+
   private createCaseRecordChronologicalData(result: any): ChronologicalCaseRecord []{
     const mapped = result.contents.map((element: any)=> {
       //TODO maybe we should implement a constructor and encapsulate this code
@@ -126,7 +149,6 @@ export class CaseRecordsService {
         caseRecordChronologicalData.details = element.details[0] || {};
         caseRecordChronologicalData.details.query = element.derivedValue?.value;
         caseRecordChronologicalData.annotation = this.getAnnotation(element);
-        console.log(caseRecordChronologicalData);
         return caseRecordChronologicalData;
       }
     );

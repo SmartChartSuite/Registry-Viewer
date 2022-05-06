@@ -73,3 +73,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 .mat-snack-bar-container {
   margin-top: 10em !important;
 }
+
+.error:focus,
+.error {
+  border-color: #F44336 !important;
+  color: #F44336 !important;
+}
+
+.invalid-feedback {
+  color: #F44336;
+}

@@ -7,32 +7,43 @@
 <mat-dialog-content>
 
   <div style="margin-top: 1em" *ngIf="isAddAnnotationFormVisible" [formGroup]="form">
+
     <div>
+      <mat-error *ngIf="submitted && form.controls['question'].errors">
+        Please select a question
+      </mat-error>
       <mat-form-field appearance="outline" [style.width.%]=100>
         <mat-label>Select Question</mat-label>
-        <mat-select formControlName="flag" cdkFocusInitial>
-          <mat-option value="Question One">One</mat-option>
-          <mat-option value="Question Two">Two</mat-option>
-          <mat-option value="Question Three">Three</mat-option>
+        <mat-select formControlName="question" cdkFocusInitial formControlName="question">
+          <mat-option *ngFor="let question of questions" [value]="question">{{question.text}}</mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
-    <div>
-      <mat-form-field appearance="outline" [style.width.%]=100>
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+
     </div>
 
     <div>
+      <mat-error *ngIf="submitted && form.controls['date'].errors">
+        Please select or enter a date
+      </mat-error>
+      <mat-form-field appearance="outline" [style.width.%]=100>
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+
+    <div>
+      <mat-error *ngIf="submitted && form.controls['date'].errors">
+        Please enter text
+      </mat-error>
       <mat-form-field appearance="outline" [style.width.%]=100>
         <mat-label>Enter Text</mat-label>
         <textarea rows="10" cols="50"
                   matInput
-                  formControlName="textValue">
-            </textarea>
+                  formControlName="value">
+        </textarea>
       </mat-form-field>
     </div>
 

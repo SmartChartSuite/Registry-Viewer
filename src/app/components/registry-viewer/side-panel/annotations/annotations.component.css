@@ -1,9 +1,0 @@
-.error:focus,
-.error {
-  border-color: #F44336 !important;
-  color: #F44336 !important;
-}
-
-.invalid-feedback {
-  color: #F44336 ;
-}

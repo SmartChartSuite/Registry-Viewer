@@ -1,6 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
+import {Question} from "../../../model/question";
+import {CaseRecordsService} from "../../../service/case-records.service";
+import {UtilsService} from "../../../service/utils.service";
+
 
 @Component({
   selector: 'app-add-record-dialog',
@@ -10,19 +14,30 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angula
 export class AddRecordDialogComponent implements OnInit {
 
   form = this.formBuilder.group({
-    textValue: [this.annotationData.textValue, Validators.required],
-    flag: [this.annotationData.flag, Validators.required],
+    value: ['', Validators.required],
+    date: ['', Validators.required],
+    question: ['', Validators.required]
   });
 
   isAddAnnotationFormVisible = true;
   dialogTitle: string;
+  questions: Question[];
+  submitted = false;
 
-  constructor(private formBuilder: FormBuilder,
-              @Inject(MAT_DIALOG_DATA) private annotationData: any,
-              private dialogRef: MatDialogRef<any>) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<any>,
+    private caseRecordsService: CaseRecordsService,
+    private utilsService: UtilsService
+  ) { }
 
   ngOnInit(): void {
-    this.setDialogTitle(this.annotationData?.section);
+    this.setDialogTitle(this.data?.section);
+    this.caseRecordsService.getQuestions(this.data?.section).subscribe({
+      next: value => this.questions = value,
+      error: err => console.error(err)
+    })
   }
 
   setDialogTitle(section: string): void{
@@ -37,17 +52,43 @@ export class AddRecordDialogComponent implements OnInit {
     }
   }
 
-
   close() {
     this.dialogRef.close();
+    this.form.reset();
+  }
+
+  updateCaseRecord(keyValue: any): void{
+    const caseId =  this.data.caseId;
+    this.caseRecordsService.updateCaseRecord(keyValue, caseId).subscribe({
+      next: value => {
+        this.submitted = false; this.utilsService.showSuccessMessage("Record updated successfully")
+      },
+      error: err => this.utilsService.showErrorMessage("Server Error. Unable to update record."),
+    })
   }
 
   save() {
-    this.dialogRef.close(this.form.value);
+    this.submitted = true;
+    this.form.markAllAsTouched();
+
+    //TODO we may need to change this to a specific type and add a class to the model
+    if(this.form.valid){
+      let keyValueData = {
+        manualCaseData:
+          [
+            {
+              conceptId: this.form.value.question.conceptId,
+              date: this.form.value.date,
+              value: this.form.value.value
+            }
+          ]
+      };
+      this.updateCaseRecord(keyValueData);
+      this.close();
+    }
   }
 
 }
-
 
 export function openAnnotationDialog(dialog: MatDialog, data: any) {
   const config = new MatDialogConfig();

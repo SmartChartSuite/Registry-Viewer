@@ -54,7 +54,7 @@ export class AnnotationsComponent implements OnInit {
       ]
     }
 
-    this.caseRecordsService.updateCaseRecord(caseId, this.selectedCaseRecord?.contentId, annotationObj)
+    this.caseRecordsService.updateCaseRecord(annotationObj, caseId, this.selectedCaseRecord?.contentId)
       .subscribe(
         {
           next: value => {

@@ -35,7 +35,7 @@ export class FlagComponent implements OnInit, OnDestroy {
     if($event.checked){
      flagValue = "Invalid Entry";
     }
-    this.caseRecordsService.updateCaseRecord(caseId, this.selectedCaseRecord?.contentId,{'flag': flagValue}).subscribe(
+    this.caseRecordsService.updateCaseRecord({'flag': flagValue}, caseId, this.selectedCaseRecord?.contentId).subscribe(
       {
         next: value => this.utilsService.showSuccessMessage("Flag updated successfully"),
         error: (err)=> {console.error(err); this.utilsService.showErrorMessage("Unable to upload the record. Server error.")

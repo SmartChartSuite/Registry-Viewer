@@ -7,6 +7,7 @@ import {filter, Subscription} from "rxjs";
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ChronologicalCaseRecord} from "../../../../model/chronological.case.record";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-section',
@@ -30,7 +31,8 @@ export class SectionComponent implements OnInit, OnDestroy {
   constructor(
     private caseRecordsService: CaseRecordsService,
     private sidenavService: SidenavService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute
   ) { }
 
   data: ChronologicalCaseRecord[];
@@ -107,7 +109,7 @@ export class SectionComponent implements OnInit, OnDestroy {
   }
 
   onAddDiagnose(): void {
-    openAnnotationDialog(this.dialog, {section: this.section, description: "Sample annotation text"})
+    openAnnotationDialog(this.dialog, {section: this.section, description: "Sample annotation text", caseId: this.route.snapshot.params['id']})
       .pipe(filter(val => !!val))
       .subscribe(
         val=> console.log(val)

@@ -3,8 +3,6 @@ import {MatSidenav} from "@angular/material/sidenav";
 import {SidenavService} from "../../service/sidenav.service";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
-import {ChronologicalCaseRecord} from "../../model/chronological.case.record";
 
 
 @Component({
