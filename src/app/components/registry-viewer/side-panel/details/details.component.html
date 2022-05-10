@@ -1,5 +1,14 @@
 <div #myIdentifier [innerHTML]="safeHtml"
-     style="height: 20em;
-     overflow:hidden;">
+     style="overflow:hidden"
+     [ngStyle]="{'max-height' : expanded ? '' : (maxHeight + 'px')}">
 </div>
-<button mat-raised-button color="accent">Expand</button>
+<div class="top-spacer" *ngIf="maxHeightReached">
+  <button style="width: 100%" *ngIf="!expanded" mat-stroked-button color="primary" (click)="expanded = !expanded">
+    <mat-icon>expand_more</mat-icon>
+    Expand Content
+  </button>
+  <button style="width: 100%" *ngIf="expanded" mat-stroked-button color="primary" (click)="expanded = !expanded">
+    <mat-icon>expand_less</mat-icon>
+    Collapse Content
+  </button>
+</div>

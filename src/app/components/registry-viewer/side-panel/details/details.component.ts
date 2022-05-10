@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DrawerService} from "../../../../service/drawer.service";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import { DatePipe } from '@angular/common';
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {CaseRecordsService} from "../../../../service/case-records.service";
@@ -10,24 +10,24 @@ import {CaseRecordsService} from "../../../../service/case-records.service";
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
-export class DetailsComponent implements OnInit, AfterViewInit {
+export class DetailsComponent implements OnInit {
 
   @ViewChild('myIdentifier') myIdentifier: ElementRef;
 
-  constructor (private sidenavService: DrawerService,
+  constructor (private drawerService: DrawerService,
                private datePipe: DatePipe,
                private sanitized: DomSanitizer,
                private caseRecordsService: CaseRecordsService) { }
 
   safeHtml: SafeHtml;
-
   details$: Observable<any>;
-
+  drawerStatus$: Subscription;
   htmlString: string;
-
   query: string;
-
+  maxHeightReached = false;
   ignoreProperties: string[] = ['query', 'tableDisplayText', 'type'];
+  expanded = false;
+  maxHeight = 300;
 
   formatKeyToString(key: string): string{
     // Nothing like regex without comments :-)
@@ -90,14 +90,21 @@ export class DetailsComponent implements OnInit, AfterViewInit {
         this.safeHtml = this.sanitized.bypassSecurityTrustHtml(this.htmlString);
       }
     })
+
+    this.drawerStatus$ = this.drawerService.currentDrawerStatus.subscribe(
+      () => {
+        setTimeout(
+          ()=> {
+            let height = this.myIdentifier?.nativeElement?.offsetHeight;
+            this.maxHeightReached = (height  >= this.maxHeight)
+          }
+        )
+      }
+    );
   }
 
-  ngAfterViewInit(): void {
-    let width = this.myIdentifier.nativeElement.offsetWidth;
-    let height = this.myIdentifier.nativeElement.offsetHeight;
-
-    console.log('Width:' + width);
-    console.log('Height: ' + height);
+  ngOnDestroy() {
+    this.drawerStatus$.unsubscribe();
   }
 
 }
