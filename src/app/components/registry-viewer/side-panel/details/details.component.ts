@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {DrawerService} from "../../../../service/drawer.service";
 import {Observable} from "rxjs";
 import { DatePipe } from '@angular/common';
@@ -10,7 +10,9 @@ import {CaseRecordsService} from "../../../../service/case-records.service";
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('myIdentifier') myIdentifier: ElementRef;
 
   constructor (private sidenavService: DrawerService,
                private datePipe: DatePipe,
@@ -88,6 +90,14 @@ export class DetailsComponent implements OnInit {
         this.safeHtml = this.sanitized.bypassSecurityTrustHtml(this.htmlString);
       }
     })
+  }
+
+  ngAfterViewInit(): void {
+    let width = this.myIdentifier.nativeElement.offsetWidth;
+    let height = this.myIdentifier.nativeElement.offsetHeight;
+
+    console.log('Width:' + width);
+    console.log('Height: ' + height);
   }
 
 }

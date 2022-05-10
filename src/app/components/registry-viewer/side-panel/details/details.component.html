@@ -1,1 +1,5 @@
-<div [innerHTML]="safeHtml"></div>
+<div #myIdentifier [innerHTML]="safeHtml"
+     style="height: 20em;
+     overflow:hidden;">
+</div>
+<button mat-raised-button color="accent">Expand</button>
