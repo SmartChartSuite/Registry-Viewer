@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: "https://gt-apps.hdap.gatech.edu/rc-api"
+  apiUrl: 'https://apps.hdap.gatech.edu/registry-viewer-api/'
 };
