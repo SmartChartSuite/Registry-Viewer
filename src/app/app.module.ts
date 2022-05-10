@@ -46,6 +46,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {DatePipe} from "@angular/common";
 import { SectionComponent } from './components/registry-viewer/summary-view/section/section.component';
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 
 @NgModule({
@@ -97,7 +98,8 @@ import { SectionComponent } from './components/registry-viewer/summary-view/sect
         MatMultiSortModule,
         MatCheckboxModule,
         MatButtonToggleModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        ScrollingModule
     ],
   providers: [DrawerService, DatePipe],
   bootstrap: [AppComponent]
