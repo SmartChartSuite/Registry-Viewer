@@ -1,27 +1,27 @@
-<button *ngIf="!isAddAnnotationInputVisible" mat-raised-button color="primary"
-        (click)="isAddAnnotationInputVisible = true">
-  <mat-icon matTooltip="Add annotation">edit_note</mat-icon>
+<button mat-raised-button color="success" style="width: 100%"
+        (click)="onAddAnnotation()">
+  <mat-icon matTooltip="Add annotation">add</mat-icon>
   Add Annotation
 </button>
 <div *ngIf="isAddAnnotationInputVisible">
 
-  <div>
+  <div class="top-spacer">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm" >
+      <mat-error *ngIf="submitted && form.controls['annotation'].errors">
+        Please enter annotation text
+      </mat-error>
       <mat-form-field appearance="outline" [style.width.%]=100 (submit)="onSubmit()">
         <mat-label>Annotation Text</mat-label>
         <textarea rows="10" matInput placeholeder="Annotation Text" formControlName="annotation"
                   [ngClass]="{'error': submitted && form.controls['annotation'].errors}"></textarea>
       </mat-form-field>
-      <div class="invalid-feedback" *ngIf="submitted && form.controls['annotation'].errors">
-        Please enter annotation text
-      </div>
       <div align="right">
         <button mat-raised-button (click)="onCancelAddAnnotation()">Cancel</button>
         <span style="margin-left: 1em">
-      <button mat-raised-button mat-raised-button color="primary" type="submit">
-        Save
-      </button>
-    </span>
+          <button mat-raised-button mat-raised-button color="primary" type="submit">
+            Save
+          </button>
+        </span>
       </div>
     </form>
   </div>
@@ -30,8 +30,22 @@
 
 <div *ngFor="let annotation of annotationList; index as i">
   <hr/>
-  <div style="margin-top: 1em; margin-bottom: 0.5em">
-    {{annotation.date | date:'mediumDate'}}<span style="margin-left: 2em">author: {{annotation.updatedBy}} </span>
+  <div style="display: flex"  [ngClass]="{'selected-row-background': annotation.annotationId === selectedAnnotation?.annotationId}">
+    <div style=" display: flex; align-items: center;">
+      {{annotation.date | date:'mediumDate'}}
+      <span style="margin-left: 2em">author: {{annotation.updatedBy}}</span>
+    </div>
+    <div style="flex-grow: 1;"></div>
+    <div>
+      <button mat-icon-button color="warn" aria-label="Delete Annotation" matTooltip="Delete Annotation"
+        (click)="onDeleteAnnotation(annotation)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" aria-label="Edit Annotation" matTooltip="Edit Annotation"
+        (click)="onEditAnnotation(annotation)">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
   </div>
   <div>{{annotation.text}}</div>
 </div>

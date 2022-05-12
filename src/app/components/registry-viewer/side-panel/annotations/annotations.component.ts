@@ -22,6 +22,7 @@ export class AnnotationsComponent implements OnInit {
   selectedCaseRecord: any;
   selectedCaseRecordSubscription$: Subscription;
   submitted = false;
+  selectedAnnotation: Annotation;
 
   @ViewChild('formDirective') formDirective: any;
 
@@ -43,14 +44,12 @@ export class AnnotationsComponent implements OnInit {
     );
   }
 
-  saveAnnotation(annotationText: string) {
+  saveAnnotation(annotation: any, operation: string) {
     const caseId = this.route.snapshot.params['id'];
 
     const annotationObj = {
       "annotations": [
-        {
-          "text": annotationText
-        }
+        annotation
       ]
     }
 
@@ -58,17 +57,28 @@ export class AnnotationsComponent implements OnInit {
       .subscribe(
         {
           next: value => {
-            this.utilsService.showSuccessMessage("Annotation updated successfully");
-            this.form.reset();
-            this.isAddAnnotationInputVisible = false;
+            let successMessageStr: string = "";
+            if(operation === "delete"){
+              successMessageStr = "Annotation deleted successfully."
+            }
+            else if(operation === "create"){
+              successMessageStr = "Annotation created successfully."
+            }
+            else if(operation === "update"){
+              successMessageStr = "Annotation updated successfully."
+            }
+            this.utilsService.showSuccessMessage(successMessageStr);
+            //this.form.reset();
+            this.formDirective?.resetForm();
             this.submitted = false;
+            this.selectedAnnotation = null;
           },
           error: (err) => {
             console.error(err);
             this.utilsService.showErrorMessage("Unable to upload the record. Server error.");
             this.form.reset();
             this.submitted = false;
-          }
+          },
         }
       );
   }
@@ -77,7 +87,18 @@ export class AnnotationsComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if(this.form.valid){
-      this.saveAnnotation(this.form.controls['annotation'].value);
+      let annotation: any = {};
+      let operation: string;
+      if(this.selectedAnnotation?.annotationId){
+        annotation.annotationId = this.selectedAnnotation.annotationId;
+        annotation.text = this.form.controls['annotation'].value;
+        operation = "update";
+      }
+      else {
+        annotation = {text: this.form.controls['annotation'].value};
+        operation = "create";
+      }
+      this.saveAnnotation(annotation, operation);
     }
   }
 
@@ -85,5 +106,25 @@ export class AnnotationsComponent implements OnInit {
     this.submitted = false;
     this.form.reset();
     this.isAddAnnotationInputVisible = false;
+    this.selectedAnnotation = null;
+  }
+
+  onDeleteAnnotation(annotation){
+    let annotationObj: any = {};
+    annotationObj.annotationId = annotation.annotationId
+    annotationObj.text = '';
+    this.saveAnnotation(annotationObj, "delete");
+  }
+
+  onEditAnnotation(annotation: Annotation) {
+    this.isAddAnnotationInputVisible = true;
+    this.selectedAnnotation = annotation;
+    this.form.controls['annotation'].patchValue(annotation.text);
+  }
+
+  onAddAnnotation() {
+    this.isAddAnnotationInputVisible = true;
+    this.selectedAnnotation = null;
+    this.formDirective?.resetForm();
   }
 }
