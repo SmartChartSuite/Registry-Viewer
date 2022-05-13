@@ -30,7 +30,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   constructor(
     private caseRecordsService: CaseRecordsService,
-    private sidenavService: DrawerService,
+    private drawerService: DrawerService,
     private dialog: MatDialog,
     private route: ActivatedRoute
   ) { }
@@ -104,11 +104,13 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   onRowClick(row: any) {
     this.selectedRow = row;
-    this.sidenavService.open();
+    this.drawerService.open();
     this.caseRecordsService.setSelectedRecord(row);
   }
 
-  onAddDiagnose(): void {
+  onAddRecord(): void {
+    this.caseRecordsService.selectedCaseRecord$.next(null);
+    this.drawerService.close();
     openAnnotationDialog(this.dialog, {section: this.section, description: "Sample annotation text", caseId: this.route.snapshot.params['id']})
       .pipe(filter(val => !!val))
       .subscribe(
