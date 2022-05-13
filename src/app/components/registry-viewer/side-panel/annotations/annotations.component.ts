@@ -7,13 +7,12 @@ import {Subscription} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Annotation} from "../../../../model/annotation";
 
-
-
 @Component({
   selector: 'app-annotations',
   templateUrl: './annotations.component.html',
   styleUrls: ['./annotations.component.css']
 })
+
 export class AnnotationsComponent implements OnInit {
 
   isAddAnnotationInputVisible = false;
@@ -67,8 +66,10 @@ export class AnnotationsComponent implements OnInit {
             else if(operation === "update"){
               successMessageStr = "Annotation updated successfully."
             }
+            else {
+              successMessageStr = "Annotation saved."
+            }
             this.utilsService.showSuccessMessage(successMessageStr);
-            //this.form.reset();
             this.formDirective?.resetForm();
             this.submitted = false;
             this.selectedAnnotation = null;
