@@ -3,9 +3,11 @@ import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {DrawerService} from "../../../../service/drawer.service";
 import {UtilsService} from "../../../../service/utils.service";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Annotation} from "../../../../model/annotation";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {ConformationDialogComponent} from "../../../conformation-dialog/conformation-dialog.component";
 
 @Component({
   selector: 'app-annotations',
@@ -22,10 +24,13 @@ export class AnnotationsComponent implements OnInit {
   selectedCaseRecordSubscription$: Subscription;
   submitted = false;
   selectedAnnotation: Annotation;
+  dialogClosed$: Observable<boolean>;
+
 
   @ViewChild('formDirective') formDirective: any;
 
   constructor(
+    private dialog: MatDialog,
     private caseRecordsService: CaseRecordsService,
     private route: ActivatedRoute,
     private sidenavService: DrawerService,
@@ -73,6 +78,7 @@ export class AnnotationsComponent implements OnInit {
             this.formDirective?.resetForm();
             this.submitted = false;
             this.selectedAnnotation = null;
+            this.isAddAnnotationInputVisible = false;
           },
           error: (err) => {
             console.error(err);
@@ -111,10 +117,17 @@ export class AnnotationsComponent implements OnInit {
   }
 
   onDeleteAnnotation(annotation){
-    let annotationObj: any = {};
-    annotationObj.annotationId = annotation.annotationId
-    annotationObj.text = '';
-    this.saveAnnotation(annotationObj, "delete");
+    this.openDialog();
+    this.dialogClosed$.subscribe({
+      next: value => {
+        if(value){
+          let annotationObj: any = {};
+          annotationObj.annotationId = annotation.annotationId
+          annotationObj.text = '';
+          this.saveAnnotation(annotationObj, "delete");
+        }
+      }
+    })
   }
 
   onEditAnnotation(annotation: Annotation) {
@@ -128,4 +141,21 @@ export class AnnotationsComponent implements OnInit {
     this.selectedAnnotation = null;
     this.formDirective?.resetForm();
   }
+
+  openDialog() {
+
+    const config = new MatDialogConfig();
+
+    config.data = {
+      message: 'Are you sure want to proceed deleting the annotation?',
+      buttonText: {
+        ok: 'Delete',
+        cancel: 'Cancel'
+      }
+    }
+    const dialogRef = this.dialog.open(ConformationDialogComponent,config);
+    this.dialogClosed$ = dialogRef.afterClosed();
+  }
+
+
 }

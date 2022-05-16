@@ -47,6 +47,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {DatePipe} from "@angular/common";
 import { SectionComponent } from './components/registry-viewer/summary-view/section/section.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
+import { ConformationDialogComponent } from './components/conformation-dialog/conformation-dialog.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     AnnotationsComponent,
     AddRecordDialogComponent,
     SectionComponent,
+    ConformationDialogComponent,
   ],
     imports: [
         BrowserModule,

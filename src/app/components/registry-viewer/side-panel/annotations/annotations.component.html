@@ -5,7 +5,7 @@
 </button>
 <div *ngIf="isAddAnnotationInputVisible">
 
-  <div class="top-spacer">
+  <div class="top-spacer" *ngIf="!selectedAnnotation?.annotationId">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm" >
       <mat-error *ngIf="submitted && form.controls['annotation'].errors">
         Please enter annotation text
@@ -47,5 +47,27 @@
       </button>
     </div>
   </div>
-  <div>{{annotation.text}}</div>
+
+  <div *ngIf="annotation.annotationId === selectedAnnotation?.annotationId">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm">
+      <mat-error *ngIf="submitted && form.controls['annotation'].errors">
+        Please enter annotation text
+      </mat-error>
+      <mat-form-field appearance="outline" [style.width.%]=100 (submit)="onSubmit()">
+        <mat-label>Annotation Text</mat-label>
+        <textarea rows="10" matInput placeholeder="Annotation Text" formControlName="annotation"
+                  [ngClass]="{'error': submitted && form.controls['annotation'].errors}"></textarea>
+      </mat-form-field>
+      <div align="right">
+        <button mat-raised-button (click)="onCancelAddAnnotation()">Cancel</button>
+        <span style="margin-left: 1em">
+          <button mat-raised-button mat-raised-button color="primary" type="submit">
+            Save
+          </button>
+        </span>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="!(annotation.annotationId === selectedAnnotation?.annotationId)">{{annotation.text}}</div>
 </div>
