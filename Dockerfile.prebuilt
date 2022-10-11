@@ -1,0 +1,5 @@
+
+FROM nginx
+COPY /dist/smart-pacer-registry-viewer /usr/share/nginx/html/
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
