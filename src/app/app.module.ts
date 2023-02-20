@@ -48,6 +48,7 @@ import {DatePipe} from "@angular/common";
 import { SectionComponent } from './components/registry-viewer/summary-view/section/section.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import { ConformationDialogComponent } from './components/conformation-dialog/conformation-dialog.component';
+import { DemoModeComponent } from './components/demo-mode/demo-mode.component';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { ConformationDialogComponent } from './components/conformation-dialog/co
     AddRecordDialogComponent,
     SectionComponent,
     ConformationDialogComponent,
+    DemoModeComponent,
   ],
     imports: [
         BrowserModule,

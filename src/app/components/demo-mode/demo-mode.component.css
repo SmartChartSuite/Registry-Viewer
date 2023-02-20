@@ -1,0 +1,12 @@
+.demo-container {
+  background-color: #E8EAF6;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-icon{
+  margin-right: 16px;
+  cursor: pointer;
+}

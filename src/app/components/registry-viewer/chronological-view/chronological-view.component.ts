@@ -6,6 +6,7 @@ import {ChronologicalCaseRecord} from "../../../model/chronological.case.record"
 import {DrawerService} from "../../../service/drawer.service";
 import {Subscription} from "rxjs";
 import {MultiSortTableService} from "../../../service/multi-sort-table.service";
+import {DemoModeService} from "../../../service/demo-mode.service";
 
 
 @Component({
@@ -34,11 +35,13 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
   filterList = [];
   sections$: Subscription;
   sections: string[];
+  latestDate: any;
 
   constructor(
     private caseRecordsService: CaseRecordsService,
     private sidenavService: DrawerService,
-    private multiSortTableService: MultiSortTableService
+    private multiSortTableService: MultiSortTableService,
+    private demoModeService: DemoModeService
   ) {
 
     // this.table = new TableData<any>([
@@ -85,7 +88,15 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
         this.selectedSectionFormControl.patchValue(this.sections);
         this.selectedSections = this.sections?.map((element) => ({name: element, selected: true}));
       });
+
     this.initTableObservables();
+
+    this.demoModeService.latestDate$.subscribe({
+      next: value => {
+        this.latestDate = value;
+        setTimeout(() => this.onSectionSelectionChange())
+      }
+    })
   }
 
   initData() {
@@ -102,6 +113,7 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
       // when no filters are selected the data source filter does not run, and we need to empty the table manually
       this.table.data = [];
       this.table.totalElements = 0;
+      this.demoModeService.setRecordsCount(0);
     }
     else {
       this.getData(this.filterList);
@@ -116,24 +128,30 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
     this.caseRecordsSubscription$ = this.caseRecordsService.caseRecordChronologicalData$.subscribe({
       next: value => {
         let data = value;
-        if(filterList?.length > 0) {
+        if (filterList?.length > 0) {
           // the multi-sort table does not inherit the filters for the mat table, but filtering our data is quite trivial.
-          data = value.filter((caseRecord)=> filterList.indexOf(caseRecord.section) != -1);
+          data = value.filter((caseRecord) => filterList.indexOf(caseRecord.section) != -1);
+          if (this.latestDate) {
+            data = value.filter(caseRecord => {
+              const caseRecordDate = new Date(parseInt(caseRecord.date, 10));
+              return caseRecordDate < this.latestDate
+            });
+          }
         }
-        if(data && data.length) {
-          this.caseRecordChronologicalData = data;
-          const res = this.multiSortTableService.list(
-            this.table.sortParams,
-            this.table.sortDirs,
-            this.table.pageIndex,
-            this.table.pageSize,
-            data
-          );
-          this.table.totalElements = res.totalElements;
-          this.table.pageIndex = res.page;
-          this.table.pageSize = res.pagesize;
-          this.table.data = res.tableData;
-      }
+        this.caseRecordChronologicalData = data;
+        const res = this.multiSortTableService.list(
+          this.table.sortParams,
+          this.table.sortDirs,
+          this.table.pageIndex,
+          this.table.pageSize,
+          data
+        );
+        this.table.totalElements = res.totalElements;
+        this.table.pageIndex = res.page;
+        this.table.pageSize = res.pagesize;
+        this.table.data = res.tableData;
+
+        this.demoModeService.setRecordsCount(data.length);
     }});
   }
 

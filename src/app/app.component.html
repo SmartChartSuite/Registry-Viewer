@@ -7,6 +7,10 @@
 
   <span class="menu-spacer"></span>
 
+  <mat-slide-toggle style="margin-right: 1em" (toggleChange)="onToggleDemoMode()" [disabled]="!isDemoModeEnabled()">
+    Demo Mode
+  </mat-slide-toggle>
+
   <button mat-raised-button color="accent" [routerLink]="'/'">
     Search
   </button>
@@ -17,6 +21,8 @@
   </button>
 
 </mat-toolbar>
+
+<app-demo-mode *ngIf="isToggleModeActive"></app-demo-mode>
 
 <router-outlet></router-outlet>
 

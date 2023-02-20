@@ -1,0 +1,27 @@
+<div class="demo-container">
+
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(-7)" matTooltip="Reverse one week">
+    keyboard_double_arrow_left
+  </mat-icon>
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(-1)" matTooltip="Reverse one day">
+    chevron_left
+  </mat-icon>
+
+  <form [formGroup]="form">
+    <mat-form-field style="margin-right: 16px">
+      <mat-label>Select Latest Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="latestDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
+
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(1)" matTooltip="Advance one day">
+    navigate_next
+  </mat-icon>
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(7)" matTooltip="Advance one week">
+    keyboard_double_arrow_right
+  </mat-icon>
+  <label>
+    Records Found: {{count}}</label>
+</div>
