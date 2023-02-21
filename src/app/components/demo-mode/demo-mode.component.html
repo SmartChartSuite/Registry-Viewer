@@ -1,9 +1,9 @@
 <div class="demo-container">
 
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(-7)" matTooltip="Reverse one week">
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.REW)" matTooltip="Reverse one week">
     keyboard_double_arrow_left
   </mat-icon>
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(-1)" matTooltip="Reverse one day">
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.PREVIOUS)" matTooltip="Reverse one day">
     chevron_left
   </mat-icon>
 
@@ -16,10 +16,10 @@
     </mat-form-field>
   </form>
 
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(1)" matTooltip="Advance one day">
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.NEXT)" matTooltip="Advance one day">
     navigate_next
   </mat-icon>
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(7)" matTooltip="Advance one week">
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.FF)" matTooltip="Advance one week">
     keyboard_double_arrow_right
   </mat-icon>
   <label>

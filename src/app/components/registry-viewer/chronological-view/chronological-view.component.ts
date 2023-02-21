@@ -128,6 +128,9 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
     this.caseRecordsSubscription$ = this.caseRecordsService.caseRecordChronologicalData$.subscribe({
       next: value => {
         let data = value;
+        if(data?.length){
+          this.demoModeService.setSignificantDateList(data);
+        }
         if (filterList?.length > 0) {
           // the multi-sort table does not inherit the filters for the mat table, but filtering our data is quite trivial.
           data = value.filter((caseRecord) => filterList.indexOf(caseRecord.section) != -1);
@@ -138,21 +141,22 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
             });
           }
         }
-        this.caseRecordChronologicalData = data;
-        const res = this.multiSortTableService.list(
-          this.table.sortParams,
-          this.table.sortDirs,
-          this.table.pageIndex,
-          this.table.pageSize,
-          data
-        );
-        this.table.totalElements = res.totalElements;
-        this.table.pageIndex = res.page;
-        this.table.pageSize = res.pagesize;
-        this.table.data = res.tableData;
+        if(data && data.length) {
+          this.caseRecordChronologicalData = data;
+          const res = this.multiSortTableService.list(
+            this.table.sortParams,
+            this.table.sortDirs,
+            this.table.pageIndex,
+            this.table.pageSize,
+            data
+          );
+          this.table.totalElements = res.totalElements;
+          this.table.pageIndex = res.page;
+          this.table.pageSize = res.pagesize;
+          this.table.data = res.tableData;
 
-        this.demoModeService.setRecordsCount(data.length);
-    }});
+          this.demoModeService.setRecordsCount(data.length || 0);
+        }}});
   }
 
   onSelectRow(row) {
