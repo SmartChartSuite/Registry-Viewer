@@ -156,7 +156,9 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
           this.table.data = res.tableData;
 
           this.demoModeService.setRecordsCount(data.length || 0);
-        }}});
+        }
+      }
+    });
   }
 
   onSelectRow(row) {
