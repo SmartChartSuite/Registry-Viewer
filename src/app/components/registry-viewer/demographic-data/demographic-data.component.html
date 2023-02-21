@@ -1,20 +1,35 @@
-<mat-toolbar-row style="align-items: flex-start !important;">
-  <div style="margin-top: 0.8em;">{{demographicsData?.givenName}} {{demographicsData?.lastName}}</div>
-  <div class="demographics">
-    <div>Dob: {{demographicsData?.dob | date}} </div>
-    <div>Gender: {{demographicsData?.gender}}</div>
-  </div>
-
-  <div class="demographics">
-    Status: {{demographicsData?.status}}
-  </div>
-
-  <div class="demographics">
-    <div *ngIf="demographicsData?.phone"> {{demographicsData?.phone}} </div>
-    <div> {{demographicsData?.street}} </div>
-    <div> {{demographicsData?.city}} {{demographicsData?.state}}
-      <span *ngIf="demographicsData?.zip">,</span>
-      {{demographicsData?.zip}}
+<mat-toolbar-row class="tool-bars primary-lighter">
+  <div class="viewer-header-label">Subject Name:</div>
+  <input type="text" value="{{demographicsData?.givenName}} {{demographicsData?.lastName}}" readonly>
+  <div class="content-spacer"></div>
+    <div class="row">
+      <div class="col-small">
+        <div>DOB:</div>
+        <div>Gender:</div>
+      </div>
+      <div class="row">
+        <div class="col-small">
+          <div><input type="text" value="{{demographicsData?.dob | date}}" readonly></div>
+          <div><input type="text" value="{{demographicsData?.gender}}" readonly></div>
+        </div>
+      </div>
     </div>
-  </div>
+  <div class="content-spacer"></div>
+    <div class="row">
+      <div class="col-small">
+        <div>Address Line 1:</div>
+        <div>Line 2:</div>
+      </div>
+      <div class="row">
+        <div class="col-small">
+          <div><input type="text" value="{{demographicsData?.city}} {{demographicsData?.state}}" readonly></div>
+          <div><input type="text" value="{{demographicsData?.zip}}" readonly></div>
+        </div>
+      </div>
+    </div>
+  <div class="content-spacer"></div>
+  <div class="viewer-header-label">Status:</div>
+  <input type="text" value="{{demographicsData?.status}}" readonly>
+  <div class="content-spacer"></div>
+  <div class="app-demo" *ngIf="isDemoModeActive"><app-demo-mode></app-demo-mode></div>
 </mat-toolbar-row>

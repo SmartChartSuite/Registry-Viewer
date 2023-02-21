@@ -1,6 +1,40 @@
 /*.tile {*/
 /*  height: 90%; display: flex; justify-content: flex-start;*/
 /*}*/
-.demographics{
-  font-size: 12px; margin-left: 2em; line-height: 1.4; margin-top: 0.5em;
+/*.demographics{*/
+/*  font-size: 12px; margin-left: 2em; line-height: 1.4; margin-top: 0.5em;*/
+/*}*/
+
+.viewer-header-label {
+  margin: 5px;
+  font-size: medium;
+}
+.viewer-header-title {
+  text-decoration: underline;
+  padding: 10px;
+}
+
+.tool-bars {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+.content-spacer {
+  flex: 1 1 auto;
+}
+
+.row {
+  display: flex;  /* aligns all child elements (flex items) in a row */
+}
+
+.col-small {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 4px;
+}
+
+.app-demo{
+  margin-left: 8px; border-left-color: #303f9f; border-left-width: 1px; border-left-style: solid;
 }
