@@ -9,6 +9,9 @@ export class DemoModeService {
   private isDemoModeActive = new BehaviorSubject<boolean>(false);
   isDemoModeActive$ = this.isDemoModeActive.asObservable();
 
+  private isChronologicalViewActive = new BehaviorSubject<boolean>(false);
+  isChronologicalViewActive$ = this.isChronologicalViewActive.asObservable();
+
   private latestDate = new BehaviorSubject<Date>(null);
   latestDate$ = this.latestDate.asObservable();
 
@@ -28,6 +31,10 @@ export class DemoModeService {
 
   setRecordsCount(count: number): void {
     this.recordsCount.next(count);
+  }
+
+  setChronologicalViewActive (isActive: boolean): void {
+    this.isChronologicalViewActive.next(isActive);
   }
 
   setSignificantDateList(objectList: any){

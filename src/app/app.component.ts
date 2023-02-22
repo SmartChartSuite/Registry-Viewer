@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {DemoModeService} from "./service/demo-mode.service";
 
@@ -7,14 +7,26 @@ import {DemoModeService} from "./service/demo-mode.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   title = 'SMART-PACER-Registry-Viewer';
+
   isToggleModeActive: boolean = false;
+
+  isChronologicalViewActive = false;
+
   constructor(
     private demoModeService: DemoModeService,
     private router: Router,
   ) {
   }
+
+  ngOnInit(): void {
+    this.demoModeService.isChronologicalViewActive$.subscribe({
+      next: value => this.isChronologicalViewActive = value
+    })
+  }
+
   onTitleClick() {
     this.router.navigate(['/']);
   }
@@ -28,6 +40,6 @@ export class AppComponent {
   }
 
   isDemoModeEnabled() {
-    return (this.router.url != '/')
+    return this.router.url != '/' && this.isChronologicalViewActive;
   }
 }

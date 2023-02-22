@@ -3,6 +3,7 @@ import {MatSidenav} from "@angular/material/sidenav";
 import {DrawerService} from "../../service/drawer.service";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
+import {DemoModeService} from "../../service/demo-mode.service";
 
 
 @Component({
@@ -20,7 +21,8 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
 
   constructor(private sidenavService: DrawerService,
               private caseRecordsService: CaseRecordsService,
-              private route: ActivatedRoute,) {
+              private route: ActivatedRoute,
+              private demoModeService: DemoModeService) {
   }
 
   setMatCardContentHeight(windowSize: number){
@@ -48,6 +50,7 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   }
 
   onViewSelected(isDefaultView: boolean) {
+    this.demoModeService.setChronologicalViewActive(!isDefaultView);
     this.isDefaultViewActive = isDefaultView;
     this.caseRecordsService.setSelectedRecord(null);
     this.sidenavService.close();
