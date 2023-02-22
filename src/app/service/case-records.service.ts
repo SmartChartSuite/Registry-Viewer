@@ -53,7 +53,7 @@ export class CaseRecordsService {
     let options = {};
     if(searchTerms?.length>0 ||fieldsList?.length> 0){
       const terms: string = searchTerms.join(', ');
-      const fields: string = fieldsList.join(', ');
+      const fields: string = fieldsList?.length ? fieldsList.join(', '): '';
       const httpParams = new HttpParams()
         .set('terms', terms)
         .set('fields', fields)
