@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     });
     this.demoModeService.isDemoModeActive$.subscribe({
       next: value => this.isDemoModeActive = value
-    })
+    });
   }
 
   onRouteChanged(route: string) {
@@ -51,7 +51,4 @@ export class AppComponent implements OnInit {
     return this.router.url.indexOf('registry-viewer') != -1  && this.isChronologicalViewActive;
   }
 
-  onRefresh() {
-    window.location.reload();
-  }
 }

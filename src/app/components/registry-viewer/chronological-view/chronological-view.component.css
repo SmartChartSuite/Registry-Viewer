@@ -6,15 +6,11 @@ table {
   color: #9e9e9e;
 }
 
-.mat-column-value {
-  flex: 0 0 40%;
-}
-
 .mat-column-question {
   padding-right: 1em;
 }
 
 .mat-column-date {
+  flex: 0 0 10%;
   padding-right: 1em;
 }
-

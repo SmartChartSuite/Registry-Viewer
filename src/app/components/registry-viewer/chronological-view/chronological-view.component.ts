@@ -44,16 +44,8 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
     private demoModeService: DemoModeService
   ) {
 
-    // this.table = new TableData<any>([
-    //   { id: "date", name: "date" },
-    //   { id: "question", name: "question" },
-    //   { id: "value", name: "value" },
-    //   { id: "section", name: "section" },
-    //   { id: "category", name: "category" },
-    //   { id: "annotation", name: "annotation" },
-    // ], { defaultSortParams: ['date'], defaultSortDirs: ['desc'] });
     this.table = new TableData<any>([
-      { id: "contentId", name: "contentId" },
+      // { id: "contentId", name: "contentId" },
       { id: "date", name: "date" },
       { id: "question", name: "question" },
       { id: "value", name: "value" },
