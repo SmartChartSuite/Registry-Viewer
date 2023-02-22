@@ -19,7 +19,7 @@ export class DemoModeComponent implements OnInit {
   Operations = Operations;
   operation: Operations;
   form = new FormGroup({
-    latestDate: new FormControl(new Date,[Validators.required]),
+    latestDate: new FormControl([Validators.required]),
   });
   count: number = 0;
   significantDateList: Date[];
@@ -32,6 +32,10 @@ export class DemoModeComponent implements OnInit {
     this.demoModeService.significantDateList$.subscribe({
       next: value => {
         this.significantDateList = value;
+        const lastSignificantDate = this.significantDateList?.[this.significantDateList.length - 1];
+        if(lastSignificantDate && !(this.form.controls['latestDate'].value instanceof Date)){
+          this.form.controls['latestDate'].patchValue(lastSignificantDate);
+        }
       }
     });
   }
