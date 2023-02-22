@@ -50,4 +50,8 @@ export class AppComponent implements OnInit {
   isDemoModeEnabled() {
     return this.router.url.indexOf('registry-viewer') != -1  && this.isChronologicalViewActive;
   }
+
+  onRefresh() {
+    window.location.reload();
+  }
 }
