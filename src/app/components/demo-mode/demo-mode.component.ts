@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DemoModeService} from "../../service/demo-mode.service";
+import {UtilsService} from "../../service/utils.service";
 
 export enum Operations {
   FF = 'FF',
@@ -18,13 +19,13 @@ export class DemoModeComponent implements OnInit {
   Operations = Operations;
   operation: Operations;
   form = new FormGroup({
-    latestDate: new FormControl(new Date, [Validators.required]),
+    latestDate: new FormControl(new Date,[Validators.required]),
   });
   count: number = 0;
   significantDateList: Date[];
   currentIndex = null;
 
-  constructor( private demoModeService: DemoModeService ) { }
+  constructor( private demoModeService: DemoModeService, private utilsService: UtilsService ) { }
 
   ngOnInit(): void {
     this.demoModeService.recordsCount$.subscribe({next: value => this.count = value});

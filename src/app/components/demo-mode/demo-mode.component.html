@@ -1,14 +1,14 @@
 <div class="demo-container">
 
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.REW)" matTooltip="Reverse one week">
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.REW)" matTooltip="Previous">
     keyboard_double_arrow_left
   </mat-icon>
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.PREVIOUS)" matTooltip="Reverse one day">
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.PREVIOUS)" matTooltip="Reverse one week">
     chevron_left
   </mat-icon>
 
   <form [formGroup]="form">
-    <mat-form-field style="margin-right: 16px">
+    <mat-form-field style="margin-right: 8px">
       <mat-label>Select Latest Date</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="latestDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -16,10 +16,10 @@
     </mat-form-field>
   </form>
 
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.NEXT)" matTooltip="Advance one day">
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.NEXT)" matTooltip="Advance one week">
     navigate_next
   </mat-icon>
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.FF)" matTooltip="Advance one week">
+  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.FF)" matTooltip="Next">
     keyboard_double_arrow_right
   </mat-icon>
   <label>

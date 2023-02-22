@@ -8,10 +8,9 @@ import {DemoModeService} from "./service/demo-mode.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
   title = 'SMART-PACER-Registry-Viewer';
 
-  isToggleModeActive: boolean = false;
+  isDemoModeActive: boolean = false;
 
   isChronologicalViewActive = false;
 
@@ -23,23 +22,32 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.demoModeService.isChronologicalViewActive$.subscribe({
-      next: value => this.isChronologicalViewActive = value
+      next: value => {
+        this.isChronologicalViewActive = value;
+        if(!value){
+          this.demoModeService.setDemoModeActive(false);
+        }
+      }
+    });
+    this.demoModeService.isDemoModeActive$.subscribe({
+      next: value => this.isDemoModeActive = value
     })
   }
 
-  onTitleClick() {
-    this.router.navigate(['/']);
+  onRouteChanged(route: string) {
+    this.router.navigate([route]);
+    this.demoModeService.setDemoModeActive(false);
   }
 
   onToggleDemoMode() {
-    this.isToggleModeActive = !this.isToggleModeActive;
-    this.demoModeService.setDemoModeActive(this.isToggleModeActive);
-    if(!this.isToggleModeActive){
+    this.isDemoModeActive = !this.isDemoModeActive;
+    this.demoModeService.setDemoModeActive(this.isDemoModeActive);
+    if(!this.isDemoModeActive){
       this.demoModeService.setLatestDate(null);
     }
   }
 
   isDemoModeEnabled() {
-    return this.router.url != '/' && this.isChronologicalViewActive;
+    return this.router.url.indexOf('registry-viewer') != -1  && this.isChronologicalViewActive;
   }
 }
