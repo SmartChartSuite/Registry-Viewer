@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
 
   isDemoModeActive: boolean = false;
 
-  isChronologicalViewActive = false;
+  isChronologicalViewActive = true;
 
   constructor(
     private demoModeService: DemoModeService,
@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
   onRouteChanged(route: string) {
     this.router.navigate([route]);
     this.demoModeService.setDemoModeActive(false);
+    this.demoModeService.setChronologicalViewActive(false);
   }
 
   onToggleDemoMode() {
