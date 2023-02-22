@@ -86,7 +86,15 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
       value => {
         this.sections = value;
         this.selectedSectionFormControl.patchValue(this.sections);
-        this.selectedSections = this.sections?.map((element) => ({name: element, selected: true}));
+        if (this.filterList.length) {
+          this.selectedSections = this.sections?.map(element => ({
+            name: element,
+            selected: (this.filterList.indexOf(element) != -1)
+          }));
+        }
+        else {
+          this.selectedSections = this.sections?.map(element => ({name: element, selected: true}));
+        }
       });
 
     this.initTableObservables();
@@ -96,7 +104,7 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
         this.latestDate = value;
         setTimeout(() => this.onSectionSelectionChange())
       }
-    })
+    });
   }
 
   initData() {
