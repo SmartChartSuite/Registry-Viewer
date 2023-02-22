@@ -1,35 +1,63 @@
 <mat-toolbar-row class="tool-bars primary-lighter">
-  <div class="viewer-header-label">Subject Name:</div>
-  <input type="text" value="{{demographicsData?.givenName}} {{demographicsData?.lastName}}" readonly>
-  <div class="content-spacer"></div>
-    <div class="row">
-      <div class="col-small">
-        <div>DOB:</div>
-        <div>Gender:</div>
+  <div class="container">
+    <div class="item">
+      <div class="viewer-header-label">Subject Name: <input type="text" value="{{demographicsData?.givenName}} {{demographicsData?.lastName}}" readonly></div>
+    </div>
+    <div class="item">
+      <div class="row">
+        <div class="cell right-align">DOB:</div>
+        <div class="cell"><input type="text" value="{{demographicsData?.dob | date}}" readonly></div>
       </div>
       <div class="row">
-        <div class="col-small">
-          <div><input type="text" value="{{demographicsData?.dob | date}}" readonly></div>
-          <div><input type="text" value="{{demographicsData?.gender}}" readonly></div>
-        </div>
+        <div class="cell right-align">Gender:</div>
+        <div class="cell"><input type="text" value="{{demographicsData?.gender}}" readonly></div>
       </div>
     </div>
-  <div class="content-spacer"></div>
-    <div class="row">
-      <div class="col-small">
-        <div>Address Line 1:</div>
-        <div>Line 2:</div>
+    <div class="item">
+      <div class="row">
+        <div class="cell right-align">Address Line 1:</div>
+        <div class="cell"><input type="text" value="{{demographicsData?.city}} {{demographicsData?.state}}" readonly></div>
       </div>
       <div class="row">
-        <div class="col-small">
-          <div><input type="text" value="{{demographicsData?.city}} {{demographicsData?.state}}" readonly></div>
-          <div><input type="text" value="{{demographicsData?.zip}}" readonly></div>
-        </div>
+        <div class="cell right-align">Line 2:</div>
+        <div class="cell"><input type="text" value="{{demographicsData?.zip}}" readonly></div>
       </div>
     </div>
-  <div class="content-spacer"></div>
-  <div class="viewer-header-label">Status:</div>
-  <input type="text" value="{{demographicsData?.status}}" readonly>
-  <div class="content-spacer"></div>
-  <div class="app-demo" *ngIf="isDemoModeActive"><app-demo-mode></app-demo-mode></div>
+    <div class="item"><div><span style="margin-right: 4px">Status:</span><input type="text" value="{{demographicsData?.status}}" readonly></div></div>
+    <div class="item app-demo" *ngIf="isDemoModeActive"><app-demo-mode></app-demo-mode></div>
+  </div>
+
+<!--  <div class="viewer-header-label">Subject Name:</div>-->
+<!--  <input type="text" value="{{demographicsData?.givenName}} {{demographicsData?.lastName}}" readonly>-->
+<!--  <div class="content-spacer"></div>-->
+<!--    <div class="row">-->
+<!--      <div class="col-small">-->
+<!--        <div>DOB:</div>-->
+<!--        <div>Gender:</div>-->
+<!--      </div>-->
+<!--      <div class="row">-->
+<!--        <div class="col-small">-->
+<!--          <div><input type="text" value="{{demographicsData?.dob | date}}" readonly></div>-->
+<!--          <div><input type="text" value="{{demographicsData?.gender}}" readonly></div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  <div class="content-spacer"></div>-->
+<!--    <div class="row">-->
+<!--      <div class="col-small">-->
+<!--        <div>Address Line 1:</div>-->
+<!--        <div>Line 2:</div>-->
+<!--      </div>-->
+<!--      <div class="row">-->
+<!--        <div class="col-small">-->
+<!--          <div><input type="text" value="{{demographicsData?.city}} {{demographicsData?.state}}" readonly></div>-->
+<!--          <div><input type="text" value="{{demographicsData?.zip}}" readonly></div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  <div class="content-spacer"></div>-->
+<!--  <div class="viewer-header-label">Status:</div>-->
+<!--  <input type="text" value="{{demographicsData?.status}}" readonly>-->
+<!--  <div class="content-spacer"></div>-->
+
 </mat-toolbar-row>
