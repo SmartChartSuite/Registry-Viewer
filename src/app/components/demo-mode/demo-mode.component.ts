@@ -45,32 +45,41 @@ export class DemoModeComponent implements OnInit {
     });
   }
 
-  onChangeDate(operation: Operations) {
+  onChangeDate(operation?: Operations) {
     if (this.form.valid) {
       const currentDate = this.form.controls['latestDate'].value;
       let resultingDate = currentDate;
-      let offset = 0;
+      const offset = 7; // one week offset
       if (operation == Operations.NEXT && this.form.valid) {
-        offset = 7;
+        // Advance by the number of days in offset
         resultingDate = new Date(currentDate.setDate(resultingDate.getDate() + offset));
-      } else if (operation == Operations.PREVIOUS && this.form.valid) {
-        offset = -7;
-        resultingDate = new Date(currentDate.setDate(resultingDate.getDate() + offset));
-      } else if (operation == Operations.FF && this.significantDateList?.length > 0) {
+      }
+      else if (operation == Operations.PREVIOUS && this.form.valid) {
+        // Go back by the number of days in the offset
+        resultingDate = new Date(currentDate.setDate(resultingDate.getDate() - offset));
+      }
+      else if (operation == Operations.FF && this.significantDateList?.length > 0) {
         if ((!this.currentIndex && !(this.currentIndex == 0))
           || this.currentIndex >= (this.significantDateList?.length - 1)) {
           this.currentIndex = this.significantDateList?.length - 1
-        } else if (this.currentIndex == this.significantDateList?.length || this.currentIndex >= 0) {
+        }
+        else if (this.currentIndex == this.significantDateList?.length || this.currentIndex >= 0) {
           this.currentIndex = this.currentIndex + 1;
         }
         resultingDate = this.significantDateList[this.currentIndex];
-      } else if (operation == Operations.REW && this.significantDateList?.length > 0 && this.currentIndex != 0) {
+      }
+      else if (operation == Operations.REW && this.significantDateList?.length > 0 && this.currentIndex != 0) {
         if (!this.currentIndex) {
+          //get the last index from the significantDateList array
           this.currentIndex = ((this.significantDateList?.length) - 1) - 1;
-        } else {
+        }
+        else {
           this.currentIndex = this.currentIndex - 1;
         }
         resultingDate = this.significantDateList[this.currentIndex];
+      }
+      if(!operation){ //User enter date manually
+        this.demoModeService.setLatestDate(this.form.controls['latestDate'].value);
       }
       this.form.controls['latestDate'].patchValue(resultingDate);
       this.demoModeService.setLatestDate(resultingDate);
@@ -97,4 +106,7 @@ export class DemoModeComponent implements OnInit {
     return true;
   }
 
+  onDateChanged() {
+    console.log("change");
+  }
 }
