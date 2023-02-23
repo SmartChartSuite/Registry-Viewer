@@ -49,31 +49,26 @@ export class DemoModeComponent implements OnInit {
     if (this.form.valid) {
       const currentDate = this.form.controls['latestDate'].value;
       let resultingDate = currentDate;
-      const offset = 7; // one week offset
+      let offset = 0;
       if (operation == Operations.NEXT && this.form.valid) {
-        // Advance by the number of days in offset
+        offset = 7;
         resultingDate = new Date(currentDate.setDate(resultingDate.getDate() + offset));
-      }
-      else if (operation == Operations.PREVIOUS && this.form.valid) {
-        // Go back by the number of days in the offset
-        resultingDate = new Date(currentDate.setDate(resultingDate.getDate() - offset));
-      }
-      else if (operation == Operations.FF && this.significantDateList?.length > 0) {
+      } else if (operation == Operations.PREVIOUS && this.form.valid) {
+        offset = -7;
+        resultingDate = new Date(currentDate.setDate(resultingDate.getDate() + offset));
+      } else if (operation == Operations.FF && this.significantDateList?.length > 0) {
         if ((!this.currentIndex && !(this.currentIndex == 0))
           || this.currentIndex >= (this.significantDateList?.length - 1)) {
           this.currentIndex = this.significantDateList?.length - 1
-        }
-        else if (this.currentIndex == this.significantDateList?.length || this.currentIndex >= 0) {
+        } else if (this.currentIndex == this.significantDateList?.length || this.currentIndex >= 0) {
           this.currentIndex = this.currentIndex + 1;
         }
         resultingDate = this.significantDateList[this.currentIndex];
-      }
-      else if (operation == Operations.REW && this.significantDateList?.length > 0 && this.currentIndex != 0) {
+      } else if (operation == Operations.REW && this.significantDateList?.length > 0 && this.currentIndex != 0) {
         if (!this.currentIndex) {
           //get the last index from the significantDateList array
           this.currentIndex = ((this.significantDateList?.length) - 1) - 1;
-        }
-        else {
+        } else {
           this.currentIndex = this.currentIndex - 1;
         }
         resultingDate = this.significantDateList[this.currentIndex];
