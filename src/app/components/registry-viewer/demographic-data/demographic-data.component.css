@@ -1,6 +1,84 @@
-/*.tile {*/
-/*  height: 90%; display: flex; justify-content: flex-start;*/
-/*}*/
-.demographics{
-  font-size: 12px; margin-left: 2em; line-height: 1.4; margin-top: 0.5em;
+.viewer-header-label {
+  margin: 5px;
+  font-size: medium;
+}
+.viewer-header-title {
+  text-decoration: underline;
+  padding: 10px;
+}
+
+.tool-bars {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+.row {
+  display: flex;  /* aligns all child elements (flex items) in a row */
+}
+
+.app-demo{
+  margin-left: 8px; border-left-color: #303f9f; border-left-width: 1px; border-left-style: solid;
+}
+
+.container {
+  display: flex;
+  align-items: center; /* Change this line */
+  justify-content: space-between;
+  height: 100%;
+}
+
+.item {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.item:first-child {
+  flex-basis: 20%;
+}
+.item:nth-child(1),
+.item:nth-child(2),
+.item:nth-child(3),
+.item:nth-child(4) {
+  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+.item:first-child.row,
+.item:nth-child(2) .row,
+.item:nth-child(3) .row,
+.item:nth-child(4) .row {
+  display: flex;
+}
+
+.item:first-child .cell,
+.item:nth-child(2) .cell,
+.item:nth-child(3) .cell,
+.item:nth-child(4) .cell {
+  flex: 1;
+}
+
+.item:first-child  .row:first-child .cell:first-child,
+.item:first-child  .row:last-child .cell:last-child,
+.item:nth-child(2) .row:first-child .cell:first-child,
+.item:nth-child(2) .row:last-child .cell:last-child,
+.item:nth-child(3) .row:first-child .cell:first-child,
+.item:nth-child(3) .row:last-child .cell:last-child,
+.item:nth-child(4) .row:first-child .cell:first-child,
+.item:nth-child(4) .row:last-child .cell:last-child {
+}
+
+.item:last-child {
+  flex-basis: 40%;
+}
+
+.center-align {
+  display: flex;
+  align-items: center;
+}
+
+.right-align {
+  text-align: right;
+  margin-right: 4px
 }
