@@ -7,11 +7,17 @@ import {CaseRecordsService} from "../../service/case-records.service";
 import {CaseRecord} from "../../model/case.record";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {CaseRecordApiResponse} from "../../model/case.record.api.response";
+import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
+import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 
 @Component({
   selector: 'app-case-explorer',
   templateUrl: './case-explorer.component.html',
   styleUrls: ['./case-explorer.component.css'],
+  providers: [
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ]
 })
 export class CaseExplorerComponent implements OnInit {
 
