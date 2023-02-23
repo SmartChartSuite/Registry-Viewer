@@ -138,8 +138,7 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
           });
           if (this.latestDate) {
             data = data.filter(caseRecord => {
-              const caseRecordDate = new Date(parseInt(caseRecord.date, 10));
-              return caseRecordDate <= this.latestDate
+              return caseRecord.date <= this.latestDate.getTime()
             });
           }
         }

@@ -72,4 +72,24 @@ export class DemoModeComponent implements OnInit {
     }
   }
 
+  isNextEnabled(): boolean {
+    if(!this.significantDateList?.length || this.significantDateList?.length == 1 || !this.form.valid) {
+      return false;
+    }
+    if(this.significantDateList[this.significantDateList.length -1].getTime() <= this.form.controls['latestDate'].value.getTime()){
+      return false;
+    }
+    return true;
+  }
+
+  isPreviousEnabled(): boolean {
+    if(!this.significantDateList?.length || this.significantDateList?.length == 1 || !this.form.valid){
+      return false;
+    }
+    if(this.significantDateList[0].getTime() >= this.form.controls['latestDate'].value.getTime()){
+      return false;
+    }
+    return true;
+  }
+
 }

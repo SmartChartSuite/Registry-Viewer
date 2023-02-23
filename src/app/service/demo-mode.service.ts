@@ -42,19 +42,18 @@ export class DemoModeService {
       this.significantDateList.next([]);
     }
     else {
-      const uniqueDatesSet: Set<Date> = new Set();
+      const uniqueDatesSet: Set<any> = new Set();
       objectList.forEach(entry => {
         if(entry.date) {
-          // this code may be bug and error-prone since we are using a specific format for working with the dates.
-          const date: Date = new Date(parseInt(entry.date, 10));
-          uniqueDatesSet.add(date);
+          uniqueDatesSet.add(entry.date);
         }
       });
       const uniqueDatesList = Array.from(uniqueDatesSet);
       const sortedDatesList = uniqueDatesList.sort(function(a,b){
         return a.valueOf() - b.valueOf();
       });
-      this.significantDateList.next(sortedDatesList);
+      const mappedList = sortedDatesList.map(date => new Date(parseInt(date, 10)));
+      this.significantDateList.next(mappedList);
     }
   }
 

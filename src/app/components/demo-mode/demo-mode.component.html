@@ -1,14 +1,28 @@
 <div class="demo-container">
 
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.REW)" matTooltip="Previous">
-    keyboard_double_arrow_left
-  </mat-icon>
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.PREVIOUS)" matTooltip="Reverse one week">
-    chevron_left
-  </mat-icon>
+  <button
+    mat-icon-button
+    color="primary" matTooltip="Previous" aria-label="Previous"
+    [disabled]="!isPreviousEnabled()"
+    color="primary"
+    (click)="onChangeDate(Operations.REW)">
+    <mat-icon>
+      keyboard_double_arrow_left
+    </mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    color="primary" matTooltip="Reverse one week" aria-label="Reverse one week"
+    [disabled]="!isPreviousEnabled()"
+    (click)="onChangeDate(Operations.PREVIOUS)">
+    <mat-icon  >
+      chevron_left
+    </mat-icon>
+  </button>
 
   <form [formGroup]="form">
-    <mat-form-field style="margin-right: 8px">
+    <mat-form-field>
       <mat-label>Select Latest Date</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="latestDate">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -16,12 +30,25 @@
     </mat-form-field>
   </form>
 
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.NEXT)" matTooltip="Advance one week">
-    navigate_next
-  </mat-icon>
-  <mat-icon class="demo-icon" color="primary" (click)="onChangeDate(Operations.FF)" matTooltip="Next">
-    keyboard_double_arrow_right
-  </mat-icon>
+  <button
+    mat-icon-button
+    color="primary" matTooltip="Advance one week" aria-label="Advance one week"
+    [disabled]="!isNextEnabled()"
+    (click)="onChangeDate(Operations.NEXT)">
+    <mat-icon>
+      navigate_next
+    </mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    color="primary" matTooltip="Next" aria-label="Next"
+    [disabled]="!isNextEnabled()"
+    (click)="onChangeDate(Operations.FF)">
+    <mat-icon>
+      keyboard_double_arrow_right
+    </mat-icon>
+  </button>
   <label>
     Records Found: {{count}}</label>
 </div>
