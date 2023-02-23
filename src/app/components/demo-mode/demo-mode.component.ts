@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DemoModeService} from "../../service/demo-mode.service";
-import {UtilsService} from "../../service/utils.service";
+import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
+import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 
 export enum Operations {
   FF = 'FF',
@@ -13,7 +14,11 @@ export enum Operations {
 @Component({
   selector: 'app-demo-mode',
   templateUrl: './demo-mode.component.html',
-  styleUrls: ['./demo-mode.component.css']
+  styleUrls: ['./demo-mode.component.css'],
+  providers: [
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ]
 })
 export class DemoModeComponent implements OnInit {
   Operations = Operations;
@@ -25,7 +30,7 @@ export class DemoModeComponent implements OnInit {
   significantDateList: Date[];
   currentIndex = null;
 
-  constructor( private demoModeService: DemoModeService, private utilsService: UtilsService ) { }
+  constructor( private demoModeService: DemoModeService) { }
 
   ngOnInit(): void {
     this.demoModeService.recordsCount$.subscribe({next: value => this.count = value});
