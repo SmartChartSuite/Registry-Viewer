@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DemoModeService} from "../../service/demo-mode.service";
-import {UtilsService} from "../../service/utils.service";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 
@@ -31,7 +30,7 @@ export class DemoModeComponent implements OnInit {
   significantDateList: Date[];
   currentIndex = null;
 
-  constructor( private demoModeService: DemoModeService, private utilsService: UtilsService ) { }
+  constructor( private demoModeService: DemoModeService) { }
 
   ngOnInit(): void {
     this.demoModeService.recordsCount$.subscribe({next: value => this.count = value});
@@ -74,13 +73,11 @@ export class DemoModeComponent implements OnInit {
         resultingDate = this.significantDateList[this.currentIndex];
       }
       this.form.controls['latestDate'].patchValue(resultingDate);
-      //this.form.controls['latestDate'].patchValue(this.utilsService.convertDate(resultingDate));
       this.demoModeService.setLatestDate(resultingDate);
     }
   }
 
   isNextEnabled(): boolean {
-    console.log(this.form.controls['latestDate'].value);
     if(!this.significantDateList?.length || this.significantDateList?.length == 1 || !this.form.valid) {
       return false;
     }
