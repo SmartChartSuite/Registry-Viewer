@@ -90,13 +90,6 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
       });
 
     this.initTableObservables();
-
-    this.demoModeService.latestDate$.subscribe({
-      next: value => {
-        this.latestDate = value;
-        setTimeout(() => this.onSectionSelectionChange())
-      }
-    });
   }
 
   initData() {
@@ -120,27 +113,14 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
     }
   }
 
-  setTableData(data){
-    this.table.data = data;
-  }
-
   getData(filterList: string[]) {
     this.caseRecordsSubscription$ = this.caseRecordsService.caseRecordChronologicalData$.subscribe({
       next: value => {
-        if(value?.length){
-          this.demoModeService.setSignificantDateList(value);
-        }
-        let data = [];
+        let data = value
         if (filterList?.length > 0) {
-          // the multi-sort table does not inherit the filters for the mat table, but filtering our data is quite trivial.
-          data = value.filter(caseRecord => {
+          data = data.filter(caseRecord => {
             return filterList.indexOf(caseRecord.section) != -1
           });
-          if (this.latestDate) {
-            data = data.filter(caseRecord => {
-              return caseRecord.date <= this.latestDate.getTime()
-            });
-          }
         }
         if(data && data.length) {
           this.caseRecordChronologicalData = data;
