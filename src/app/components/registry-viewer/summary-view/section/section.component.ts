@@ -8,6 +8,7 @@ import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ChronologicalCaseRecord} from "../../../../model/chronological.case.record";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ActivatedRoute} from "@angular/router";
+import {DemoModeService} from "../../../../service/demo-mode.service";
 
 @Component({
   selector: 'app-section',
@@ -32,7 +33,8 @@ export class SectionComponent implements OnInit, OnDestroy {
     private caseRecordsService: CaseRecordsService,
     private drawerService: DrawerService,
     private dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private demoModeService: DemoModeService
   ) { }
 
   data: ChronologicalCaseRecord[];
@@ -43,6 +45,7 @@ export class SectionComponent implements OnInit, OnDestroy {
   selectedRow: any;
   selectedRowSubscription$: Subscription;
   caseRecordSubscription$: Subscription;
+  latestDate: Date = null;
 
   private extractCategories(data: any, key: string): string[]{
     let result : string[] = [];
@@ -91,10 +94,23 @@ export class SectionComponent implements OnInit, OnDestroy {
               const textB = b.category.toUpperCase();
               return (textA < textB) ? -1 : (textA < textB) ? 1 : 0;
             });
-          this.dataSource.data = categorised;
+          if(this.latestDate && categorised){
+            this.dataSource.data = this.filterBasedOnLatestDate(this.latestDate, categorised);
+          }
+          else {
+            this.dataSource.data = categorised;
+          }
+        }
+      });
+
+    this.demoModeService.latestDate$.subscribe({
+      next: latestDate => {
+        if(latestDate && this.data?.length > 1){
+          this.latestDate = latestDate;
+          this.dataSource.data = this.filterBasedOnLatestDate(this.latestDate, this.dataSource.data);
         }
       }
-    );
+    });
 
     this.selectedRowSubscription$ = this.caseRecordsService.selectedCaseRecord$.subscribe({
       next: value => this.selectedRow = value
@@ -142,5 +158,20 @@ export class SectionComponent implements OnInit, OnDestroy {
     else {
       return "Add " + section;
     }
+  }
+
+  private filterBasedOnLatestDate(latestDate: Date, data) {
+    // console.log(data[0].data = data[0].data.filter(element => element.date <= latestDate));
+    // const filtered = data.map(record => {
+    //   const innerList = record?.data?.filter(value => {
+    //     console.log(value.date);
+    //     console.log(latestDate);
+    //     return value.date <= latestDate.getTime();
+    //   })
+    //   return innerList
+    // });
+   //console.log(filtered);
+
+    return data;
   }
 }

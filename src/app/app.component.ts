@@ -21,14 +21,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.demoModeService.isChronologicalViewActive$.subscribe({
-      next: value => {
-        this.isChronologicalViewActive = value;
-        if(!value){
-          this.demoModeService.setDemoModeActive(false);
-        }
-      }
-    });
     this.demoModeService.isDemoModeActive$.subscribe({
       next: value => this.isDemoModeActive = value
     });
@@ -37,7 +29,6 @@ export class AppComponent implements OnInit {
   onRouteChanged(route: string) {
     this.router.navigate([route]);
     this.demoModeService.setDemoModeActive(false);
-    this.demoModeService.setChronologicalViewActive(false);
   }
 
   onToggleDemoMode() {
@@ -49,7 +40,7 @@ export class AppComponent implements OnInit {
   }
 
   isDemoModeEnabled() {
-    return this.router.url.indexOf('registry-viewer') != -1  && this.isChronologicalViewActive;
+    return this.router.url.indexOf('registry-viewer') != -1;
   }
 
 }

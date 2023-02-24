@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {DrawerService} from "../../service/drawer.service";
 import {CaseRecordsService} from "../../service/case-records.service";
@@ -50,7 +50,6 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   }
 
   onViewSelected(isDefaultView: boolean) {
-    this.demoModeService.setChronologicalViewActive(!isDefaultView);
     this.isDefaultViewActive = isDefaultView;
     this.caseRecordsService.setSelectedRecord(null);
     this.sidenavService.close();
