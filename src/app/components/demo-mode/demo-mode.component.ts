@@ -36,7 +36,6 @@ export class DemoModeComponent implements OnInit {
     this.demoModeService.recordsCount$.subscribe({next: value => this.count = value});
     this.demoModeService.significantDateList$.subscribe({
       next: value => {
-        console.log("I only run once");
         this.significantDateList = value;
         const lastSignificantDate = this.significantDateList?.[this.significantDateList.length - 1];
         if(lastSignificantDate && !(this.form.controls['latestDate'].value instanceof Date)){
