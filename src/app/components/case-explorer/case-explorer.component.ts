@@ -13,7 +13,7 @@ import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker
 @Component({
   selector: 'app-case-explorer',
   templateUrl: './case-explorer.component.html',
-  styleUrls: ['./case-explorer.component.css'],
+  styleUrls: ['./case-explorer.component.scss'],
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}

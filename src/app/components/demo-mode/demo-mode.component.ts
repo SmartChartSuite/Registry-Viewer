@@ -14,7 +14,7 @@ export enum Operations {
 @Component({
   selector: 'app-demo-mode',
   templateUrl: './demo-mode.component.html',
-  styleUrls: ['./demo-mode.component.css'],
+  styleUrls: ['./demo-mode.component.scss'],
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}

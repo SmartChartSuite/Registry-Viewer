@@ -7,7 +7,7 @@ import {DemoModeService} from "../../../service/demo-mode.service";
 @Component({
   selector: 'app-demographic-data',
   templateUrl: './demographic-data.component.html',
-  styleUrls: ['./demographic-data.component.css']
+  styleUrls: ['./demographic-data.component.scss']
 })
 export class DemographicDataComponent implements OnInit {
 

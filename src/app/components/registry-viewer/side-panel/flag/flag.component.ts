@@ -9,7 +9,7 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 @Component({
   selector: 'app-flag',
   templateUrl: './flag.component.html',
-  styleUrls: ['./flag.component.css']
+  styleUrls: ['./flag.component.scss']
 })
 export class FlagComponent implements OnInit, OnDestroy {
 

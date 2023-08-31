@@ -9,7 +9,7 @@ import {DemoModeService} from "../../service/demo-mode.service";
 @Component({
   selector: 'app-registry-viewer',
   templateUrl: './registry-viewer.component.html',
-  styleUrls: ['./registry-viewer.component.css']
+  styleUrls: ['./registry-viewer.component.scss']
 })
 export class RegistryViewerComponent implements OnInit, AfterViewInit {
 

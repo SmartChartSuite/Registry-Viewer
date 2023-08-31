@@ -13,7 +13,7 @@ import {openAnnotationDialog} from "../../add-record-dialog/add-record-dialog.co
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.css', '../../registry-viewer.component.css'],
+  styleUrls: ['./section.component.scss', '../../registry-viewer.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),

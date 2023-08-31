@@ -12,7 +12,7 @@ let AppDateAdapter;
 @Component({
   selector: 'app-add-record-dialog',
   templateUrl: './add-record-dialog.component.html',
-  styleUrls: ['./add-record-dialog.component.css'],
+  styleUrls: ['./add-record-dialog.component.scss'],
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}

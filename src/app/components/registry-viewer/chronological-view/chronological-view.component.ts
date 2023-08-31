@@ -12,7 +12,7 @@ import {DemoModeService} from "../../../service/demo-mode.service";
 @Component({
   selector: 'app-chronological-view',
   templateUrl: './chronological-view.component.html',
-  styleUrls: ['./chronological-view.component.css']
+  styleUrls: ['./chronological-view.component.scss']
 })
 export class ChronologicalViewComponent implements OnInit, OnDestroy{
 

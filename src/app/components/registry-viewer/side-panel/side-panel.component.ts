@@ -5,7 +5,7 @@ import {DrawerService} from "../../../service/drawer.service";
 @Component({
   selector: 'app-side-panel',
   templateUrl: './side-panel.component.html',
-  styleUrls: ['./side-panel.component.css']
+  styleUrls: ['./side-panel.component.scss']
 })
 export class SidePanelComponent {
 
