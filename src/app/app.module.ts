@@ -43,6 +43,10 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {DemoModeComponent} from "./components/demo-mode/demo-mode.component";
+import {ConfigService} from "./service/config.service";
+export const configFactory = (configService: ConfigService) => {
+  return () => configService.loadConfig();
+};
 
 
 @NgModule({

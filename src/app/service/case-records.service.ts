@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, map, Observable} from "rxjs";
-import {CaseRecordApiResponse} from "../model/case.record.api.response";
-import {CaseRecord} from "../model/case.record";
-import {environment} from "../../environments/environment";
-import {ChronologicalCaseRecord} from "../model/chronological.case.record";
-import {Annotation} from "../model/annotation";
-import {Question} from "../model/question";
+import {CaseRecordApiResponse} from "../domani/case.record.api.response";
+import {CaseRecord} from "../domani/case.record";
+import {ChronologicalCaseRecord} from "../domani/chronological.case.record";
+import {Annotation} from "../domani/annotation";
+import {Question} from "../domani/question";
 import {DemoModeService} from "./demo-mode.service";
+import {EnvironmentHandlerService} from "./environment-handler.service";
 
 @Injectable({
   providedIn: 'root'
@@ -24,14 +24,18 @@ export class CaseRecordsService {
   sections: string[] = [];
   sections$: BehaviorSubject<string[]>;
 
+  baseApiUrl: string;
+
   selectedCaseRecord: any;
   selectedCaseRecord$: BehaviorSubject<any>;
 
-  constructor(private http: HttpClient, private demoModeService: DemoModeService) {
+  constructor(private http: HttpClient, private demoModeService: DemoModeService, private environmentHandler: EnvironmentHandlerService) {
     this.caseRecordChronologicalData$ = new BehaviorSubject(this.caseRecordChronologicalData);
     this.caseRecordChronologicalDataStored$ = new BehaviorSubject(this.caseRecordChronologicalDataStored);
     this.sections$ = new BehaviorSubject(this.sections);
     this.selectedCaseRecord$ = new BehaviorSubject(this.sections);
+    this.baseApiUrl = this.environmentHandler.getBaseApiURL();
+
     this.demoModeService.latestDate$.subscribe({
       next: latestDate => {if(latestDate){this.filterLatestDateData(latestDate, this.caseRecordChronologicalDataStored$.value)}}
     });
@@ -49,7 +53,7 @@ export class CaseRecordsService {
       params = new HttpParams().set("caseId", caseId).set("contentId", contentId);
     }
 
-    return this.http.put(environment.apiUrl + 'case-record', keyValue, {params}).pipe(
+    return this.http.put(this.baseApiUrl + 'case-record', keyValue, {params}).pipe(
       map((result: any) => {
         this.getByCaseId(caseId).subscribe();
         }
@@ -68,7 +72,7 @@ export class CaseRecordsService {
       options = { params: httpParams };
     }
 
-    return this.http.get(environment.apiUrl + 'search-cases', options).pipe(
+    return this.http.get(this.baseApiUrl + 'search-cases', options).pipe(
       map((result: any) => {
         let caseList: CaseRecord[] = result.cases.map(
           (element: any) => {
@@ -105,7 +109,7 @@ export class CaseRecordsService {
       const httpParams = new HttpParams().set('caseId', caseId);
       options = { params: httpParams };
     }
-    return this.http.get(environment.apiUrl + 'case-record',  options).pipe(
+    return this.http.get(this.baseApiUrl + 'case-record',  options).pipe(
       map((result: any) => {
         const mappedCaseRecords = this.createCaseRecordChronologicalData(result);
         if(this.selectedCaseRecord$?.value?.contentId && mappedCaseRecords.length > 0){
@@ -129,7 +133,7 @@ export class CaseRecordsService {
     const httpParams = new HttpParams().set('section', section);
     const options = { params: httpParams };
 
-    return this.http.get(environment.apiUrl + 'questions',  options).pipe(
+    return this.http.get(this.baseApiUrl + 'questions',  options).pipe(
       map((result: any) => {
           return result;
         }

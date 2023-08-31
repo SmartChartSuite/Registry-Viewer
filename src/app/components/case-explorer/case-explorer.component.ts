@@ -4,9 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordsService} from "../../service/case-records.service";
-import {CaseRecord} from "../../model/case.record";
+import {CaseRecord} from "../../domani/case.record";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {CaseRecordApiResponse} from "../../model/case.record.api.response";
+import {CaseRecordApiResponse} from "../../domani/case.record.api.response";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 

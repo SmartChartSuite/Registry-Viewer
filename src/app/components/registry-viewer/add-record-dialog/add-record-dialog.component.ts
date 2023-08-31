@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
-import {Question} from "../../../model/question";
+import {Question} from "../../../domani/question";
 import {CaseRecordsService} from "../../../service/case-records.service";
 import {UtilsService} from "../../../service/utils.service";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
@@ -78,7 +78,7 @@ export class AddRecordDialogComponent implements OnInit {
     this.submitted = true;
     this.form.markAllAsTouched();
 
-    //TODO we may need to change this to a specific type and add a class to the model
+    //TODO we may need to change this to a specific type and add a class to the domani
     if(this.form.valid){
       let keyValueData = {
         manualCaseData:
