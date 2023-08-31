@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://apps.hdap.gatech.edu/registry-viewer-api/'
+  apiUrl: 'https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/search-cases'
 };
 
 /*

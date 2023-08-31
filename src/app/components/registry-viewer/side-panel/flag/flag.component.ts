@@ -1,10 +1,10 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {MatCheckboxChange} from "@angular/material/checkbox";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {DrawerService} from "../../../../service/drawer.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {Subscription} from "rxjs";
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-flag',
@@ -37,7 +37,7 @@ export class FlagComponent implements OnInit, OnDestroy {
     }
     this.caseRecordsService.updateCaseRecord({'flag': flagValue}, caseId, this.selectedCaseRecord?.contentId).subscribe(
       {
-        next: value => this.utilsService.showSuccessMessage("Flag updated successfully"),
+        next: () => this.utilsService.showSuccessMessage("Flag updated successfully"),
         error: (err)=> {console.error(err); this.utilsService.showErrorMessage("Unable to upload the record. Server error.")
         }
       }

@@ -1,12 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import {Question} from "../../../model/question";
 import {CaseRecordsService} from "../../../service/case-records.service";
 import {UtilsService} from "../../../service/utils.service";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
-import {APP_DATE_FORMATS, AppDateAdapter} from "../../../provider/format-datepicker";
+import {APP_DATE_FORMATS} from "../../../provider/format-datepicker";
 
+let AppDateAdapter;
 
 @Component({
   selector: 'app-add-record-dialog',
@@ -32,7 +33,7 @@ export class AddRecordDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private dialogRef: MatDialogRef<any>,
     private caseRecordsService: CaseRecordsService,
     private utilsService: UtilsService
@@ -66,10 +67,10 @@ export class AddRecordDialogComponent implements OnInit {
   updateCaseRecord(keyValue: any): void{
     const caseId =  this.data.caseId;
     this.caseRecordsService.updateCaseRecord(keyValue, caseId).subscribe({
-      next: value => {
+      next: ()=> {
         this.submitted = false; this.utilsService.showSuccessMessage("Record updated successfully")
       },
-      error: err => this.utilsService.showErrorMessage("Server Error. Unable to update record."),
+      error: () => this.utilsService.showErrorMessage("Server Error. Unable to update record."),
     })
   }
 

@@ -24,7 +24,7 @@ export class DemoModeComponent implements OnInit {
   Operations = Operations;
   operation: Operations;
   form = new FormGroup({
-    latestDate: new FormControl([Validators.required]),
+    latestDate: new FormControl(null, [Validators.required]),
   });
   count: number = 0;
   significantDateList: Date[];

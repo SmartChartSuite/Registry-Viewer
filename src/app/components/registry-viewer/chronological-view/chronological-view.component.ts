@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {MatMultiSort, MatMultiSortTableDataSource, TableData} from "ngx-mat-multi-sort";
 import {CaseRecordsService} from "../../../service/case-records.service";
-import {FormControl} from "@angular/forms";
+import {UntypedFormControl} from "@angular/forms";
 import {ChronologicalCaseRecord} from "../../../model/chronological.case.record";
 import {DrawerService} from "../../../service/drawer.service";
 import {Subscription} from "rxjs";
@@ -28,7 +28,7 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
   @ViewChild(MatMultiSort) sort: MatMultiSort;
   caseRecordsSubscription$: Subscription;
   table: TableData<any>;
-  selectedSectionFormControl = new FormControl();
+  selectedSectionFormControl = new UntypedFormControl();
   selectedSections: any;
   selectedRow: ChronologicalCaseRecord;
   caseRecordChronologicalData: ChronologicalCaseRecord[];
