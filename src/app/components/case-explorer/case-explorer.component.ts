@@ -5,7 +5,7 @@ import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {CaseRecord} from "../../model/case.record";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
 import {CaseRecordApiResponse} from "../../model/case.record.api.response";
 
 @Component({
@@ -22,13 +22,13 @@ export class CaseExplorerComponent implements OnInit {
   dataSource : MatTableDataSource<CaseRecord>;
   displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'status'];
   isLoading = true;
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private caseRecordsService: CaseRecordsService,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
   ) { }
 
   getCaseRecords(searchTerms?: string[]): void {

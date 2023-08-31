@@ -4,7 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {DrawerService} from "../../../../service/drawer.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {Observable, Subscription} from "rxjs";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {Annotation} from "../../../../model/annotation";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {ConformationDialogComponent} from "../../../conformation-dialog/conformation-dialog.component";
@@ -19,7 +19,7 @@ export class AnnotationsComponent implements OnInit {
 
   isAddAnnotationInputVisible = false;
   annotationList: Annotation []= [];
-  form : FormGroup = new FormGroup({annotation: new FormControl('', [Validators.required])});
+  form : UntypedFormGroup = new UntypedFormGroup({annotation: new UntypedFormControl('', [Validators.required])});
   selectedCaseRecord: any;
   selectedCaseRecordSubscription$: Subscription;
   submitted = false;
