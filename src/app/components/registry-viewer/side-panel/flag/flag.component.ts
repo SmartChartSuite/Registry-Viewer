@@ -1,5 +1,5 @@
 import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {MatCheckboxChange} from "@angular/material/checkbox";
+import {MatLegacyCheckboxChange as MatCheckboxChange} from "@angular/material/legacy-checkbox";
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {DrawerService} from "../../../../service/drawer.service";

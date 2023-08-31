@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
+import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {DrawerService} from "../../../../service/drawer.service";
-import {MatDialog} from "@angular/material/dialog";
+import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {openAnnotationDialog} from "../../add-record-dialog/add-record-dialog.component";
 import {filter, Subscription} from "rxjs";
 import {CaseRecordsService} from "../../../../service/case-records.service";

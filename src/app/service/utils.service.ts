@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatLegacySnackBar as MatSnackBar, MatLegacySnackBarModule as MatSnackBarModule} from "@angular/material/legacy-snack-bar";
 
 @Injectable({
   providedIn: 'root'
