@@ -1,13 +1,13 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
 import {DrawerService} from "../../../../service/drawer.service";
-import {MatLegacyDialog as MatDialog} from "@angular/material/legacy-dialog";
 import {openAnnotationDialog} from "../../add-record-dialog/add-record-dialog.component";
 import {filter, Subscription} from "rxjs";
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ChronologicalCaseRecord} from "../../../../model/chronological.case.record";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ActivatedRoute} from "@angular/router";
+import {MatTableDataSource} from "@angular/material/table";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-section',

@@ -1,10 +1,10 @@
 import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {MatLegacyCheckboxChange as MatCheckboxChange} from "@angular/material/legacy-checkbox";
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {DrawerService} from "../../../../service/drawer.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {Subscription} from "rxjs";
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-flag',

@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {MatLegacyTableDataSource as MatTableDataSource} from "@angular/material/legacy-table";
-import {MatLegacyPaginator as MatPaginator} from '@angular/material/legacy-paginator';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {CaseRecord} from "../../model/case.record";
 import {UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
 import {CaseRecordApiResponse} from "../../model/case.record.api.response";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-case-explorer',

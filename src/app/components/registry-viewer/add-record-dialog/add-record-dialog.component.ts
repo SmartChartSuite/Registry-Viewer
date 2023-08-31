@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UntypedFormBuilder, Validators} from "@angular/forms";
-import {MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig, MatLegacyDialogRef as MatDialogRef} from "@angular/material/legacy-dialog";
 import {Question} from "../../../model/question";
 import {CaseRecordsService} from "../../../service/case-records.service";
 import {UtilsService} from "../../../service/utils.service";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 
 
 @Component({

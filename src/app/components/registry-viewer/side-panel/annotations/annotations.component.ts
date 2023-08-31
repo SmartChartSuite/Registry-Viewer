@@ -6,8 +6,8 @@ import {UtilsService} from "../../../../service/utils.service";
 import {Observable, Subscription} from "rxjs";
 import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {Annotation} from "../../../../model/annotation";
-import {MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig} from "@angular/material/legacy-dialog";
 import {ConformationDialogComponent} from "../../../conformation-dialog/conformation-dialog.component";
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-annotations',
