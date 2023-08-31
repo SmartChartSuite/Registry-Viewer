@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {DrawerService} from "../../service/drawer.service";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
+import {DemoModeService} from "../../service/demo-mode.service";
 
 
 @Component({
@@ -20,7 +21,8 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
 
   constructor(private sidenavService: DrawerService,
               private caseRecordsService: CaseRecordsService,
-              private route: ActivatedRoute,) {
+              private route: ActivatedRoute,
+              private demoModeService: DemoModeService) {
   }
 
   setMatCardContentHeight(windowSize: number){

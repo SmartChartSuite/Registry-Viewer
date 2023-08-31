@@ -7,6 +7,7 @@ import {environment} from "../../environments/environment";
 import {ChronologicalCaseRecord} from "../model/chronological.case.record";
 import {Annotation} from "../model/annotation";
 import {Question} from "../model/question";
+import {DemoModeService} from "./demo-mode.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +18,23 @@ export class CaseRecordsService {
   caseRecordChronologicalData:  ChronologicalCaseRecord [] = [];
   caseRecordChronologicalData$: BehaviorSubject<ChronologicalCaseRecord []>;
 
+  caseRecordChronologicalDataStored:  ChronologicalCaseRecord [] = [];
+  caseRecordChronologicalDataStored$: BehaviorSubject<ChronologicalCaseRecord []>;
+
   sections: string[] = [];
   sections$: BehaviorSubject<string[]>;
 
   selectedCaseRecord: any;
   selectedCaseRecord$: BehaviorSubject<any>;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private demoModeService: DemoModeService) {
     this.caseRecordChronologicalData$ = new BehaviorSubject(this.caseRecordChronologicalData);
+    this.caseRecordChronologicalDataStored$ = new BehaviorSubject(this.caseRecordChronologicalDataStored);
     this.sections$ = new BehaviorSubject(this.sections);
     this.selectedCaseRecord$ = new BehaviorSubject(this.sections);
+    this.demoModeService.latestDate$.subscribe({
+      next: latestDate => {if(latestDate){this.filterLatestDateData(latestDate, this.caseRecordChronologicalDataStored$.value)}}
+    });
   }
 
   setSelectedRecord(selectedCaseRecord) {
@@ -53,7 +61,7 @@ export class CaseRecordsService {
     let options = {};
     if(searchTerms?.length>0 ||fieldsList?.length> 0){
       const terms: string = searchTerms.join(', ');
-      const fields: string = fieldsList.join(', ');
+      const fields: string = fieldsList?.length ? fieldsList.join(', '): '';
       const httpParams = new HttpParams()
         .set('terms', terms)
         .set('fields', fields)
@@ -107,7 +115,9 @@ export class CaseRecordsService {
           this.setSelectedRecord(updatedSelectedRecord);
         }
         this.caseRecordChronologicalData$.next(mappedCaseRecords);
-        this.sections$.next(this.extractSectionList(result))
+        this.caseRecordChronologicalDataStored$.next(mappedCaseRecords);
+        this.sections$.next(this.extractSectionList(result));
+        this.demoModeService.setSignificantDateList(mappedCaseRecords);
         return result;
         }
       ),
@@ -188,4 +198,10 @@ export class CaseRecordsService {
 
   }
 
+  private filterLatestDateData(latestDate: Date, caseRecordChronologicalData: ChronologicalCaseRecord[]) {
+     const currentRecords = caseRecordChronologicalData.filter(caseRecord => {
+       return parseInt(caseRecord.date) <= latestDate.getTime();
+     });
+    this.caseRecordChronologicalData$.next(currentRecords);
+  }
 }

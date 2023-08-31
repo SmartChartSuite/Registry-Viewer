@@ -87,3 +87,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 .success-color{
   color: #28a745;
 }
+
+.primary-lighter {
+  background-color: #bfc8fa;
+}

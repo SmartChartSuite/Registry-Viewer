@@ -1,0 +1,11 @@
+.demo-container {
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-icon{
+  margin-right: 16px;
+  cursor: pointer;
+}

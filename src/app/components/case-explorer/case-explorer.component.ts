@@ -1,17 +1,23 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {MatTableDataSource} from "@angular/material/table";
+import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {CaseRecord} from "../../model/case.record";
-import {UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {CaseRecordApiResponse} from "../../model/case.record.api.response";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatTableDataSource} from "@angular/material/table";
+import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
+import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 
 @Component({
   selector: 'app-case-explorer',
   templateUrl: './case-explorer.component.html',
   styleUrls: ['./case-explorer.component.css'],
+  providers: [
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ]
 })
 export class CaseExplorerComponent implements OnInit {
 
@@ -22,13 +28,13 @@ export class CaseExplorerComponent implements OnInit {
   dataSource : MatTableDataSource<CaseRecord>;
   displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'status'];
   isLoading = true;
-  searchForm: UntypedFormGroup;
+  searchForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private caseRecordsService: CaseRecordsService,
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
   ) { }
 
   getCaseRecords(searchTerms?: string[]): void {

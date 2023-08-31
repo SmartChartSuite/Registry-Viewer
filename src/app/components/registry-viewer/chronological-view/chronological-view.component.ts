@@ -6,6 +6,7 @@ import {ChronologicalCaseRecord} from "../../../model/chronological.case.record"
 import {DrawerService} from "../../../service/drawer.service";
 import {Subscription} from "rxjs";
 import {MultiSortTableService} from "../../../service/multi-sort-table.service";
+import {DemoModeService} from "../../../service/demo-mode.service";
 
 
 @Component({
@@ -34,23 +35,17 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
   filterList = [];
   sections$: Subscription;
   sections: string[];
+  latestDate: any;
 
   constructor(
     private caseRecordsService: CaseRecordsService,
     private sidenavService: DrawerService,
-    private multiSortTableService: MultiSortTableService
+    private multiSortTableService: MultiSortTableService,
+    private demoModeService: DemoModeService
   ) {
 
-    // this.table = new TableData<any>([
-    //   { id: "date", name: "date" },
-    //   { id: "question", name: "question" },
-    //   { id: "value", name: "value" },
-    //   { id: "section", name: "section" },
-    //   { id: "category", name: "category" },
-    //   { id: "annotation", name: "annotation" },
-    // ], { defaultSortParams: ['date'], defaultSortDirs: ['desc'] });
     this.table = new TableData<any>([
-      { id: "contentId", name: "contentId" },
+      // { id: "contentId", name: "contentId" },
       { id: "date", name: "date" },
       { id: "question", name: "question" },
       { id: "value", name: "value" },
@@ -83,8 +78,17 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
       value => {
         this.sections = value;
         this.selectedSectionFormControl.patchValue(this.sections);
-        this.selectedSections = this.sections?.map((element) => ({name: element, selected: true}));
+        if (this.filterList.length) {
+          this.selectedSections = this.sections?.map(element => ({
+            name: element,
+            selected: (this.filterList.indexOf(element) != -1)
+          }));
+        }
+        else {
+          this.selectedSections = this.sections?.map(element => ({name: element, selected: true}));
+        }
       });
+
     this.initTableObservables();
   }
 
@@ -102,23 +106,21 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
       // when no filters are selected the data source filter does not run, and we need to empty the table manually
       this.table.data = [];
       this.table.totalElements = 0;
+      this.demoModeService.setRecordsCount(0);
     }
     else {
       this.getData(this.filterList);
     }
   }
 
-  setTableData(data){
-    this.table.data = data;
-  }
-
   getData(filterList: string[]) {
     this.caseRecordsSubscription$ = this.caseRecordsService.caseRecordChronologicalData$.subscribe({
       next: value => {
-        let data = value;
-        if(filterList?.length > 0) {
-          // the multi-sort table does not inherit the filters for the mat table, but filtering our data is quite trivial.
-          data = value.filter((caseRecord)=> filterList.indexOf(caseRecord.section) != -1);
+        let data = value
+        if (filterList?.length > 0) {
+          data = data.filter(caseRecord => {
+            return filterList.indexOf(caseRecord.section) != -1
+          });
         }
         if(data && data.length) {
           this.caseRecordChronologicalData = data;
@@ -133,8 +135,16 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
           this.table.pageIndex = res.page;
           this.table.pageSize = res.pagesize;
           this.table.data = res.tableData;
+
+          this.demoModeService.setRecordsCount(data.length || 0);
+        }
+        else {
+          this.table.data = [];
+          this.table.totalElements = 0;
+          this.demoModeService.setRecordsCount(0);
+        }
       }
-    }});
+    });
   }
 
   onSelectRow(row) {
