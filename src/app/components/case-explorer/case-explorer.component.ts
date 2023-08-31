@@ -78,7 +78,7 @@ export class CaseExplorerComponent implements OnInit {
     if(dob){
       if(!searchTerms){
         searchTerms = [];
-      };
+      }
       const dobStr = this.getDateStr(dob);
       searchTerms.push(dobStr);
     }

@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {DrawerService} from "../../../../service/drawer.service";
@@ -37,7 +37,7 @@ export class FlagComponent implements OnInit, OnDestroy {
     }
     this.caseRecordsService.updateCaseRecord({'flag': flagValue}, caseId, this.selectedCaseRecord?.contentId).subscribe(
       {
-        next: value => this.utilsService.showSuccessMessage("Flag updated successfully"),
+        next: () => this.utilsService.showSuccessMessage("Flag updated successfully"),
         error: (err)=> {console.error(err); this.utilsService.showErrorMessage("Unable to upload the record. Server error.")
         }
       }

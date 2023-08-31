@@ -60,10 +60,10 @@ export class AddRecordDialogComponent implements OnInit {
   updateCaseRecord(keyValue: any): void{
     const caseId =  this.data.caseId;
     this.caseRecordsService.updateCaseRecord(keyValue, caseId).subscribe({
-      next: value => {
+      next: ()=> {
         this.submitted = false; this.utilsService.showSuccessMessage("Record updated successfully")
       },
-      error: err => this.utilsService.showErrorMessage("Server Error. Unable to update record."),
+      error: () => this.utilsService.showErrorMessage("Server Error. Unable to update record."),
     })
   }
 
