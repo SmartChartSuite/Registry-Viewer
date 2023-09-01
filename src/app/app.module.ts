@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -44,6 +44,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {DemoModeComponent} from "./components/demo-mode/demo-mode.component";
 import {ConfigService} from "./service/config.service";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { HeaderComponent } from './components/header/header.component';
+import { TestComponent } from './components/test/test.component';
+
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
 };
@@ -68,6 +72,8 @@ export const configFactory = (configService: ConfigService) => {
     SectionComponent,
     ConformationDialogComponent,
     DemoModeComponent,
+    HeaderComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,9 +102,18 @@ export const configFactory = (configService: ConfigService) => {
     MatProgressSpinnerModule,
     MatButtonToggleModule,
     MatButtonModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSnackBarModule
   ],
-  providers: [DrawerService, DatePipe],
+  providers: [
+    DrawerService,
+    DatePipe,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configFactory,
+      deps: [ConfigService],
+      multi: true
+    },],
   bootstrap: [AppComponent]
 })
 export class AppModule {
