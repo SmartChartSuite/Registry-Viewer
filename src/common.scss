@@ -1,0 +1,320 @@
+$primary-color: #607D8B; //TODO The primary color should be defined from angular material and the theme we want to use.
+/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; width: 100% }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+//app-root { display: flex; height: 100%; width: 100% }
+
+/**** Base SCSS Classes ****/
+/** DO NOT EDIT WITHOUT REVIEW **/
+.full-screen { height: 100%; width: 100%; }
+.flex {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  justify-content: stretch;
+  > * {
+    flex: 0 0 auto;
+  }
+}
+.flex-col { @extend .flex; flex-direction: column; }
+.flex-row { @extend .flex; flex-direction: row; }
+.flex-col-simple { display: flex; flex-direction: column; }
+.flex-row-simple { display: flex; flex-direction: row; }
+
+/* Scrolling and Pointers */
+.scrollable { overflow-y: scroll; scroll-behavior: smooth; }
+.pointer { cursor: pointer; }
+
+.center-contents { justify-items: center; text-align: center; align-self: center; }
+
+/* Margins and Paddings */
+$xs: 4px;
+$sm: 8px;
+$md: 16px;
+$lg: 24px;
+.margin-sm { margin: $sm; }
+.margin-md { margin: $md; }
+.margin-lg { margin: $lg; }
+.padding-xs { padding: $xs; }
+.padding-sm { padding: $sm; }
+.padding-md { padding: $md; }
+.padding-lg { padding: $lg; }
+// Add more of the following as needed.
+.margin-bottom-xs { margin-bottom: $xs; }
+.margin-bottom-sm { margin-bottom: $sm; }
+.margin-bottom-md { margin-bottom: $md; }
+.margin-top-xs { margin-top: $xs; }
+.margin-top-sm { margin-top: $sm; }
+.margin-top-md { margin-top: $md; }
+.margin-left-md { margin-left: $md; }
+.margin-right-md { margin-right: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-top-md { padding-top: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-left-md { padding-left: $md; }
+.padding-right-md { padding-right: $md; }
+.border-radius-xs { border-radius: $xs; }
+/**** END BASE CLASSES ****/
+
+/**** FHIR Logo ****/
+.hl7-fhir-logo-sm { height: 16px; }
+.hl7-fhir-logo-md { height: 32px; }
+.hl7-fhir-logo-lg { height: 48px; }
+.hl7-fhir-logo-disclaimer {
+  @extend .center-contents;
+  @extend .padding-md;
+  font-variant-caps: all-small-caps;
+}
+.hl7-fhir-logo-landing-page {
+  @extend .margin-right-md;
+  border-radius: $xs;
+  //border: 1px solid black;
+  background-color: white;
+  //filter: drop-shadow(1px 1px 3px $primary-color);
+}
+
+
+// DO NOT USE OUTSIDE OF app.component.html!!
+.app-wrapper { @extend .flex; @extend .full-screen; flex: 1; }
+.app-flex-wrapper { @extend .full-screen; @extend .flex-col; flex: 1; justify-content: stretch; align-items: stretch; }
+.app-header-wrapper {
+  width: 100%;
+  flex: 0;
+  display: flex;
+  flex-direction: row;
+  > common-header {
+    flex: 1
+  }
+}
+.app-body-wrapper {
+  @extend .flex-col;
+  flex: 1;
+  > * {
+    @extend .flex-col;
+    flex: 1;
+  }
+  > router-outlet {
+    flex: 0 0 auto;
+    margin: 0;
+  }
+}
+
+/** Generic Component Single Page Scrolling **/
+/** Body of the HTML Template for the *routed* component:
+ <div class="generic-component-wrapper">
+  <div class="generic-component-content">
+   <!-- Your content here. -->
+  </div>
+ </div>
+ */
+.generic-component-wrapper {
+  @extend .flex-col-simple; // Sets a basic flex display so child will fill it.
+  flex: 1;                  // Stretches to fill app component.
+  align-content: stretch;   // More stretching.
+  align-items: stretch;     // More stretching to fill!
+  overflow-y: hidden;       // Sets up overflow so that the inner content can be scrollable.
+  > .generic-component-content {
+    @extend .padding-md; // Sets default component padding.
+    @extend .scrollable; // Makes the content scrollable.
+    flex: 1;             // Stretches to fill wrapper.
+  }
+}
+
+/** Landing Page **/
+.landing-page-wrapper {
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > * {
+    @extend .flex-row-simple;
+    @extend .scrollable;
+    @extend .padding-md;
+    flex: 1;
+    > * {
+    }
+    > .landing-page-content {
+    }
+    > .option-tile-container {
+      @extend .flex-col-simple;
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+      > .flex-cell {
+        padding: 5px;
+        display: flex;
+      }
+    }
+  }
+}
+
+/** Record Viewer Container **/
+.viewer-container-wrapper {
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .viewer-container-header {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  > .viewer-container-body {
+    @extend .padding-md;
+    @extend .flex-row-simple;
+    flex: 1;
+    scroll-behavior: smooth;
+    overflow-y: hidden;
+    align-content: stretch;
+    align-items: stretch;
+    > * {
+      @extend .scrollable;
+      scroll-behavior: smooth;
+      overflow-y: scroll;
+    }
+    > .viewer-container-body-content {
+      flex: 1;
+    }
+    > .viewer-container-body-side-content {
+      width: 30%;
+      border: 3px solid $primary-color;
+      > .side-content-header {
+        @extend .center-contents;
+        @extend .flex-row-simple;
+        @extend .padding-sm;
+        font-weight: bold;
+        font-size: larger;
+        background-color: $primary-color;
+        > * {
+          @extend .center-contents;
+        }
+        > .side-content-title {
+          font-size: small;
+          color: white;
+          background-color: $primary-color;
+        }
+      }
+    }
+    > .viewer-container-body-side-fhir-explorer {
+      width: 30%;
+      border: 3px solid darkorange;
+      > .fhir-explorer-header {
+        @extend .center-contents;
+        @extend .flex-row-simple;
+        @extend .padding-sm;
+        font-weight: bold;
+        font-size: larger;
+        background-color: darkorange;
+        > * {
+          @extend .center-contents;
+        }
+        > .explorer-header-title {
+          font-size: small;
+          color: black;
+          background-color: darkorange;
+        }
+      }
+    }
+    > .viewer-container-body-tabs {
+      overflow-y: hidden;
+      width: 32px;
+      > * {
+        @extend .pointer;
+        @extend .center-contents;
+        writing-mode: vertical-rl;
+        margin: 0 0 4px;
+        color: white;
+        font-weight: bold;
+        font-variant-caps: all-small-caps;
+        background-color: $primary-color;
+        border-radius: 5px 0 0 5px;
+      }
+      > .tab {
+        > .tab-label {
+          @extend .padding-xs;
+          width: 24px;
+          padding-top: $sm;
+          padding-bottom: $sm;
+          user-select: none;
+        }
+      }
+      > .hl7-fhir-logo-tab {
+        @extend .center-contents;
+        padding: 0;
+        background-color: darkorange;
+        > .fhir-explorer-icon {
+          @extend .padding-xs;
+          transform: rotate(90deg);
+          filter: drop-shadow(0px 0px 1px black);
+          width: 24px;
+          height: 24px;
+        }
+        > .fhir-explorer-label {
+          @extend .padding-xs;
+          width: 24px;
+          padding-top: 0;
+          padding-bottom: $sm;
+          color: black;
+          user-select: none;
+        }
+      }
+    }
+
+  }
+}
+
+/** Workflow Simulator Test Container **/
+.test-container-bar {
+  @extend .flex-row;
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  margin: 0;
+  padding: 0;
+  > * {
+    flex: 1;
+  }
+}
+
+.test-container-wrapper {
+  @extend .margin-bottom-md;
+  @extend .full-screen;
+  @extend .flex-col-simple;
+  flex: 1;
+  align-content: stretch;
+  align-items: stretch;
+  overflow-y: hidden;
+  > .test-container-body {
+    @extend .padding-md;
+    @extend .scrollable;
+    border-left: 1px solid rgb(100, 96, 100);
+    border-right: 1px solid rgb(100, 96, 100);
+  }
+  > .test-container-header {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-bottom: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-header-event-name {
+      font-size: larger;
+    }
+    > .test-container-header-test-name {
+      font-size: x-large;
+    }
+  }
+  > .test-container-footer {
+    @extend .padding-md;
+    @extend .test-container-bar;
+    border-top: 2px solid rgb(100, 96, 100);
+    > * {
+      @extend .center-contents;
+    }
+    > .test-container-footer-status {
+      font-size: larger;
+    }
+  }
+}

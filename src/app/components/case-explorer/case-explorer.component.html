@@ -1,5 +1,5 @@
-<div class="container top-spacer">
-
+<div class="generic-component-wrapper">
+  <div class="generic-component-content">
   <h1>Patient Search</h1>
 
   <div>
@@ -11,7 +11,7 @@
         <input matInput type='text' formControlName="searchQuery">
       </mat-form-field>
 
-      <span style="margin-left: 1em">
+      <span class="margin-left-md">
         <mat-form-field appearance="outline">
           <mat-label>Select a Date of Birth</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="dob">
@@ -20,7 +20,7 @@
         </mat-form-field>
       </span>
 
-      <span style="margin-left: 1em;">
+      <span class="margin-left-md">
         <button mat-raised-button color="primary" type="submit" style="padding-top: 0.5em; padding-bottom: 0.5em;">
           Submit
         </button>
@@ -100,5 +100,5 @@
     <mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page"></mat-paginator>
 
   </div>
-
+</div>
 </div>

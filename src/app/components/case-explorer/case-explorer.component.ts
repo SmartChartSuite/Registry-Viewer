@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {CaseRecordApiResponse} from "../../domani/case.record.api.response";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
+import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-case-explorer',
@@ -35,18 +36,24 @@ export class CaseExplorerComponent implements OnInit {
     private router: Router,
     private caseRecordsService: CaseRecordsService,
     private formBuilder: FormBuilder,
+    private utilService: UtilsService
   ) { }
 
   getCaseRecords(searchTerms?: string[]): void {
     this.isLoading = true;
-    this.caseRecordsService.searchCases(searchTerms).subscribe(
-      (response: CaseRecordApiResponse) => {
+    this.caseRecordsService.searchCases(searchTerms).subscribe({
+      next: (response: CaseRecordApiResponse) => {
         this.dataSource = new MatTableDataSource(response.data);
         this.isLoading = false;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      },
+      error: err => {
+        console.error(err);
+        this.isLoading = false;
+        this.utilService.showErrorMessage( `${err.status} Server Error loading records.`);
       }
-    );
+    })
   }
 
   ngOnInit(): void {

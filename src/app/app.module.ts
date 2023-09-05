@@ -26,7 +26,7 @@ import { AnnotationsComponent } from './components/registry-viewer/side-panel/an
 import {DrawerService} from "./service/drawer.service";
 import {MatMultiSortModule} from "ngx-mat-multi-sort";
 import {AddRecordDialogComponent} from './components/registry-viewer/add-record-dialog/add-record-dialog.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgOptimizedImage} from "@angular/common";
 import { SectionComponent } from './components/registry-viewer/summary-view/section/section.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import { ConformationDialogComponent } from './components/conformation-dialog/conformation-dialog.component';
@@ -103,7 +103,8 @@ export const configFactory = (configService: ConfigService) => {
     MatButtonToggleModule,
     MatButtonModule,
     MatSlideToggleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    NgOptimizedImage
   ],
   providers: [
     DrawerService,
