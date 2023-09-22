@@ -13,7 +13,6 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatSortModule} from "@angular/material/sort";
 import {RegistryViewerComponent} from './components/registry-viewer/registry-viewer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import { DemographicDataComponent } from './components/registry-viewer/demographic-data/demographic-data.component';
 import { SummaryViewComponent } from './components/registry-viewer/summary-view/summary-view.component';
@@ -47,6 +46,8 @@ import {ConfigService} from "./service/config.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { HeaderComponent } from './components/header/header.component';
 import { TestComponent } from './components/test/test.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -85,7 +86,6 @@ export const configFactory = (configService: ConfigService) => {
     MatSortModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
     FormsModule,
@@ -104,7 +104,9 @@ export const configFactory = (configService: ConfigService) => {
     MatButtonModule,
     MatSlideToggleModule,
     MatSnackBarModule,
-    NgOptimizedImage
+    MatDatepickerModule,
+    NgOptimizedImage,
+    MatTooltipModule
   ],
   providers: [
     DrawerService,

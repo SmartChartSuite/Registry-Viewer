@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   }
 
   isDemoModeEnabled() {
-    return this.router.url.indexOf('registry-viewer') != -1;
+    return this.router.url.indexOf('case') != -1;
   }
 
 }
