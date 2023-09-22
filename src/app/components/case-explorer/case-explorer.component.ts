@@ -73,7 +73,7 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   onRowClicked(row: any) {
-    this.router.navigate(['registry-viewer', row.caseId]);
+    this.router.navigate(['case', row.caseId]);
   }
 
   getDateStr(date: Date): string {

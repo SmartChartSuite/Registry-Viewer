@@ -2,32 +2,31 @@
   <div class="generic-component-content">
   <h1>Patient Search</h1>
 
-  <div>
-
-    <form autocomplete="off" novalidate [formGroup]="searchForm" (submit)="onSearchFormSubmit()">
-
+    <form class="flex" autocomplete="off" novalidate [formGroup]="searchForm" (submit)="onSearchFormSubmit()">
+      <div class="column-40">
       <mat-form-field appearance="outline" [style.width.%]=30>
         <mat-label>Search Records</mat-label>
         <input matInput type='text' formControlName="searchQuery">
       </mat-form-field>
+      </div>
 
-      <span class="margin-left-md">
+      <div class="column-20">
         <mat-form-field appearance="outline">
           <mat-label>Select a Date of Birth</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="dob">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-      </span>
+      </div>
 
-      <span class="margin-left-md">
+      <span class="column-20">
         <button mat-raised-button color="primary" type="submit" style="padding-top: 0.5em; padding-bottom: 0.5em;">
           Submit
         </button>
       </span>
 
       <!--Filter search results is not part of the form, but if we take it out it will render on a separate line (the form creates a div)-->
-      <span style="float: right;">
+      <span class="column-20">
         <mat-form-field appearance="outline">
           <mat-label>Filter Search Results</mat-label>
           <input matInput (keyup)="applyFilter($event)" #input>
@@ -36,7 +35,6 @@
 
     </form>
 
-  </div>
 
   <div class="spinner-container" *ngIf="isLoading">
     <mat-spinner [diameter]="70"></mat-spinner>
