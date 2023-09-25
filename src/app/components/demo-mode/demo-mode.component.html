@@ -12,7 +12,7 @@
 
     <button
       mat-icon-button
-      color="primary" matTooltip="Reverse one week" aria-label="Reverse one week"
+      color="primary" matTooltip="Reverse one week" matTooltipClass='red-tooltip' aria-label="Reverse one week"
       [disabled]="!isPreviousEnabled()"
       (click)="onChangeDate(Operations.PREVIOUS)">
       <mat-icon>
