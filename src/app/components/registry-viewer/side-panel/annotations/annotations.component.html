@@ -1,24 +1,24 @@
-<button mat-raised-button color="success" style="width: 100%"
+<button mat-raised-button style="width: 100%"
         (click)="onAddAnnotation()">
   <mat-icon matTooltip="Add annotation">add</mat-icon>
   Add Annotation
 </button>
 <div *ngIf="isAddAnnotationInputVisible">
 
-  <div class="top-spacer" *ngIf="!selectedAnnotation?.annotationId">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm" >
+  <div class="margin-top-md" *ngIf="!selectedAnnotation?.annotationId">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm">
       <mat-error *ngIf="submitted && form.controls['annotation'].errors">
         Please enter annotation text
       </mat-error>
       <mat-form-field appearance="outline" [style.width.%]=100 (submit)="onSubmit()">
         <mat-label>Annotation Text</mat-label>
-        <textarea rows="10" matInput placeholeder="Annotation Text" formControlName="annotation"
+        <textarea rows="10" matInput placeholder="Annotation Text" formControlName="annotation"
                   [ngClass]="{'error': submitted && form.controls['annotation'].errors}"></textarea>
       </mat-form-field>
       <div align="right">
         <button mat-raised-button (click)="onCancelAddAnnotation()">Cancel</button>
-        <span style="margin-left: 1em">
-          <button mat-raised-button mat-raised-button color="primary" type="submit">
+        <span class="margin-left-md">
+          <button mat-raised-button color="primary" type="submit">
             Save
           </button>
         </span>
@@ -30,7 +30,8 @@
 
 <div *ngFor="let annotation of annotationList; index as i">
   <hr/>
-  <div style="display: flex"  [ngClass]="{'selected-row-background': annotation.annotationId === selectedAnnotation?.annotationId}">
+  <div style="display: flex"
+       [ngClass]="{'selected-row-background': annotation.annotationId === selectedAnnotation?.annotationId}">
     <div style=" display: flex; align-items: center;">
       {{annotation.date | date:'mediumDate'}}
       <span style="margin-left: 2em">author: {{annotation.updatedBy}}</span>
@@ -38,11 +39,11 @@
     <div style="flex-grow: 1;"></div>
     <div>
       <button mat-icon-button color="warn" aria-label="Delete Annotation" matTooltip="Delete Annotation"
-        (click)="onDeleteAnnotation(annotation)">
+              (click)="onDeleteAnnotation(annotation)">
         <mat-icon>delete</mat-icon>
       </button>
       <button mat-icon-button color="primary" aria-label="Edit Annotation" matTooltip="Edit Annotation"
-        (click)="onEditAnnotation(annotation)">
+              (click)="onEditAnnotation(annotation)">
         <mat-icon>edit</mat-icon>
       </button>
     </div>
@@ -55,13 +56,14 @@
       </mat-error>
       <mat-form-field appearance="outline" [style.width.%]=100 (submit)="onSubmit()">
         <mat-label>Annotation Text</mat-label>
-        <textarea rows="10" matInput placeholeder="Annotation Text" formControlName="annotation"
-                  [ngClass]="{'error': submitted && form.controls['annotation'].errors}"></textarea>
+        <textarea rows="10" matInput placeholder="Annotation Text" formControlName="annotation"
+                  [ngClass]="{'error': submitted && form.controls['annotation'].errors}">
+        </textarea>
       </mat-form-field>
       <div align="right">
         <button mat-raised-button (click)="onCancelAddAnnotation()">Cancel</button>
-        <span style="margin-left: 1em">
-          <button mat-raised-button mat-raised-button color="primary" type="submit">
+        <span class="margin-left-md">
+          <button mat-raised-button color="primary" type="submit">
             Save
           </button>
         </span>

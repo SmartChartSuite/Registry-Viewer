@@ -25,10 +25,10 @@ $my-app-theme: mat.define-light-theme(
 
 $primary-dark: map_get($my-app-primary, 700);
 
-//
-//.primary-dark-text {
-//  color: map_get($my-app-primary, 600)
-//}
+
+.primary-dark-text {
+  color: map_get($my-app-primary, 600)
+}
 
 $success-color: #28a745;
 $primary-light-color: #9fa8da;
@@ -120,5 +120,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 }
 
 .primary-light-color {
-  background-color: $primary-light-color;
+  background-color: map_get($my-app-primary, 100);
+}
+
+.spinner {
+  position: fixed;
+  z-index: 1001;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.full-width {
+  width: 100%;
 }

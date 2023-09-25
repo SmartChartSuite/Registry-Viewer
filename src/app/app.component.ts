@@ -5,7 +5,7 @@ import {DemoModeService} from "./service/demo-mode.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   title = 'SMART-PACER-Registry-Viewer';
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   }
 
   isDemoModeEnabled() {
-    return this.router.url.indexOf('registry-viewer') != -1;
+    return this.router.url.indexOf('case') != -1;
   }
 
 }

@@ -4,6 +4,7 @@ import {DrawerService} from "../../service/drawer.service";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {DemoModeService} from "../../service/demo-mode.service";
+import {UtilsService} from "../../service/utils.service";
 
 
 @Component({
@@ -18,11 +19,13 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   breakpoint: number;
   matCardContentHeight: number;
   isDefaultViewActive = true;
+  isLoading = false;
 
   constructor(private sidenavService: DrawerService,
               private caseRecordsService: CaseRecordsService,
               private route: ActivatedRoute,
-              private demoModeService: DemoModeService) {
+              private demoModeService: DemoModeService,
+              private utilsService: UtilsService) {
   }
 
   setMatCardContentHeight(windowSize: number){
@@ -42,7 +45,15 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
-    this.caseRecordsService.getByCaseId(this.route.snapshot.paramMap.get('id')).subscribe();
+    this.isLoading = true;
+    this.caseRecordsService.getByCaseId(this.route.snapshot.paramMap.get('id')).subscribe({
+      next: value => this.isLoading = false,
+      error: err => {
+        this.isLoading = false;
+        this.utilsService.showErrorMessage("Server Error when loading data.");
+        console.error(err);
+      }
+    });
   }
 
   ngAfterViewInit(): void {

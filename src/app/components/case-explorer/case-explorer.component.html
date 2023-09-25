@@ -1,33 +1,34 @@
 <div class="generic-component-wrapper">
   <div class="generic-component-content">
-  <h1>Patient Search</h1>
+    <h1>Patient Search</h1>
 
-    <form class="flex" autocomplete="off" novalidate [formGroup]="searchForm" (submit)="onSearchFormSubmit()">
-      <div class="column-40">
-      <mat-form-field appearance="outline" [style.width.%]=30>
-        <mat-label>Search Records</mat-label>
-        <input matInput type='text' formControlName="searchQuery">
-      </mat-form-field>
+    <form style="display: flex" autocomplete="off" novalidate [formGroup]="searchForm" (submit)="onSearchFormSubmit()">
+      <div class="column-40 margin-right-md margin-top-md">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Search Records</mat-label>
+          <input matInput type='text' formControlName="searchQuery">
+        </mat-form-field>
       </div>
 
-      <div class="column-20">
-        <mat-form-field appearance="outline">
+      <div class="column-20 margin-right-md margin-top-md">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Select a Date of Birth</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="dob">
+          <input matInput [matDatepicker]="picker" formControlName="dob" class="full-width">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
 
-      <span class="column-20">
-        <button mat-raised-button color="primary" type="submit" style="padding-top: 0.5em; padding-bottom: 0.5em;">
-          Submit
+      <div class="column-20">
+        <button mat-raised-button color="primary" type="submit" class="form-field-button margin-top-md" >
+          <mat-icon>search</mat-icon>
+          Search
         </button>
-      </span>
+      </div>
 
       <!--Filter search results is not part of the form, but if we take it out it will render on a separate line (the form creates a div)-->
-      <span class="column-20">
-        <mat-form-field appearance="outline">
+      <span class="column-20 margin-top-md">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Filter Search Results</mat-label>
           <input matInput (keyup)="applyFilter($event)" #input>
         </mat-form-field>
@@ -36,67 +37,67 @@
     </form>
 
 
-  <div class="spinner-container" *ngIf="isLoading">
-    <mat-spinner [diameter]="70"></mat-spinner>
-  </div>
+    <div class="spinner-container" *ngIf="isLoading">
+      <mat-spinner [diameter]="70"></mat-spinner>
+    </div>
 
-  <div class="mat-elevation-z5">
+    <div class="mat-elevation-z5">
 
-    <table mat-table [dataSource]="dataSource" matSort matSortDisableClear style="cursor:pointer">
+      <table mat-table [dataSource]="dataSource" matSort matSortDisableClear style="cursor:pointer">
 
-      <ng-container matColumnDef="lastName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
-        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.lastName}} </td>
-      </ng-container>
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name</th>
+          <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.lastName}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="givenName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Given Name </th>
-        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.givenName}} </td>
-      </ng-container>
+        <ng-container matColumnDef="givenName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Given Name</th>
+          <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.givenName}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="dob">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Birth </th>
-        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.dob | date:'mediumDate'}} </td>
-      </ng-container>
+        <ng-container matColumnDef="dob">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Birth</th>
+          <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.dob | date:'mediumDate'}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="gender">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
-        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.gender}} </td>
-      </ng-container>
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>
+          <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.gender}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="address">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
-        <td mat-cell *matCellDef="let caseRecord">
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Address</th>
+          <td mat-cell *matCellDef="let caseRecord">
             <div>{{caseRecord.street}}</div>
             <div>{{caseRecord.city}}
               <span *ngIf="!!caseRecord.city && caseRecord.state">,</span>
               {{caseRecord.state}} {{caseRecord.zip}}
             </div>
-        </td>
-      </ng-container>
+          </td>
+        </ng-container>
 
-      <ng-container matColumnDef="phone">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone # </th>
-        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.phone}} </td>
-      </ng-container>
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone #</th>
+          <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.phone}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="initialReportDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Specimen Collected </th>
-        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.initialReportDate | date:'mediumDate'}} </td>
-      </ng-container>
+        <ng-container matColumnDef="initialReportDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Specimen Collected</th>
+          <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.initialReportDate | date:'mediumDate'}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.status}} </td>
-      </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+          <td mat-cell *matCellDef="let caseRecord"> {{caseRecord.status}} </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
 
-    </table>
+      </table>
 
-    <mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page"></mat-paginator>
 
+    </div>
   </div>
-</div>
 </div>

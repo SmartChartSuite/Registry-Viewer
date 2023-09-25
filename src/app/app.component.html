@@ -1,14 +1,13 @@
 <mat-toolbar color="primary">
 
-  <span class="pointer">
-    <h1 (click)="onRouteChanged('/');" style="cursor: pointer">
-    TR State Syphilis Registry</h1>
+  <span class="pointer" (click)="onRouteChanged('/');">
+      REGISTRY VIEWER
   </span>
 
   <span class="menu-spacer"></span>
 
   <mat-slide-toggle style="margin-right: 1em" (toggleChange)="onToggleDemoMode()" [checked]="isDemoModeActive" [disabled]="!isDemoModeEnabled()">
-    Demo Mode
+    <span class="menu-text">Demo Mode</span>
   </mat-slide-toggle>
 
   <button mat-raised-button color="accent" (click)="onRouteChanged('/');">
