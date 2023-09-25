@@ -45,7 +45,6 @@ import {DemoModeComponent} from "./components/demo-mode/demo-mode.component";
 import {ConfigService} from "./service/config.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { HeaderComponent } from './components/header/header.component';
-import { TestComponent } from './components/test/test.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
 
@@ -74,7 +73,6 @@ export const configFactory = (configService: ConfigService) => {
     ConformationDialogComponent,
     DemoModeComponent,
     HeaderComponent,
-    TestComponent,
   ],
   imports: [
     BrowserModule,
