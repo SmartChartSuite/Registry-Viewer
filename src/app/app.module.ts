@@ -13,7 +13,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {MatSortModule} from "@angular/material/sort";
 import {RegistryViewerComponent} from './components/registry-viewer/registry-viewer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatNativeDateModule} from "@angular/material/core";
+import {DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule} from "@angular/material/core";
 import { DemographicDataComponent } from './components/registry-viewer/demographic-data/demographic-data.component';
 import { SummaryViewComponent } from './components/registry-viewer/summary-view/summary-view.component';
 import { ChronologicalViewComponent } from './components/registry-viewer/chronological-view/chronological-view.component';
@@ -47,6 +47,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { HeaderComponent } from './components/header/header.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -109,6 +110,8 @@ export const configFactory = (configService: ConfigService) => {
   providers: [
     DrawerService,
     DatePipe,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
     {
       provide: APP_INITIALIZER,
       useFactory: configFactory,
