@@ -72,7 +72,7 @@ export const configFactory = (configService: ConfigService) => {
     SectionComponent,
     ConformationDialogComponent,
     DemoModeComponent,
-    HeaderComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
