@@ -13,11 +13,11 @@
       </div>
     </ng-container>
 
-    <div class="centered-content" style="margin-top: 2em; margin-bottom: 2em">
+    <div class="centered-content">
 
-      <mat-button-toggle-group>
+      <mat-button-toggle-group class="margin-lg">
 
-        <mat-button-toggle checked="isDefaultViewActive" (click)="onViewSelected(true);">
+        <mat-button-toggle [checked]="isDefaultViewActive" (click)="onViewSelected(true);">
           Summary View
         </mat-button-toggle>
 
