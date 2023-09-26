@@ -4,19 +4,11 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angula
 import {Question} from "../../../domani/question";
 import {CaseRecordsService} from "../../../service/case-records.service";
 import {UtilsService} from "../../../service/utils.service";
-import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
-import {APP_DATE_FORMATS} from "../../../provider/format-datepicker";
-
-let AppDateAdapter;
 
 @Component({
   selector: 'app-add-record-dialog',
   templateUrl: './add-record-dialog.component.html',
   styleUrls: ['./add-record-dialog.component.scss'],
-  providers: [
-    {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
-  ]
 })
 export class AddRecordDialogComponent implements OnInit {
 
