@@ -19,5 +19,6 @@ export class SidePanelComponent {
   onClosePanel() {
     this.sidenavService.close();
   }
+
 }
 
