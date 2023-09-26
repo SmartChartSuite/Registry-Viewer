@@ -4,15 +4,18 @@
       REGISTRY VIEWER
   </span>
 
+  <button mat-button (click)="onRouteChanged('/');" class="margin-left-md">
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+
   <span class="menu-spacer"></span>
 
   <mat-slide-toggle style="margin-right: 1em" (toggleChange)="onToggleDemoMode()" [checked]="isDemoModeActive" [disabled]="!isDemoModeEnabled()">
     <span class="menu-text">Demo Mode</span>
   </mat-slide-toggle>
 
-  <button mat-raised-button color="accent" (click)="onRouteChanged('/');">
-    Search
-  </button>
+
 
   <button mat-button (click)="onRouteChanged('/login');">
     <mat-icon>account_circle</mat-icon>
