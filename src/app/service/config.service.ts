@@ -8,7 +8,7 @@ import {catchError, map, of} from "rxjs";
   providedIn: 'root'
 })
 export class ConfigService {
-  defaultConfigPath = '../../assets/config/config.json'
+  defaultConfigPath = 'assets/config/config.json'
   config: Config = new Config();
 
   private http: HttpClient
