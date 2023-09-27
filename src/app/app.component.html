@@ -1,13 +1,14 @@
 <mat-toolbar color="primary">
 
+  <button mat-icon-button (click)="onRouteChanged('/');" class="margin-right-md">
+    <mat-icon>home</mat-icon>
+  </button>
+
   <span class="pointer" (click)="onRouteChanged('/');">
       REGISTRY VIEWER
   </span>
 
-  <button mat-button (click)="onRouteChanged('/');" class="margin-left-md">
-    <mat-icon>home</mat-icon>
-    Home
-  </button>
+
 
   <span class="menu-spacer"></span>
 

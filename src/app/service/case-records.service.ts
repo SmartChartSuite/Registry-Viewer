@@ -76,7 +76,6 @@ export class CaseRecordsService {
       map((result: any) => {
         let caseList: CaseRecord[] = result.cases.map(
           (element: any) => {
-            //TODO this parser will not be needed once the API returns correct data
             let parsedCase: CaseRecord = {
               caseId: element.caseId,
               givenName: element.firstName,
