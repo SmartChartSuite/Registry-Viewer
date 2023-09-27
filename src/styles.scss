@@ -3,9 +3,7 @@
 
 @include mat.core();
 
-//$my-app-primary: mat.define-palette(mat.$blue-grey-palette);
 $my-app-primary: mat.define-palette(mat.$blue-grey-palette);
-//$my-app-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
 $my-app-accent: mat.define-palette(mat.$green-palette, A400, A200, A700);
 $my-app-warn: mat.define-palette(mat.$deep-orange-palette);
 
@@ -133,4 +131,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 .full-width {
   width: 100%;
+}
+
+//Snackbar offsets
+.snackbar-offset{
+  transform: translateY(24vh) !important;
+}
+
+//TODO figure out how to replace those colors with variables
+.mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: white;
+  &.app-notification-error {
+    --mdc-snackbar-container-color: #DD2C00;
+  }
+  &.app-notification-success {
+    --mdc-snackbar-container-color: #2E7D32;
+  }
 }

@@ -1,3 +1,5 @@
+import {Status} from "./case.record.status";
+
 export class CaseRecord {
   caseId: number;
   givenName: string;
@@ -6,7 +8,7 @@ export class CaseRecord {
   dob: string;
   phone: string;
   state: string;
-  status: string;
+  status: Status;
   street: string;
   zip: string;
   city: string;
