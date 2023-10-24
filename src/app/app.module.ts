@@ -48,6 +48,10 @@ import { HeaderComponent } from './components/header/header.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker";
+import { AuthModule } from '@auth0/auth0-angular';
+import { Auth0LoginComponent } from './auth0-login/auth0-login.component';
+import {MatMenuModule} from "@angular/material/menu";
+import {MatDividerModule} from "@angular/material/divider";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -73,7 +77,8 @@ export const configFactory = (configService: ConfigService) => {
     SectionComponent,
     ConformationDialogComponent,
     DemoModeComponent,
-    HeaderComponent
+    HeaderComponent,
+    Auth0LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +110,16 @@ export const configFactory = (configService: ConfigService) => {
     MatSnackBarModule,
     MatDatepickerModule,
     NgOptimizedImage,
-    MatTooltipModule
+    MatTooltipModule,
+    AuthModule.forRoot({
+      domain: 'grady-temp.us.auth0.com',
+      clientId: '4T568aTy0dj7keOCla7FubFQO7hJ9iiH',
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    }),
+    MatMenuModule,
+    MatDividerModule
   ],
   providers: [
     DrawerService,
