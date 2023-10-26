@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, map, Observable} from "rxjs";
-import {CaseRecordApiResponse} from "../domani/case.record.api.response";
-import {CaseRecord} from "../domani/case.record";
-import {ChronologicalCaseRecord} from "../domani/chronological.case.record";
-import {Annotation} from "../domani/annotation";
-import {Question} from "../domani/question";
+import {CaseRecordApiResponse} from "../domain/case.record.api.response";
+import {CaseRecord} from "../domain/case.record";
+import {ChronologicalCaseRecord} from "../domain/chronological.case.record";
+import {Annotation} from "../domain/annotation";
+import {Question} from "../domain/question";
 import {DemoModeService} from "./demo-mode.service";
 import {EnvironmentHandlerService} from "./environment-handler.service";
 

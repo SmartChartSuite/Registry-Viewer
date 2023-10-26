@@ -5,7 +5,7 @@ import {DrawerService} from "../../../../service/drawer.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {Observable, Subscription} from "rxjs";
 import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
-import {Annotation} from "../../../../domani/annotation";
+import {Annotation} from "../../../../domain/annotation";
 import {ConformationDialogComponent} from "../../../conformation-dialog/conformation-dialog.component";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 

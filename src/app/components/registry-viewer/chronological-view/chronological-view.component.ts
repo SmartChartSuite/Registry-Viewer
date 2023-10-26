@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {MatMultiSort, MatMultiSortTableDataSource, TableData} from "ngx-mat-multi-sort";
 import {CaseRecordsService} from "../../../service/case-records.service";
 import {UntypedFormControl} from "@angular/forms";
-import {ChronologicalCaseRecord} from "../../../domani/chronological.case.record";
+import {ChronologicalCaseRecord} from "../../../domain/chronological.case.record";
 import {DrawerService} from "../../../service/drawer.service";
 import {Subscription} from "rxjs";
 import {MultiSortTableService} from "../../../service/multi-sort-table.service";
