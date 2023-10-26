@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AboutComponent} from "./components/about/about.component";
-import {LoginComponent} from "./components/login/login.component";
 import {CaseExplorerComponent} from "./components/case-explorer/case-explorer.component";
 import {RegistryViewerComponent} from "./components/registry-viewer/registry-viewer.component";
 
@@ -14,10 +13,6 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent
   },
   {
     path: 'case/:id',
