@@ -43,7 +43,6 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {DemoModeComponent} from "./components/demo-mode/demo-mode.component";
 import {ConfigService} from "./service/config.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { HeaderComponent } from './components/header/header.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker";
@@ -70,8 +69,7 @@ export const configFactory = (configService: ConfigService) => {
     AddRecordDialogComponent,
     SectionComponent,
     ConformationDialogComponent,
-    DemoModeComponent,
-    HeaderComponent
+    DemoModeComponent
   ],
   imports: [
     BrowserModule,
