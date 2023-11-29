@@ -10,6 +10,8 @@ import {CaseRecordApiResponse} from "../../domain/case.record.api.response";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 import {UtilsService} from "../../service/utils.service";
+import {AuthService} from "@auth0/auth0-angular";
+import {combineLatest, mergeMap, of, skipWhile} from "rxjs";
 
 @Component({
   selector: 'app-case-explorer',
@@ -36,12 +38,22 @@ export class CaseExplorerComponent implements OnInit {
     private router: Router,
     private caseRecordsService: CaseRecordsService,
     private formBuilder: FormBuilder,
-    private utilService: UtilsService
+    private utilService: UtilsService,
+    public auth: AuthService
   ) { }
 
   getCaseRecords(searchTerms?: string[]): void {
     this.isLoading = true;
-    this.caseRecordsService.searchCases(searchTerms).subscribe({
+    let search$ = this.caseRecordsService.searchCases(searchTerms);
+    let authenticatedSearch$ = combineLatest(
+      [this.auth.user$, search$]).pipe(
+        skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
+        mergeMap(combinedResults => {
+          console.log(combinedResults[0])
+          return of(combinedResults[1]);
+        })
+    )
+    authenticatedSearch$.subscribe({
       next: (response: CaseRecordApiResponse) => {
         this.dataSource = new MatTableDataSource(response.data);
         this.isLoading = false;

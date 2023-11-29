@@ -6,10 +6,12 @@ describe('Auth0LoginComponent', () => {
   let component: Auth0LoginComponent;
   let fixture: ComponentFixture<Auth0LoginComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [Auth0LoginComponent]
-    });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ Auth0LoginComponent ]
+    })
+    .compileComponents();
+
     fixture = TestBed.createComponent(Auth0LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
