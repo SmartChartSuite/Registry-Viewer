@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {LoginComponent} from './components/login/login.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -43,14 +44,14 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {DemoModeComponent} from "./components/demo-mode/demo-mode.component";
 import {ConfigService} from "./service/config.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { HeaderComponent } from './components/header/header.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker";
+import {AuthHttpInterceptor, AuthModule} from '@auth0/auth0-angular';
 import { Auth0LoginComponent } from './auth0-login/auth0-login.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
-import { LoginComponent } from './components/login/login.component';
-import {AuthHttpInterceptor, AuthModule} from "@auth0/auth0-angular";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -60,6 +61,7 @@ export const configFactory = (configService: ConfigService) => {
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     AboutComponent,
     CaseExplorerComponent,
     RegistryViewerComponent,

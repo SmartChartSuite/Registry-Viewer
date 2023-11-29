@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^16.2.11",
     "@angular/platform-browser-dynamic": "^16.2.11",
     "@angular/router": "^16.2.11",
+    "@auth0/auth0-angular": "^2.2.1",
     "ngx-mat-multi-sort": "^16.0.2",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
