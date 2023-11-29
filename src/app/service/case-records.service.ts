@@ -25,6 +25,7 @@ export class CaseRecordsService {
   sections$: BehaviorSubject<string[]>;
 
   baseApiUrl: string;
+  registrySchema: string = "syphilis"
 
   selectedCaseRecord: any;
   selectedCaseRecord$: BehaviorSubject<any>;
@@ -72,7 +73,7 @@ export class CaseRecordsService {
       options = { params: httpParams };
     }
 
-    return this.http.get(this.baseApiUrl + 'search-cases', options).pipe(
+    return this.http.get(this.baseApiUrl + 'search-cases/' + this.registrySchema, options).pipe(
       map((result: any) => {
         let caseList: CaseRecord[] = result.cases.map(
           (element: any) => {

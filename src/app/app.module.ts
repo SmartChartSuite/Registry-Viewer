@@ -117,7 +117,7 @@ export const configFactory = (configService: ConfigService) => {
         authorizationParams: {
           redirect_uri: window.location.origin,
           audience: 'http://smartchartsuite.grady/registry-viewer-api/',
-          scope: 'profile email openid'
+          scope: 'profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis'
         },
         httpInterceptor: {
           allowedList: [ {
