@@ -1,4 +1,4 @@
-<div class="generic-component-wrapper">
+<div class="generic-component-wrapper" *ngIf="auth.isAuthenticated$ | async; else loggedout">
   <div class="generic-component-content container">
     <h1>Patient Search</h1>
 
