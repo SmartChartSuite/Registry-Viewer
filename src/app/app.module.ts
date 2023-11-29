@@ -46,6 +46,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker";
+import { Auth0LoginComponent } from './auth0-login/auth0-login.component';
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -69,7 +70,8 @@ export const configFactory = (configService: ConfigService) => {
     AddRecordDialogComponent,
     SectionComponent,
     ConformationDialogComponent,
-    DemoModeComponent
+    DemoModeComponent,
+    Auth0LoginComponent
   ],
   imports: [
     BrowserModule,
