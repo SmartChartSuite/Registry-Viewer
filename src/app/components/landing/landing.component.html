@@ -1,0 +1,13 @@
+<mat-card>
+  <mat-card-title>
+    Select Registry
+  </mat-card-title>
+  <mat-card-content>
+    <mat-radio-group aria-labelledby="example-radio-group-label" [(ngModel)]="selectedRegistrySchema">
+      <mat-radio-button *ngFor="let registrySchema of registrySchemaList" [value]="registrySchema"
+                        (change)="onSelectionChanged(registrySchema)">
+        {{ registrySchema.description }}
+      </mat-radio-button>
+    </mat-radio-group>
+  </mat-card-content>
+</mat-card>
