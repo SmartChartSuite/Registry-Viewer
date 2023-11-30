@@ -109,7 +109,7 @@ export class CaseRecordsService {
       const httpParams = new HttpParams().set('caseId', caseId);
       options = { params: httpParams };
     }
-    return this.http.get(this.baseApiUrl + 'case-record',  options).pipe(
+    return this.http.get(this.baseApiUrl + 'case-record/' + this.registrySchema,  options).pipe(
       map((result: any) => {
         const mappedCaseRecords = this.createCaseRecordChronologicalData(result);
         if(this.selectedCaseRecord$?.value?.contentId && mappedCaseRecords.length > 0){
