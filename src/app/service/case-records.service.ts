@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, map, Observable} from "rxjs";
-import {CaseRecordApiResponse} from "../domani/case.record.api.response";
-import {CaseRecord} from "../domani/case.record";
-import {ChronologicalCaseRecord} from "../domani/chronological.case.record";
-import {Annotation} from "../domani/annotation";
-import {Question} from "../domani/question";
+import {CaseRecordApiResponse} from "../domain/case.record.api.response";
+import {CaseRecord} from "../domain/case.record";
+import {ChronologicalCaseRecord} from "../domain/chronological.case.record";
+import {Annotation} from "../domain/annotation";
+import {Question} from "../domain/question";
 import {DemoModeService} from "./demo-mode.service";
 import {EnvironmentHandlerService} from "./environment-handler.service";
 
@@ -25,6 +25,7 @@ export class CaseRecordsService {
   sections$: BehaviorSubject<string[]>;
 
   baseApiUrl: string;
+  registrySchema: string = "syphilis"
 
   selectedCaseRecord: any;
   selectedCaseRecord$: BehaviorSubject<any>;
@@ -72,7 +73,7 @@ export class CaseRecordsService {
       options = { params: httpParams };
     }
 
-    return this.http.get(this.baseApiUrl + 'search-cases', options).pipe(
+    return this.http.get(this.baseApiUrl + 'search-cases/' + this.registrySchema, options).pipe(
       map((result: any) => {
         let caseList: CaseRecord[] = result.cases.map(
           (element: any) => {
@@ -108,7 +109,7 @@ export class CaseRecordsService {
       const httpParams = new HttpParams().set('caseId', caseId);
       options = { params: httpParams };
     }
-    return this.http.get(this.baseApiUrl + 'case-record',  options).pipe(
+    return this.http.get(this.baseApiUrl + 'case-record/' + this.registrySchema,  options).pipe(
       map((result: any) => {
         const mappedCaseRecords = this.createCaseRecordChronologicalData(result);
         if(this.selectedCaseRecord$?.value?.contentId && mappedCaseRecords.length > 0){

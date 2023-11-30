@@ -1,7 +1,7 @@
 <mat-toolbar class="toolbar primary-text">
   <mat-toolbar-row>
     <div class="column-logo"></div>
-    <div class="column-name margin-left-md" (click)="onRouteSelected()">REGISTRY VIEWER</div>
+    <div class="column-name margin-left-md" (click)="onRouteSelected()">SmartChart Registry Viewer</div>
     <div class="column-menu-options">
       <ng-container *ngFor="let item of menuItems">
       <span class="menu-item" [ngClass]="{ 'menu-item-selected': item.selected }" (click)="onMenuItemSelected(item)">{{ item.display }}</span>

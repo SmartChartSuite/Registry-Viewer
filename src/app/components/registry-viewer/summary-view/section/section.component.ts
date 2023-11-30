@@ -4,7 +4,7 @@ import {DrawerService} from "../../../../service/drawer.service";
 import {MatDialog} from "@angular/material/dialog";
 import {filter, Subscription} from "rxjs";
 import {CaseRecordsService} from "../../../../service/case-records.service";
-import {ChronologicalCaseRecord} from "../../../../domani/chronological.case.record";
+import {ChronologicalCaseRecord} from "../../../../domain/chronological.case.record";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ActivatedRoute} from "@angular/router";
 import {DemoModeService} from "../../../../service/demo-mode.service";
