@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-summary-view',
@@ -10,6 +10,7 @@ export class SummaryViewComponent implements OnInit {
   breakpoint: number;
   matCardContentHeight: number;
   sectionsList = ['Lab Results', 'Diagnoses', 'Treatment', 'Other Medical History'];
+  @Input() registrySchemaTag: string;
 
   constructor() {
   }

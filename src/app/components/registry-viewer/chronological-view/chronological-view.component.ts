@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatMultiSort, MatMultiSortTableDataSource, TableData} from "ngx-mat-multi-sort";
 import {CaseRecordsService} from "../../../service/case-records.service";
 import {UntypedFormControl} from "@angular/forms";
@@ -24,6 +24,8 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
    * While I am skeptical about the reliability of the implementation, the users requested the feature and
    * our team implemented it. The implementation could easily be reverted to using the Angular material table.
    */
+
+  @Input() registrySchemaTag: string;
 
   @ViewChild(MatMultiSort) sort: MatMultiSort;
   caseRecordsSubscription$: Subscription;

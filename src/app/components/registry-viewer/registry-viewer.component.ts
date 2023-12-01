@@ -2,9 +2,10 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {DrawerService} from "../../service/drawer.service";
 import {CaseRecordsService} from "../../service/case-records.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DemoModeService} from "../../service/demo-mode.service";
 import {UtilsService} from "../../service/utils.service";
+import {RegistrySchema} from "../../domain/registry.schema";
 
 
 @Component({
@@ -20,12 +21,14 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   matCardContentHeight: number;
   isDefaultViewActive = true;
   isLoading = false;
+  registrySchema: RegistrySchema;
 
   constructor(private sidenavService: DrawerService,
               private caseRecordsService: CaseRecordsService,
               private route: ActivatedRoute,
               private demoModeService: DemoModeService,
-              private utilsService: UtilsService) {
+              private utilsService: UtilsService,
+              private router: Router) {
   }
 
   setMatCardContentHeight(windowSize: number){
@@ -43,10 +46,15 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.registrySchema = this.route.snapshot.queryParams as RegistrySchema;
+    if(!this.registrySchema?.tag){
+      this.router.navigate(["/"]);
+      return;
+    }
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
     this.isLoading = true;
-    this.caseRecordsService.getByCaseId(this.route.snapshot.paramMap.get('id')).subscribe({
+    this.caseRecordsService.getByCaseId(this.registrySchema.tag, this.route.snapshot.paramMap.get('id')).subscribe({
       next: value => this.isLoading = false,
       error: err => {
         this.isLoading = false;

@@ -3,7 +3,7 @@
 <mat-drawer-container hasBackdrop="false">
 
   <mat-drawer #resultViewerSidenav class="registry-viewer-drawer" mode="side" position="end" disableClose closed>
-    <app-side-panel></app-side-panel>
+    <app-side-panel [registrySchemaTag]="registrySchema.tag"></app-side-panel>
   </mat-drawer>
 
   <mat-drawer-content>
@@ -29,8 +29,8 @@
     </div>
 
     <div style="max-width: 85%; margin: auto">
-      <app-chronological-view *ngIf="!isDefaultViewActive"></app-chronological-view>
-      <app-summary-view *ngIf="isDefaultViewActive"></app-summary-view>
+      <app-chronological-view [registrySchemaTag]="registrySchema.tag" *ngIf="!isDefaultViewActive"></app-chronological-view>
+      <app-summary-view *ngIf="isDefaultViewActive" [registrySchemaTag]="registrySchema.tag" ></app-summary-view>
     </div>
   </mat-drawer-content>
 

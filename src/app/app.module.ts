@@ -44,7 +44,6 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {DemoModeComponent} from "./components/demo-mode/demo-mode.component";
 import {ConfigService} from "./service/config.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import { HeaderComponent } from './components/header/header.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker";
@@ -52,6 +51,8 @@ import {AuthHttpInterceptor, AuthModule} from '@auth0/auth0-angular';
 import { Auth0LoginComponent } from './auth0-login/auth0-login.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
+import { LandingComponent } from './components/landing/landing.component';
+import {MatRadioModule} from "@angular/material/radio";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -77,8 +78,8 @@ export const configFactory = (configService: ConfigService) => {
     SectionComponent,
     ConformationDialogComponent,
     DemoModeComponent,
-    HeaderComponent,
-    Auth0LoginComponent
+    Auth0LoginComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
@@ -120,7 +121,7 @@ export const configFactory = (configService: ConfigService) => {
           scope: 'profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis'
         },
         httpInterceptor: {
-          allowedList: [ {
+          allowedList: [{
             uri: 'https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/*',
             // tokenOptions: {
             //   authorizationParams: {
@@ -134,7 +135,8 @@ export const configFactory = (configService: ConfigService) => {
       }
     ),
     MatMenuModule,
-    MatDividerModule
+    MatDividerModule,
+    MatRadioModule
   ],
   providers: [
     DrawerService,

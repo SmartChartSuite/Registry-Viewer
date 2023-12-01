@@ -26,6 +26,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   @Input() matCardContentHeight: number;
   @Input() section: string;
+  @Input() registrySchemaTag;
 
   panelOpenState = false;
 
