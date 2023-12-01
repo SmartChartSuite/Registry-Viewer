@@ -12,6 +12,7 @@ import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker
 import {UtilsService} from "../../service/utils.service";
 import {AuthService} from "@auth0/auth0-angular";
 import {combineLatest, mergeMap, of, skipWhile} from "rxjs";
+import {RegistrySchema} from "../../domain/registry.schema";
 
 @Component({
   selector: 'app-case-explorer',
@@ -32,6 +33,7 @@ export class CaseExplorerComponent implements OnInit {
   displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'lastUpdated', 'status'];
   isLoading = true;
   searchForm: FormGroup;
+  registrySchema: RegistrySchema;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,9 +44,13 @@ export class CaseExplorerComponent implements OnInit {
     public auth: AuthService
   ) { }
 
-  getCaseRecords(searchTerms?: string[]): void {
+  getCaseRecords(registrySchema: RegistrySchema, searchTerms?: string[]): void {
+    if(!registrySchema){
+      console.error("missing required registry schema");
+      return;
+    }
     this.isLoading = true;
-    let search$ = this.caseRecordsService.searchCases(searchTerms);
+    let search$ = this.caseRecordsService.searchCases(registrySchema.tag, searchTerms);
     let authenticatedSearch$ = combineLatest(
       [this.auth.user$, search$]).pipe(
         skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
@@ -69,11 +75,13 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCaseRecords();
+    this.registrySchema = this.route.snapshot.queryParams as RegistrySchema;
+    this.getCaseRecords(this.registrySchema);
     this.searchForm = this.formBuilder.group({
       searchQuery: [null],
       dob: [null]
     });
+
   }
 
   applyFilter(event: Event) {
@@ -109,7 +117,7 @@ export class CaseExplorerComponent implements OnInit {
     }
 
     if(searchTerms){
-      this.getCaseRecords(searchTerms);
+      this.getCaseRecords(this.registrySchema, searchTerms);
     }
   }
 }

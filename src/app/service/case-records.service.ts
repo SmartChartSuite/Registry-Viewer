@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {BehaviorSubject, map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable, of, Subscription} from "rxjs";
 import {CaseRecordApiResponse} from "../domain/case.record.api.response";
 import {CaseRecord} from "../domain/case.record";
 import {ChronologicalCaseRecord} from "../domain/chronological.case.record";
@@ -8,6 +8,8 @@ import {Annotation} from "../domain/annotation";
 import {Question} from "../domain/question";
 import {DemoModeService} from "./demo-mode.service";
 import {EnvironmentHandlerService} from "./environment-handler.service";
+import {MetadataService} from "./metadata.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +40,11 @@ export class CaseRecordsService {
     this.baseApiUrl = this.environmentHandler.getBaseApiURL();
 
     this.demoModeService.latestDate$.subscribe({
-      next: latestDate => {if(latestDate){this.filterLatestDateData(latestDate, this.caseRecordChronologicalDataStored$.value)}}
+      next: latestDate => {
+        if(latestDate) {
+          this.filterLatestDateData(latestDate, this.caseRecordChronologicalDataStored$.value)
+        }
+      }
     });
   }
 
@@ -62,7 +68,7 @@ export class CaseRecordsService {
     );
   }
 
-  searchCases(searchTerms?: string[], fieldsList? : string[]):  Observable<CaseRecordApiResponse> {
+  searchCases(registrySchemaTag: string, searchTerms?: string[], fieldsList? : string[]):  Observable<CaseRecordApiResponse> {
     let options = {};
     if(searchTerms?.length>0 ||fieldsList?.length> 0){
       const terms: string = searchTerms.join(', ');

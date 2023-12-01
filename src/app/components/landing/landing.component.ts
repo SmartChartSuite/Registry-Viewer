@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MetadataService} from "../../service/metadata.service";
 import {RegistrySchema} from "../../domain/registry.schema";
 import {UtilsService} from "../../service/utils.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-landing',
@@ -12,16 +13,13 @@ export class LandingComponent implements OnInit {
 
   registrySchemaList: RegistrySchema[];
   selectedRegistrySchema: RegistrySchema;
-  constructor(private metadataService: MetadataService, private utilsService: UtilsService){
+  constructor(private metadataService: MetadataService, private utilsService: UtilsService, private router: Router){
   }
   ngOnInit(): void {
     this.metadataService.getMetadata().subscribe({
       next: value => {
         this.registrySchemaList = value;
-        setTimeout(()=> {
-          this.selectedRegistrySchema = value?.[0];
-        })
-
+        this.selectedRegistrySchema = value?.[0];
       },
       error: err => {
         console.error(err);
@@ -31,6 +29,10 @@ export class LandingComponent implements OnInit {
   }
 
   onSelectionChanged( registrySchema: any) {
-    console.log(registrySchema);
+    this.selectedRegistrySchema = registrySchema;
+  }
+
+  onContinue() {
+    this.router.navigate(['case'], { queryParams: this.selectedRegistrySchema } );
   }
 }

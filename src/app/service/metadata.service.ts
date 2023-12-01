@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {EnvironmentHandlerService} from "./environment-handler.service";
 import {RegistrySchema} from "../domain/registry.schema";
@@ -8,6 +8,7 @@ import {RegistrySchema} from "../domain/registry.schema";
   providedIn: 'root'
 })
 export class MetadataService {
+
   baseApiUrl: string;
 
   constructor(private http: HttpClient, private environmentHandler: EnvironmentHandlerService) {
