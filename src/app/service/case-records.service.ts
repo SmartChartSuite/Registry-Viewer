@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {BehaviorSubject, map, Observable, of, Subscription} from "rxjs";
+import {BehaviorSubject, map, Observable} from "rxjs";
 import {CaseRecordApiResponse} from "../domain/case.record.api.response";
 import {CaseRecord} from "../domain/case.record";
 import {ChronologicalCaseRecord} from "../domain/chronological.case.record";
@@ -8,8 +8,6 @@ import {Annotation} from "../domain/annotation";
 import {Question} from "../domain/question";
 import {DemoModeService} from "./demo-mode.service";
 import {EnvironmentHandlerService} from "./environment-handler.service";
-import {MetadataService} from "./metadata.service";
-import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +25,7 @@ export class CaseRecordsService {
   sections$: BehaviorSubject<string[]>;
 
   baseApiUrl: string;
-  registrySchema: string = "syphilis"
+  //registrySchema: string = "syphilis"
 
   selectedCaseRecord: any;
   selectedCaseRecord$: BehaviorSubject<any>;
@@ -52,7 +50,7 @@ export class CaseRecordsService {
     this.selectedCaseRecord$.next(selectedCaseRecord);
   }
 
-  updateCaseRecord(keyValue: any, caseId: number, contentId?: number) : Observable<any>{
+  updateCaseRecord(registrySchemaTag: string, keyValue: any, caseId: number, contentId?: number) : Observable<any>{
 
     let params = new HttpParams().set("caseId", caseId);
 
@@ -60,9 +58,9 @@ export class CaseRecordsService {
       params = new HttpParams().set("caseId", caseId).set("contentId", contentId);
     }
 
-    return this.http.put(this.baseApiUrl + 'case-record', keyValue, {params}).pipe(
+    return this.http.put(this.baseApiUrl + 'case-record/' + registrySchemaTag, keyValue, {params}).pipe(
       map((result: any) => {
-        this.getByCaseId(caseId).subscribe();
+        this.getByCaseId(registrySchemaTag, caseId).subscribe();
         }
       ),
     );
@@ -79,7 +77,7 @@ export class CaseRecordsService {
       options = { params: httpParams };
     }
 
-    return this.http.get(this.baseApiUrl + 'search-cases/' + this.registrySchema, options).pipe(
+    return this.http.get(this.baseApiUrl + 'search-cases/' + registrySchemaTag, options).pipe(
       map((result: any) => {
         let caseList: CaseRecord[] = result.cases.map(
           (element: any) => {
@@ -109,13 +107,13 @@ export class CaseRecordsService {
     );
   };
 
-  getByCaseId (caseId):  Observable<any> {
+  getByCaseId (registrySchema, caseId):  Observable<any> {
     let options = {};
     if(!!caseId){
       const httpParams = new HttpParams().set('caseId', caseId);
       options = { params: httpParams };
     }
-    return this.http.get(this.baseApiUrl + 'case-record/' + this.registrySchema,  options).pipe(
+    return this.http.get(this.baseApiUrl + 'case-record/' + registrySchema,  options).pipe(
       map((result: any) => {
         const mappedCaseRecords = this.createCaseRecordChronologicalData(result);
         if(this.selectedCaseRecord$?.value?.contentId && mappedCaseRecords.length > 0){

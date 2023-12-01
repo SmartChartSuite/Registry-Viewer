@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {DrawerService} from "../../../../service/drawer.service";
@@ -26,7 +26,7 @@ export class AnnotationsComponent implements OnInit {
   selectedAnnotation: Annotation;
   dialogClosed$: Observable<boolean>;
 
-
+  @Input() registrySchemaTag: string;
   @ViewChild('formDirective') formDirective: any;
 
   constructor(
@@ -57,7 +57,7 @@ export class AnnotationsComponent implements OnInit {
       ]
     }
 
-    this.caseRecordsService.updateCaseRecord(annotationObj, caseId, this.selectedCaseRecord?.contentId)
+    this.caseRecordsService.updateCaseRecord(this.registrySchemaTag, annotationObj, caseId, this.selectedCaseRecord?.contentId)
       .subscribe(
         {
           next: value => {

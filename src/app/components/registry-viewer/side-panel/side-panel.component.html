@@ -36,7 +36,7 @@
           Flag
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-flag></app-flag>
+      <app-flag [registrySchemaTag]="registrySchemaTag"></app-flag>
     </mat-expansion-panel>
 
     <mat-expansion-panel togglePosition="before" [expanded]="true">
@@ -45,7 +45,7 @@
           Annotations
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <app-annotations></app-annotations>
+      <app-annotations [registrySchemaTag]="registrySchemaTag"></app-annotations>
     </mat-expansion-panel>
 
   </mat-accordion>

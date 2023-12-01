@@ -45,10 +45,6 @@ export class CaseExplorerComponent implements OnInit {
   ) { }
 
   getCaseRecords(registrySchema: RegistrySchema, searchTerms?: string[]): void {
-    if(!registrySchema){
-      console.error("missing required registry schema");
-      return;
-    }
     this.isLoading = true;
     let search$ = this.caseRecordsService.searchCases(registrySchema.tag, searchTerms);
     let authenticatedSearch$ = combineLatest(
@@ -76,12 +72,15 @@ export class CaseExplorerComponent implements OnInit {
 
   ngOnInit(): void {
     this.registrySchema = this.route.snapshot.queryParams as RegistrySchema;
+    if(!this.registrySchema?.tag){
+      this.router.navigate(["/"]);
+      return;
+    }
     this.getCaseRecords(this.registrySchema);
     this.searchForm = this.formBuilder.group({
       searchQuery: [null],
       dob: [null]
     });
-
   }
 
   applyFilter(event: Event) {
@@ -93,7 +92,7 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   onRowClicked(row: any) {
-    this.router.navigate(['case', row.caseId]);
+    this.router.navigate(['case', row.caseId], { queryParams: this.registrySchema });
   }
 
   getDateStr(date: Date): string {

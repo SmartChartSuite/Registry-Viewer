@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {MatAccordion} from "@angular/material/expansion";
 import {DrawerService} from "../../../service/drawer.service";
 
@@ -8,6 +8,7 @@ import {DrawerService} from "../../../service/drawer.service";
   styleUrls: ['./side-panel.component.scss']
 })
 export class SidePanelComponent {
+  @Input() registrySchemaTag: string;
 
   @ViewChild(MatAccordion) accordion: MatAccordion;
   allPanelsExpanded = true;

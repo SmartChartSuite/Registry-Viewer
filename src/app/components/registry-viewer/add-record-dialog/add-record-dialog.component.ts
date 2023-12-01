@@ -22,6 +22,7 @@ export class AddRecordDialogComponent implements OnInit {
   dialogTitle: string;
   questions: Question[];
   submitted = false;
+  registrySchemaTag: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -33,6 +34,7 @@ export class AddRecordDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.setDialogTitle(this.data?.section);
+    this.registrySchemaTag = this.data.registrySchemaTag;
     this.caseRecordsService.getQuestions(this.data?.section).subscribe({
       next: value => this.questions = value,
       error: err => console.error(err)
@@ -58,7 +60,7 @@ export class AddRecordDialogComponent implements OnInit {
 
   updateCaseRecord(keyValue: any): void{
     const caseId =  this.data.caseId;
-    this.caseRecordsService.updateCaseRecord(keyValue, caseId).subscribe({
+    this.caseRecordsService.updateCaseRecord(this.registrySchemaTag, keyValue, caseId).subscribe({
       next: ()=> {
         this.submitted = false; this.utilsService.showSuccessMessage("Record updated successfully")
       },
