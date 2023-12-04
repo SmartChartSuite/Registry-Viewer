@@ -1,26 +1,21 @@
 <mat-toolbar color="primary">
-
-  <button mat-icon-button (click)="onRouteChanged('/');" class="margin-right-md">
-    <mat-icon>home</mat-icon>
-  </button>
-
-  <span class="pointer" (click)="onRouteChanged('/');">
-      REGISTRY VIEWER
+  <span class="pointer" (click)="onRouteChanged('/');">REGISTRY VIEWER</span>
+  <span>
+    <span style="border: 1px solid whitesmoke;" class="margin-md"></span>
+    <button *ngIf="isReturnBtnVisible" mat-button (click)="onReturnToRegistry()"> <mat-icon>navigate_before</mat-icon>Return to {{registrySchema.name}} Case Search </button>
   </span>
 
   <span class="menu-spacer"></span>
-  <span class="menu-text">{{registrySchema?.description}}</span>
-
-  <span class="menu-spacer"></span>
-  <mat-slide-toggle style="margin-right: 1em" (toggleChange)="onToggleDemoMode()" [checked]="isDemoModeActive" [disabled]="!isDemoModeEnabled()">
+  <mat-slide-toggle style="margin-right: 1em" (toggleChange)="onToggleDemoMode()" [checked]="isDemoModeActive"
+                    [disabled]="!isDemoModeEnabled()">
     <span class="menu-text">Demo Mode</span>
   </mat-slide-toggle>
-
-
 
   <app-auth0-login></app-auth0-login>
 
 </mat-toolbar>
+
+
 
 <router-outlet></router-outlet>
 

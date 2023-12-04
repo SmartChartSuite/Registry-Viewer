@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 import {DemoModeService} from "./service/demo-mode.service";
 import {RegistrySchema} from "./domain/registry.schema";
+import {filter, map} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit {
 
   isChronologicalViewActive = true;
   registrySchema: RegistrySchema;
+  isReturnBtnVisible = false;
 
   constructor(
     private demoModeService: DemoModeService,
@@ -28,6 +30,10 @@ export class AppComponent implements OnInit {
       next: value => this.isDemoModeActive = value
     });
     this.route.queryParams.subscribe(params=> this.registrySchema = params as RegistrySchema);
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart),
+      map(event => event as NavigationStart),
+    ).subscribe(event => this.isReturnBtnVisible = /case\/\d+/.test(event.url));
   }
 
   onRouteChanged(route: string) {
@@ -47,4 +53,7 @@ export class AppComponent implements OnInit {
     return this.router.url.indexOf('case') != -1;
   }
 
+  onReturnToRegistry() {
+    this.router.navigate(['case'], { queryParams: this.registrySchema } );
+  }
 }
