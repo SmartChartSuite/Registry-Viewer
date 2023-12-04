@@ -128,7 +128,7 @@ export class SectionComponent implements OnInit, OnDestroy {
   onAddRecord(): void {
     this.caseRecordsService.selectedCaseRecord$.next(null);
     this.drawerService.close();
-    openAnnotationDialog(this.dialog, {section: this.section, description: "Sample annotation text", caseId: this.route.snapshot.params['id']})
+    openAnnotationDialog(this.dialog, {registrySchemaTag: this.registrySchemaTag, section: this.section, description: "Sample annotation text", caseId: this.route.snapshot.params['id']})
       .pipe(filter(val => !!val))
       .subscribe(
         val=> console.log(val)

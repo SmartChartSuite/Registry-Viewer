@@ -51,7 +51,6 @@ export class CaseExplorerComponent implements OnInit {
       [this.auth.user$, search$]).pipe(
         skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
         mergeMap(combinedResults => {
-          console.log(combinedResults[0])
           return of(combinedResults[1]);
         })
     )
