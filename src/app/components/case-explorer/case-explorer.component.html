@@ -108,6 +108,10 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
 
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell no-records-found" [colSpan]="displayedColumns.length"><span class="no-records-found-text">No results found.</span></td>
+        </tr>
+
       </table>
 
       <mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page"></mat-paginator>
