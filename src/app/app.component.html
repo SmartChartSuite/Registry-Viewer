@@ -8,10 +8,10 @@
       REGISTRY VIEWER
   </span>
 
-
+  <span class="menu-spacer"></span>
+  <span class="menu-text">{{registrySchema?.description}}</span>
 
   <span class="menu-spacer"></span>
-
   <mat-slide-toggle style="margin-right: 1em" (toggleChange)="onToggleDemoMode()" [checked]="isDemoModeActive" [disabled]="!isDemoModeEnabled()">
     <span class="menu-text">Demo Mode</span>
   </mat-slide-toggle>

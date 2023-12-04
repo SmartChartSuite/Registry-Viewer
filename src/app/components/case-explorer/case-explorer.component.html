@@ -1,7 +1,6 @@
 <div class="generic-component-wrapper" *ngIf="auth.isAuthenticated$ | async; else loggedout">
   <div class="generic-component-content container">
     <h1>Patient Search</h1>
-
     <form style="display: flex" autocomplete="off" novalidate [formGroup]="searchForm" (submit)="onSearchFormSubmit()">
       <div class="column-40 margin-right-md margin-top-md">
         <mat-form-field appearance="outline" class="full-width">

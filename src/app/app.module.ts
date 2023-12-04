@@ -3,7 +3,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LoginComponent} from './components/login/login.component';
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
@@ -62,7 +61,6 @@ export const configFactory = (configService: ConfigService) => {
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     AboutComponent,
     CaseExplorerComponent,
     RegistryViewerComponent,
@@ -79,7 +77,7 @@ export const configFactory = (configService: ConfigService) => {
     ConformationDialogComponent,
     DemoModeComponent,
     Auth0LoginComponent,
-    LandingComponent
+    LandingComponent,
   ],
   imports: [
     BrowserModule,
@@ -116,7 +114,7 @@ export const configFactory = (configService: ConfigService) => {
         domain: 'grady-temp.us.auth0.com',
         clientId: '4T568aTy0dj7keOCla7FubFQO7hJ9iiH',
         authorizationParams: {
-          redirect_uri: window.location.origin,
+          redirect_uri: window.location.href,
           audience: 'http://smartchartsuite.grady/registry-viewer-api/',
           scope: 'profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis'
         },

@@ -132,12 +132,12 @@ export class CaseRecordsService {
     );
   };
 
-  getQuestions (section: string): Observable<Question[]> {
+  getQuestions (section: string, registrySchemaTag: string): Observable<Question[]> {
 
     const httpParams = new HttpParams().set('section', section);
     const options = { params: httpParams };
 
-    return this.http.get(this.baseApiUrl + 'questions',  options).pipe(
+    return this.http.get(this.baseApiUrl + 'questions/' + registrySchemaTag,  options).pipe(
       map((result: any) => {
           return result;
         }

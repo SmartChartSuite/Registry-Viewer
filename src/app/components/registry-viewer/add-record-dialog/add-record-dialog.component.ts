@@ -35,7 +35,7 @@ export class AddRecordDialogComponent implements OnInit {
   ngOnInit(): void {
     this.setDialogTitle(this.data?.section);
     this.registrySchemaTag = this.data.registrySchemaTag;
-    this.caseRecordsService.getQuestions(this.data?.section).subscribe({
+    this.caseRecordsService.getQuestions(this.data?.section, this.registrySchemaTag).subscribe({
       next: value => this.questions = value,
       error: err => console.error(err)
     })
