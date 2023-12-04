@@ -10,11 +10,7 @@ import {filter, map} from "rxjs";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'SMART-PACER-Registry-Viewer';
-
   isDemoModeActive: boolean = false;
-
-  isChronologicalViewActive = true;
   registrySchema: RegistrySchema;
   isReturnBtnVisible = false;
 
@@ -30,10 +26,13 @@ export class AppComponent implements OnInit {
       next: value => this.isDemoModeActive = value
     });
     this.route.queryParams.subscribe(params=> this.registrySchema = params as RegistrySchema);
+
     this.router.events.pipe(
       filter(event => event instanceof NavigationStart),
-      map(event => event as NavigationStart),
-    ).subscribe(event => this.isReturnBtnVisible = /case\/\d+/.test(event.url));
+      map(event => event as NavigationStart))
+      .subscribe(event =>
+        // check if the url has "case" followed by a digit. If this is the case, we should render the "Return to Registry x" button
+        this.isReturnBtnVisible = /case\/\d+/.test(event.url));
   }
 
   onRouteChanged(route: string) {
