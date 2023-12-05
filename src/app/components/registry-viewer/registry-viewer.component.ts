@@ -21,7 +21,7 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   matCardContentHeight: number;
   isDefaultViewActive = true;
   isLoading = false;
-  registrySchema: RegistrySchema;
+  registrySchema: string;
 
   constructor(private sidenavService: DrawerService,
               private caseRecordsService: CaseRecordsService,
@@ -46,15 +46,15 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.registrySchema = this.route.snapshot.queryParams as RegistrySchema;
-    if(!this.registrySchema?.tag){
+    this.registrySchema = this.route.snapshot.queryParams['registrySchema'];
+    if(!this.registrySchema){
       this.router.navigate(["/"]);
       return;
     }
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
     this.isLoading = true;
-    this.caseRecordsService.getByCaseId(this.registrySchema.tag, this.route.snapshot.paramMap.get('id')).subscribe({
+    this.caseRecordsService.getByCaseId(this.registrySchema, this.route.snapshot.paramMap.get('id')).subscribe({
       next: value => this.isLoading = false,
       error: err => {
         this.isLoading = false;

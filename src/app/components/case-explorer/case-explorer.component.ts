@@ -33,7 +33,7 @@ export class CaseExplorerComponent implements OnInit {
   displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'lastUpdated', 'status'];
   isLoading = true;
   searchForm: FormGroup;
-  registrySchema: RegistrySchema;
+  registrySchema: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,9 +44,9 @@ export class CaseExplorerComponent implements OnInit {
     public auth: AuthService
   ) { }
 
-  getCaseRecords(registrySchema: RegistrySchema, searchTerms?: string[]): void {
+  getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
     this.isLoading = true;
-    let search$ = this.caseRecordsService.searchCases(registrySchema.tag, searchTerms);
+    let search$ = this.caseRecordsService.searchCases(registrySchema, searchTerms);
     let authenticatedSearch$ = combineLatest(
       [this.auth.user$, search$]).pipe(
         skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
@@ -70,10 +70,10 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.registrySchema = this.route.snapshot.queryParams as RegistrySchema;
-    if(!this.registrySchema?.tag){
-      this.router.navigate(["/"]);
-      return;
+    this.registrySchema = this.route.snapshot.queryParams['registrySchema'];
+    if(!this.registrySchema){
+        this.router.navigate(["/"]);
+        return;
     }
     this.getCaseRecords(this.registrySchema);
     this.searchForm = this.formBuilder.group({
@@ -91,7 +91,7 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   onRowClicked(row: any) {
-    this.router.navigate(['case', row.caseId], { queryParams: this.registrySchema });
+    this.router.navigate(['case', row.caseId], { queryParams: {registrySchema: this.registrySchema}} );
   }
 
   getDateStr(date: Date): string {
