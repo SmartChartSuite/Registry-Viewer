@@ -3,6 +3,7 @@ import {MetadataService} from "../../service/metadata.service";
 import {RegistrySchema} from "../../domain/registry.schema";
 import {UtilsService} from "../../service/utils.service";
 import {Router} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-landing',
@@ -11,28 +12,20 @@ import {Router} from "@angular/router";
 })
 export class LandingComponent implements OnInit {
 
-  registrySchemaList: RegistrySchema[];
+  registrySchemaList$: Observable<RegistrySchema[]>;
   selectedRegistrySchema: RegistrySchema;
   constructor(private metadataService: MetadataService, private utilsService: UtilsService, private router: Router){
   }
   ngOnInit(): void {
-    this.metadataService.getMetadata().subscribe({
-      next: value => {
-        this.registrySchemaList = value;
-        this.selectedRegistrySchema = value?.[0];
-      },
-      error: err => {
-        console.error(err);
-        this.utilsService.showErrorMessage("Server Error");
-      }
-    })
+    this.registrySchemaList$ = this.metadataService.registrySchemaList$;
+    this.metadataService.selectedRegistrySchema$.subscribe(schema=> this.selectedRegistrySchema = schema);
   }
 
-  onSelectionChanged( registrySchema: any) {
-    this.selectedRegistrySchema = registrySchema;
+  onSelectionChanged(registrySchema: RegistrySchema) {
+    this.metadataService.setSelectedRegistrySchema(registrySchema);
   }
 
   onContinue() {
-    this.router.navigate(['case'], { queryParams: this.selectedRegistrySchema } );
+    this.router.navigate(['case'], { queryParams: {registrySchema: this.selectedRegistrySchema.tag}} );
   }
 }

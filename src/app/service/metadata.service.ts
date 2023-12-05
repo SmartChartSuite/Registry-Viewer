@@ -10,6 +10,15 @@ import {RegistrySchema} from "../domain/registry.schema";
 export class MetadataService {
 
   baseApiUrl: string;
+  private registrySchemaList = new BehaviorSubject<RegistrySchema[]>(null);
+  registrySchemaList$: Observable<RegistrySchema[]> = this.registrySchemaList.asObservable();
+
+  private selectedRegistrySchema = new BehaviorSubject<RegistrySchema>(null);
+  selectedRegistrySchema$: Observable<RegistrySchema> = this.selectedRegistrySchema.asObservable();
+
+  setSelectedRegistrySchema(registrySchema: RegistrySchema){
+    this.selectedRegistrySchema.next(registrySchema);
+  }
 
   constructor(private http: HttpClient, private environmentHandler: EnvironmentHandlerService) {
     this.baseApiUrl = this.environmentHandler.getBaseApiURL();
@@ -28,6 +37,7 @@ export class MetadataService {
               };
               return registrySchema;
             });
+          this.registrySchemaList.next(registrySchemaList);
           return registrySchemaList;
         }
       ),
