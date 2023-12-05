@@ -44,10 +44,15 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
 }
 
 .mat-column-date {
-  width: 100px;
-  max-width: 100px;
+  width: 64px;
+  white-space: nowrap;
 }
 
 .mat-icon {
   vertical-align: middle;
 }
+
+.selected-row-background {
+  background-color: whitesmoke;
+}
+
