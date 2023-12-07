@@ -10,3 +10,8 @@
   align-items: center;
   justify-content: center;
 }
+
+.radio-group {
+  display: flex; flex-direction: column;
+  margin: 4px 0;
+}
