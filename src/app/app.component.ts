@@ -3,6 +3,7 @@ import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 import {DemoModeService} from "./service/demo-mode.service";
 import {RegistrySchema} from "./domain/registry.schema";
 import {filter, map} from "rxjs";
+import {MetadataService} from "./service/metadata.service";
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
     private demoModeService: DemoModeService,
     private router: Router,
     private route: ActivatedRoute,
+    private metadataService: MetadataService
   ) {
   }
 
@@ -25,7 +27,9 @@ export class AppComponent implements OnInit {
     this.demoModeService.isDemoModeActive$.subscribe({
       next: value => this.isDemoModeActive = value
     });
-    this.route.queryParams.subscribe(params=> this.registrySchema = params as RegistrySchema);
+    // this.route.queryParams.subscribe(params=> this.registrySchema = params as RegistrySchema);
+
+    this.metadataService.selectedRegistrySchema$.subscribe(value=> this.registrySchema=value);
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationStart),
