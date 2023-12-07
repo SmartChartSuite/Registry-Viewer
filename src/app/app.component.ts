@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   isDemoModeActive: boolean = false;
   registrySchema: RegistrySchema;
   isReturnBtnVisible = false;
+  isRegistryDescriptionVisible: boolean = false;
 
   constructor(
     private demoModeService: DemoModeService,
@@ -27,16 +28,17 @@ export class AppComponent implements OnInit {
     this.demoModeService.isDemoModeActive$.subscribe({
       next: value => this.isDemoModeActive = value
     });
-    // this.route.queryParams.subscribe(params=> this.registrySchema = params as RegistrySchema);
 
     this.metadataService.selectedRegistrySchema$.subscribe(value=> this.registrySchema=value);
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationStart),
       map(event => event as NavigationStart))
-      .subscribe(event =>
+      .subscribe(event => {
         // check if the url has "case" followed by a digit. If this is the case, we should render the "Return to Registry x" button
-        this.isReturnBtnVisible = /case\/\d+/.test(event.url));
+        this.isReturnBtnVisible = /case\/\d+/.test(event.url);
+        this.isRegistryDescriptionVisible = event.url != '/'; //hide the selected registry when the route is root (this is where a user selects a route)
+      });
   }
 
   onRouteChanged(route: string) {
@@ -57,6 +59,10 @@ export class AppComponent implements OnInit {
   }
 
   onReturnToRegistry() {
-    this.router.navigate(['case'], { queryParams: this.registrySchema } );
+    this.router.navigate(['case'], { queryParams: {registrySchema: this.registrySchema.tag}} );
+  }
+
+  onSelectRegistry() {
+    this.router.navigate(['/']);
   }
 }
