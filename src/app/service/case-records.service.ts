@@ -25,7 +25,6 @@ export class CaseRecordsService {
   sections$: BehaviorSubject<string[]>;
 
   baseApiUrl: string;
-  //registrySchema: string = "syphilis"
 
   selectedCaseRecord: any;
   selectedCaseRecord$: BehaviorSubject<any>;
