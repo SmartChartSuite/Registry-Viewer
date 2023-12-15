@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-summary-view',
   templateUrl: './summary-view.component.html',
-  styleUrls: ['./summary-view.component.css']
+  styleUrls: ['./summary-view.component.scss']
 })
 export class SummaryViewComponent implements OnInit {
 
   breakpoint: number;
   matCardContentHeight: number;
   sectionsList = ['Lab Results', 'Diagnoses', 'Treatment', 'Other Medical History'];
+  @Input() registrySchemaTag: string;
 
   constructor() {
   }

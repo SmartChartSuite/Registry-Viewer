@@ -4,16 +4,20 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordsService} from "../../service/case-records.service";
-import {CaseRecord} from "../../model/case.record";
+import {CaseRecord} from "../../domain/case.record";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {CaseRecordApiResponse} from "../../model/case.record.api.response";
+import {CaseRecordApiResponse} from "../../domain/case.record.api.response";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
+import {UtilsService} from "../../service/utils.service";
+import {AuthService} from "@auth0/auth0-angular";
+import {combineLatest, mergeMap, of, skipWhile} from "rxjs";
+import {RegistrySchema} from "../../domain/registry.schema";
 
 @Component({
   selector: 'app-case-explorer',
   templateUrl: './case-explorer.component.html',
-  styleUrls: ['./case-explorer.component.css'],
+  styleUrls: ['./case-explorer.component.scss'],
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
@@ -26,31 +30,52 @@ export class CaseExplorerComponent implements OnInit {
   @ViewChild('input') input: ElementRef;
 
   dataSource : MatTableDataSource<CaseRecord>;
-  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'status'];
+  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'lastUpdated', 'status'];
   isLoading = true;
   searchForm: FormGroup;
+  registrySchema: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private caseRecordsService: CaseRecordsService,
     private formBuilder: FormBuilder,
+    private utilService: UtilsService,
+    public auth: AuthService
   ) { }
 
-  getCaseRecords(searchTerms?: string[]): void {
+  getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
     this.isLoading = true;
-    this.caseRecordsService.searchCases(searchTerms).subscribe(
-      (response: CaseRecordApiResponse) => {
+    let search$ = this.caseRecordsService.searchCases(registrySchema, searchTerms);
+    let authenticatedSearch$ = combineLatest(
+      [this.auth.user$, search$]).pipe(
+        skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
+        mergeMap(combinedResults => {
+          return of(combinedResults[1]);
+        })
+    )
+    authenticatedSearch$.subscribe({
+      next: (response: CaseRecordApiResponse) => {
         this.dataSource = new MatTableDataSource(response.data);
         this.isLoading = false;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      },
+      error: err => {
+        console.error(err);
+        this.isLoading = false;
+        this.utilService.showErrorMessage( `${err.status} Server Error loading records.`);
       }
-    );
+    })
   }
 
   ngOnInit(): void {
-    this.getCaseRecords();
+    this.registrySchema = this.route.snapshot.queryParams['registrySchema'];
+    if(!this.registrySchema){
+        this.router.navigate(["/"]);
+        return;
+    }
+    this.getCaseRecords(this.registrySchema);
     this.searchForm = this.formBuilder.group({
       searchQuery: [null],
       dob: [null]
@@ -66,7 +91,7 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   onRowClicked(row: any) {
-    this.router.navigate(['registry-viewer', row.caseId]);
+    this.router.navigate(['case', row.caseId], { queryParams: {registrySchema: this.registrySchema}} );
   }
 
   getDateStr(date: Date): string {
@@ -90,7 +115,7 @@ export class CaseExplorerComponent implements OnInit {
     }
 
     if(searchTerms){
-      this.getCaseRecords(searchTerms);
+      this.getCaseRecords(this.registrySchema, searchTerms);
     }
   }
 }

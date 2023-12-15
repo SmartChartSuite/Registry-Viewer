@@ -1,0 +1,182 @@
+/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+$my-app-primary: mat.define-palette(mat.$blue-grey-palette);
+$my-app-accent: mat.define-palette(mat.$green-palette, A400, A200, A700);
+$my-app-warn: mat.define-palette(mat.$deep-orange-palette);
+
+$my-app-theme: mat.define-light-theme(
+    (
+      color: (
+        primary: $my-app-primary,
+        accent: $my-app-accent,
+        warn: $my-app-warn,
+      ),
+    )
+);
+
+@include mat.all-component-themes($my-app-theme);
+
+@import "common.scss";
+
+$primary-dark: map_get($my-app-primary, 700);
+
+
+.primary-dark-text {
+  color: map_get($my-app-primary, 600)
+}
+
+$success-color: #28a745;
+$primary-light-color: #9fa8da;
+$light-gray-color: #E8EAF6;
+$error-text-color: #F44336;
+
+html, body { height: 100%;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
+
+/*This is bootstrap-like container, and we can change the media queries as needed one day*/
+.container {
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+@media (min-width: 1450px) {
+  .container {
+    width: 1440px;
+  }
+}
+
+/* Color Shades */
+.primary-light {
+  background-color: $primary-light-color;
+}
+
+/* Color Shades */
+.primary-extra-light {
+  background-color: #e8eaf6;
+}
+
+/*Adding some green buttons. We may have to change the color if we don't like it*/
+.mat-button.mat-success {
+  color: green;
+}
+
+.mat-raised-button.mat-success, .mat-flat-button.mat-success{
+  background-color: green;
+  color: white;
+}
+
+.mat-form-field-appearance-outline.mat-success .mat-form-field-outline.mat-success{
+  color: green;
+}
+
+.spacer{
+  flex: 1 1 auto;
+}
+
+.selected-row-background {
+  background-color: $light-gray-color;
+}
+
+.mat-snack-bar-container {
+  margin-top: 10em !important;
+}
+
+.error:focus,
+.error {
+  border-color: $error-text-color !important;
+  color: $error-text-color !important;
+}
+
+.invalid-feedback {
+  color: $error-text-color;
+}
+
+.success-color {
+  color: $success-color;
+}
+
+.primary-light-color {
+  background-color: map_get($my-app-primary, 100);
+}
+
+.spinner {
+  position: fixed;
+  z-index: 1001;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.full-width {
+  width: 100%;
+}
+
+//Snackbar offsets
+.snackbar-offset{
+  transform: translateY(24vh) !important;
+}
+
+//TODO figure out how to replace those colors with variables
+.mat-mdc-snack-bar-container {
+  --mat-mdc-snack-bar-button-color: white;
+  &.app-notification-error {
+    --mdc-snackbar-container-color: #DD2C00;
+  }
+  &.app-notification-success {
+    --mdc-snackbar-container-color: #2E7D32;
+  }
+}
+
+/* Margins and Paddings */
+$xs: 4px;
+$sm: 8px;
+$md: 16px;
+$lg: 24px;
+.margin-none { margin: 0; }
+.margin-sm { margin: $sm; }
+.margin-md { margin: $md; }
+.margin-lg { margin: $lg; }
+.padding-none { padding: 0; }
+.padding-xs { padding: $xs; }
+.padding-sm { padding: $sm; }
+.padding-md { padding: $md; }
+.padding-lg { padding: $lg; }
+// Add more of the following as needed.
+.margin-bottom-xs { margin-bottom: $xs; }
+.margin-bottom-sm { margin-bottom: $sm; }
+.margin-bottom-md { margin-bottom: $md; }
+.margin-top-xs { margin-top: $xs; }
+.margin-top-sm { margin-top: $sm; }
+.margin-top-md { margin-top: $md; }
+.margin-left-md { margin-left: $md; }
+.margin-left-sm { margin-left: $sm; }
+.margin-right-md { margin-right: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-top-md { padding-top: $md; }
+.padding-bottom-md { padding-bottom: $md; }
+.padding-left-md { padding-left: $md; }
+.padding-right-md { padding-right: $md; }
+.border-radius-xs { border-radius: $xs; }
+// Standardized Border

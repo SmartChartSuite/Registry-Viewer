@@ -1,22 +1,14 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {UntypedFormBuilder, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
-import {Question} from "../../../model/question";
+import {Question} from "../../../domain/question";
 import {CaseRecordsService} from "../../../service/case-records.service";
 import {UtilsService} from "../../../service/utils.service";
-import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
-import {APP_DATE_FORMATS} from "../../../provider/format-datepicker";
-
-let AppDateAdapter;
 
 @Component({
   selector: 'app-add-record-dialog',
   templateUrl: './add-record-dialog.component.html',
-  styleUrls: ['./add-record-dialog.component.css'],
-  providers: [
-    {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
-  ]
+  styleUrls: ['./add-record-dialog.component.scss'],
 })
 export class AddRecordDialogComponent implements OnInit {
 
@@ -30,6 +22,7 @@ export class AddRecordDialogComponent implements OnInit {
   dialogTitle: string;
   questions: Question[];
   submitted = false;
+  registrySchemaTag: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -41,7 +34,8 @@ export class AddRecordDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.setDialogTitle(this.data?.section);
-    this.caseRecordsService.getQuestions(this.data?.section).subscribe({
+    this.registrySchemaTag = this.data.registrySchemaTag;
+    this.caseRecordsService.getQuestions(this.data?.section, this.registrySchemaTag).subscribe({
       next: value => this.questions = value,
       error: err => console.error(err)
     })
@@ -66,7 +60,7 @@ export class AddRecordDialogComponent implements OnInit {
 
   updateCaseRecord(keyValue: any): void{
     const caseId =  this.data.caseId;
-    this.caseRecordsService.updateCaseRecord(keyValue, caseId).subscribe({
+    this.caseRecordsService.updateCaseRecord(this.registrySchemaTag, keyValue, caseId).subscribe({
       next: ()=> {
         this.submitted = false; this.utilsService.showSuccessMessage("Record updated successfully")
       },
@@ -78,7 +72,7 @@ export class AddRecordDialogComponent implements OnInit {
     this.submitted = true;
     this.form.markAllAsTouched();
 
-    //TODO we may need to change this to a specific type and add a class to the model
+    //TODO we may need to change this to a specific type and add a class to the domain
     if(this.form.valid){
       let keyValueData = {
         manualCaseData:

@@ -1,17 +1,23 @@
 <app-demographic-data></app-demographic-data>
+
 <mat-drawer-container hasBackdrop="false">
 
   <mat-drawer #resultViewerSidenav class="registry-viewer-drawer" mode="side" position="end" disableClose closed>
-    <app-side-panel></app-side-panel>
+    <app-side-panel [registrySchemaTag]="registrySchema"></app-side-panel>
   </mat-drawer>
 
   <mat-drawer-content>
+    <ng-container *ngIf="isLoading" class="spinner-container">
+      <div class="spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-container>
+    <div class="centered-content">
 
-    <div class="centered-content" style="margin-top: 2em; margin-bottom: 2em">
 
-      <mat-button-toggle-group>
+      <mat-button-toggle-group class="margin-lg">
 
-        <mat-button-toggle checked="isDefaultViewActive" (click)="onViewSelected(true);">
+        <mat-button-toggle [checked]="isDefaultViewActive" (click)="onViewSelected(true);">
           Summary View
         </mat-button-toggle>
 
@@ -20,13 +26,14 @@
         </mat-button-toggle>
 
       </mat-button-toggle-group>
-
     </div>
 
     <div style="max-width: 85%; margin: auto">
-      <app-chronological-view *ngIf="!isDefaultViewActive"></app-chronological-view>
-      <app-summary-view *ngIf="isDefaultViewActive"></app-summary-view>
+      <app-chronological-view [registrySchemaTag]="registrySchema" *ngIf="!isDefaultViewActive"></app-chronological-view>
+      <app-summary-view *ngIf="isDefaultViewActive" [registrySchemaTag]="registrySchema" ></app-summary-view>
     </div>
   </mat-drawer-content>
 
 </mat-drawer-container>
+
+

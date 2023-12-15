@@ -4,7 +4,7 @@ import {DrawerService} from "../../../../service/drawer.service";
 import {MatDialog} from "@angular/material/dialog";
 import {filter, Subscription} from "rxjs";
 import {CaseRecordsService} from "../../../../service/case-records.service";
-import {ChronologicalCaseRecord} from "../../../../model/chronological.case.record";
+import {ChronologicalCaseRecord} from "../../../../domain/chronological.case.record";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {ActivatedRoute} from "@angular/router";
 import {DemoModeService} from "../../../../service/demo-mode.service";
@@ -13,7 +13,7 @@ import {openAnnotationDialog} from "../../add-record-dialog/add-record-dialog.co
 @Component({
   selector: 'app-section',
   templateUrl: './section.component.html',
-  styleUrls: ['./section.component.css', '../../registry-viewer.component.css'],
+  styleUrls: ['./section.component.scss', '../../registry-viewer.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -26,6 +26,7 @@ export class SectionComponent implements OnInit, OnDestroy {
 
   @Input() matCardContentHeight: number;
   @Input() section: string;
+  @Input() registrySchemaTag;
 
   panelOpenState = false;
 
@@ -127,7 +128,7 @@ export class SectionComponent implements OnInit, OnDestroy {
   onAddRecord(): void {
     this.caseRecordsService.selectedCaseRecord$.next(null);
     this.drawerService.close();
-    openAnnotationDialog(this.dialog, {section: this.section, description: "Sample annotation text", caseId: this.route.snapshot.params['id']})
+    openAnnotationDialog(this.dialog, {registrySchemaTag: this.registrySchemaTag, section: this.section, description: "Sample annotation text", caseId: this.route.snapshot.params['id']})
       .pipe(filter(val => !!val))
       .subscribe(
         val=> console.log(val)

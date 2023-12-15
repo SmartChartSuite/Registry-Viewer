@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatMultiSort, MatMultiSortTableDataSource, TableData} from "ngx-mat-multi-sort";
 import {CaseRecordsService} from "../../../service/case-records.service";
 import {UntypedFormControl} from "@angular/forms";
-import {ChronologicalCaseRecord} from "../../../model/chronological.case.record";
+import {ChronologicalCaseRecord} from "../../../domain/chronological.case.record";
 import {DrawerService} from "../../../service/drawer.service";
 import {Subscription} from "rxjs";
 import {MultiSortTableService} from "../../../service/multi-sort-table.service";
@@ -12,7 +12,7 @@ import {DemoModeService} from "../../../service/demo-mode.service";
 @Component({
   selector: 'app-chronological-view',
   templateUrl: './chronological-view.component.html',
-  styleUrls: ['./chronological-view.component.css']
+  styleUrls: ['./chronological-view.component.scss']
 })
 export class ChronologicalViewComponent implements OnInit, OnDestroy{
 
@@ -24,6 +24,8 @@ export class ChronologicalViewComponent implements OnInit, OnDestroy{
    * While I am skeptical about the reliability of the implementation, the users requested the feature and
    * our team implemented it. The implementation could easily be reverted to using the Angular material table.
    */
+
+  @Input() registrySchemaTag: string;
 
   @ViewChild(MatMultiSort) sort: MatMultiSort;
   caseRecordsSubscription$: Subscription;

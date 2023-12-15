@@ -1,26 +1,31 @@
 <mat-toolbar color="primary">
 
-  <span class="pointer">
-    <h1 (click)="onRouteChanged('/');" style="cursor: pointer">
-    TR State Syphilis Registry</h1>
+  <span class="pointer padding-right-md menu-right-border" (click)="onRouteChanged('/');">REGISTRY VIEWER</span>
+  <span class="margin-left-md" *ngIf="isRegistryDescriptionVisible">{{registrySchema?.name}}</span>
+
+  <span class="margin-md">
+    <button *ngIf="isReturnBtnVisible && registrySchema" mat-button (click)="onReturnToRegistry()"> <mat-icon>navigate_before</mat-icon>Return to {{registrySchema.name}}
+      Case Search
+    </button>
+  </span>
+
+  <span class="margin-md">
+    <button *ngIf="isRegistryDescriptionVisible" mat-button (click)="onSelectRegistry()"> <mat-icon>navigate_before</mat-icon>
+      Return to Select Registry
+    </button>
   </span>
 
   <span class="menu-spacer"></span>
 
-  <mat-slide-toggle style="margin-right: 1em" (toggleChange)="onToggleDemoMode()" [checked]="isDemoModeActive" [disabled]="!isDemoModeEnabled()">
-    Demo Mode
+  <mat-slide-toggle class="margin-right-md" (toggleChange)="onToggleDemoMode()" [checked]="isDemoModeActive"
+                    [disabled]="!isDemoModeEnabled()">
+    <span class="menu-text">Demo Mode</span>
   </mat-slide-toggle>
 
-  <button mat-raised-button color="accent" (click)="onRouteChanged('/');">
-    Search
-  </button>
-
-  <button mat-button (click)="onRouteChanged('/login');">
-    <mat-icon>account_circle</mat-icon>
-    Login
-  </button>
+  <app-auth0-login></app-auth0-login>
 
 </mat-toolbar>
+
 
 <router-outlet></router-outlet>
 

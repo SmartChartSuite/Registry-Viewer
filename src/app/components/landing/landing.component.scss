@@ -1,0 +1,17 @@
+.registry-card {
+  margin-top: 64px;
+  max-width: 512px;
+  min-width: 256px;
+  min-height: 128px;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radio-group {
+  display: flex; flex-direction: column;
+  margin: 4px 0;
+}

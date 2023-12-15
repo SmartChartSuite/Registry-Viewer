@@ -2,14 +2,16 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {DrawerService} from "../../service/drawer.service";
 import {CaseRecordsService} from "../../service/case-records.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {DemoModeService} from "../../service/demo-mode.service";
+import {UtilsService} from "../../service/utils.service";
+import {RegistrySchema} from "../../domain/registry.schema";
 
 
 @Component({
   selector: 'app-registry-viewer',
   templateUrl: './registry-viewer.component.html',
-  styleUrls: ['./registry-viewer.component.css']
+  styleUrls: ['./registry-viewer.component.scss']
 })
 export class RegistryViewerComponent implements OnInit, AfterViewInit {
 
@@ -18,11 +20,15 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   breakpoint: number;
   matCardContentHeight: number;
   isDefaultViewActive = true;
+  isLoading = false;
+  registrySchema: string;
 
   constructor(private sidenavService: DrawerService,
               private caseRecordsService: CaseRecordsService,
               private route: ActivatedRoute,
-              private demoModeService: DemoModeService) {
+              private demoModeService: DemoModeService,
+              private utilsService: UtilsService,
+              private router: Router) {
   }
 
   setMatCardContentHeight(windowSize: number){
@@ -40,9 +46,22 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.registrySchema = this.route.snapshot.queryParams['registrySchema'];
+    if(!this.registrySchema){
+      this.router.navigate(["/"]);
+      return;
+    }
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
-    this.caseRecordsService.getByCaseId(this.route.snapshot.paramMap.get('id')).subscribe();
+    this.isLoading = true;
+    this.caseRecordsService.getByCaseId(this.registrySchema, this.route.snapshot.paramMap.get('id')).subscribe({
+      next: value => this.isLoading = false,
+      error: err => {
+        this.isLoading = false;
+        this.utilsService.showErrorMessage("Server Error when loading data.");
+        console.error(err);
+      }
+    });
   }
 
   ngAfterViewInit(): void {

@@ -1,18 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {DrawerService} from "../../../../service/drawer.service";
 import {UtilsService} from "../../../../service/utils.service";
 import {Observable, Subscription} from "rxjs";
 import {UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
-import {Annotation} from "../../../../model/annotation";
+import {Annotation} from "../../../../domain/annotation";
 import {ConformationDialogComponent} from "../../../conformation-dialog/conformation-dialog.component";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-annotations',
   templateUrl: './annotations.component.html',
-  styleUrls: ['./annotations.component.css']
+  styleUrls: ['./annotations.component.scss']
 })
 
 export class AnnotationsComponent implements OnInit {
@@ -26,7 +26,7 @@ export class AnnotationsComponent implements OnInit {
   selectedAnnotation: Annotation;
   dialogClosed$: Observable<boolean>;
 
-
+  @Input() registrySchemaTag: string;
   @ViewChild('formDirective') formDirective: any;
 
   constructor(
@@ -57,7 +57,7 @@ export class AnnotationsComponent implements OnInit {
       ]
     }
 
-    this.caseRecordsService.updateCaseRecord(annotationObj, caseId, this.selectedCaseRecord?.contentId)
+    this.caseRecordsService.updateCaseRecord(this.registrySchemaTag, annotationObj, caseId, this.selectedCaseRecord?.contentId)
       .subscribe(
         {
           next: value => {

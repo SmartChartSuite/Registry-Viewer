@@ -1,22 +1,26 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 import {DemoModeService} from "./service/demo-mode.service";
+import {RegistrySchema} from "./domain/registry.schema";
+import {filter, map} from "rxjs";
+import {MetadataService} from "./service/metadata.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'SMART-PACER-Registry-Viewer';
-
   isDemoModeActive: boolean = false;
-
-  isChronologicalViewActive = true;
+  registrySchema: RegistrySchema;
+  isReturnBtnVisible = false;
+  isRegistryDescriptionVisible: boolean = false;
 
   constructor(
     private demoModeService: DemoModeService,
     private router: Router,
+    private route: ActivatedRoute,
+    private metadataService: MetadataService
   ) {
   }
 
@@ -24,6 +28,17 @@ export class AppComponent implements OnInit {
     this.demoModeService.isDemoModeActive$.subscribe({
       next: value => this.isDemoModeActive = value
     });
+
+    this.metadataService.selectedRegistrySchema$.subscribe(value=> this.registrySchema=value);
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart),
+      map(event => event as NavigationStart))
+      .subscribe(event => {
+        // check if the url has "case" followed by a digit. If this is the case, we should render the "Return to Registry x" button
+        this.isReturnBtnVisible = /case\/\d+/.test(event.url);
+        this.isRegistryDescriptionVisible = event.url != '/'; //hide the selected registry when the route is root (this is where a user selects a route)
+      });
   }
 
   onRouteChanged(route: string) {
@@ -40,7 +55,14 @@ export class AppComponent implements OnInit {
   }
 
   isDemoModeEnabled() {
-    return this.router.url.indexOf('registry-viewer') != -1;
+    return this.router.url.indexOf('case') != -1;
   }
 
+  onReturnToRegistry() {
+    this.router.navigate(['case'], { queryParams: {registrySchema: this.registrySchema.tag}} );
+  }
+
+  onSelectRegistry() {
+    this.router.navigate(['/']);
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {CaseRecordsService} from "../../../../service/case-records.service";
 import {ActivatedRoute} from "@angular/router";
 import {DrawerService} from "../../../../service/drawer.service";
@@ -9,10 +9,10 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 @Component({
   selector: 'app-flag',
   templateUrl: './flag.component.html',
-  styleUrls: ['./flag.component.css']
+  styleUrls: ['./flag.component.scss']
 })
 export class FlagComponent implements OnInit, OnDestroy {
-
+  @Input() registrySchemaTag: string;
   selectedCaseRecord: any;
   selectedCaseRecordSubscription$: Subscription;
 
@@ -35,7 +35,7 @@ export class FlagComponent implements OnInit, OnDestroy {
     if($event.checked){
      flagValue = "Invalid Entry";
     }
-    this.caseRecordsService.updateCaseRecord({'flag': flagValue}, caseId, this.selectedCaseRecord?.contentId).subscribe(
+    this.caseRecordsService.updateCaseRecord(this.registrySchemaTag, {'flag': flagValue}, caseId, this.selectedCaseRecord?.contentId).subscribe(
       {
         next: () => this.utilsService.showSuccessMessage("Flag updated successfully"),
         error: (err)=> {console.error(err); this.utilsService.showErrorMessage("Unable to upload the record. Server error.")
