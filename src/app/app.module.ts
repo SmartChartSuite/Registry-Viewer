@@ -114,7 +114,7 @@ export const configFactory = (configService: ConfigService) => {
         domain: 'grady-temp.us.auth0.com',
         clientId: '4T568aTy0dj7keOCla7FubFQO7hJ9iiH',
         authorizationParams: {
-          redirect_uri: window.location.href,
+          redirect_uri: window.location.origin,
           audience: 'http://smartchartsuite.grady/registry-viewer-api/',
           scope: 'profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis'
         },
