@@ -15,7 +15,7 @@
       </mat-radio-group>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onContinue()">Continue</button>
+      <button mat-raised-button color="primary" (click)="onContinue()" [disabled]="!(registrySchemaList$ | async)">Continue</button>
     </mat-card-actions>
   </mat-card>
 </div>
