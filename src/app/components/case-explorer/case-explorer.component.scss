@@ -33,6 +33,10 @@ table {
   flex: 0 0 5%;
 }
 
+.mat-column-dob .mat-column-initialReportDate .mat-column-phone {
+  white-space: nowrap;
+}
+
 .no-records-found{
   padding: 16px 0;
   font-weight: bold;
