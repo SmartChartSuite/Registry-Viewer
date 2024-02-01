@@ -25,7 +25,8 @@ export class DemographicDataComponent implements OnInit {
 
   ngOnInit(): void {
     const caseId =  this.route.snapshot.params['id'];
-    this.caseRecordService.searchCases('syphilis', [caseId.toString()], ['caseId']).subscribe(
+    const registrySchema = this.route.snapshot.queryParamMap.get('registrySchema');
+    this.caseRecordService.searchCases(registrySchema, [caseId.toString()], ['caseId']).subscribe(
       {
       next: value => this.demographicsData = value?.data[0]
       }
