@@ -46,12 +46,14 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker";
-import {AuthHttpInterceptor, AuthModule} from '@auth0/auth0-angular';
+//import {AuthHttpInterceptor, AuthModule} from '@auth0/auth0-angular';
 import { Auth0LoginComponent } from './auth0-login/auth0-login.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
 import { LandingComponent } from './components/landing/landing.component';
 import {MatRadioModule} from "@angular/material/radio";
+import {OAuthModule} from "angular-oauth2-oidc";
+import {AuthGuard} from "./guards/auth.guard";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -110,28 +112,36 @@ export const configFactory = (configService: ConfigService) => {
     MatDatepickerModule,
     NgOptimizedImage,
     MatTooltipModule,
-    AuthModule.forRoot({
-        domain: 'grady-temp.us.auth0.com',
-        clientId: '4T568aTy0dj7keOCla7FubFQO7hJ9iiH',
-        authorizationParams: {
-          redirect_uri: window.location.href,
-          audience: 'http://smartchartsuite.grady/registry-viewer-api/',
-          scope: 'profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis'
-        },
-        httpInterceptor: {
-          allowedList: [{
-            uri: 'https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/*',
-            // tokenOptions: {
-            //   authorizationParams: {
-            //     audience: 'http://smartchartsuite.grady/registry-viewer-api/'
-            //   }
-            // }
-          }
-
-          ]
-        }
-      }
+    OAuthModule.forRoot(
+      // {
+      //   resourceServer: {
+      //     allowedUrls: ["https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/search-cases/syphilis"],
+      //     sendAccessToken: true
+      //   },
+      // }
     ),
+    // AuthModule.forRoot({
+    //     domain: 'grady-temp.us.auth0.com',
+    //     clientId: '4T568aTy0dj7keOCla7FubFQO7hJ9iiH',
+    //     authorizationParams: {
+    //       redirect_uri: window.location.origin,
+    //       audience: 'http://smartchartsuite.grady/registry-viewer-api/',
+    //       scope: 'profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis'
+    //     },
+    //     httpInterceptor: {
+    //       allowedList: [{
+    //         uri: 'https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/*',
+    //         // tokenOptions: {
+    //         //   authorizationParams: {
+    //         //     audience: 'http://smartchartsuite.grady/registry-viewer-api/'
+    //         //   }
+    //         // }
+    //       }
+    //
+    //       ]
+    //     }
+    //   }
+    // ),
     MatMenuModule,
     MatDividerModule,
     MatRadioModule
@@ -147,7 +157,7 @@ export const configFactory = (configService: ConfigService) => {
       deps: [ConfigService],
       multi: true
     },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+  //  { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
