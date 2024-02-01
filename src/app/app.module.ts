@@ -54,6 +54,7 @@ import { LandingComponent } from './components/landing/landing.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {OAuthModule} from "angular-oauth2-oidc";
 import {AuthGuard} from "./guards/auth.guard";
+import {authModuleConfig} from "../assets/config/auth-code-flow-config";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -113,6 +114,7 @@ export const configFactory = (configService: ConfigService) => {
     NgOptimizedImage,
     MatTooltipModule,
     OAuthModule.forRoot(
+      authModuleConfig
       // {
       //   resourceServer: {
       //     allowedUrls: ["https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/search-cases/syphilis"],
