@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {JwksValidationHandler, OAuthService} from "angular-oauth2-oidc";
 import {authCodeFlowConfig} from "../../assets/config/auth-code-flow-config";
-import {from, Observable, skipWhile, switchMap, tap} from "rxjs";
+import {skipWhile, switchMap, tap} from "rxjs";
 import {MetadataService} from "../service/metadata.service";
 
 @Component({
@@ -9,37 +9,30 @@ import {MetadataService} from "../service/metadata.service";
   templateUrl: './auth0-login.component.html',
   styleUrls: ['./auth0-login.component.scss']
 })
-
 export class Auth0LoginComponent {
-
   constructor(public oauthService: OAuthService, private metadataService: MetadataService) {
-    this.configure();
+    this.configureOAuthService();
+    this.loadMetadata();
   }
 
-  private configure() {
-    // Load information from Auth0 (could also be configured manually)
+  private configureOAuthService() {
+    this.oauthService.events.subscribe(e => console.log(e));
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    const userLoggedIn: Observable<boolean> = from(this.oauthService.loadDiscoveryDocumentAndTryLogin());
-    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(value=> {
-      console.log(this.oauthService.getIdToken());
-      console.log(this.oauthService.getAccessToken());
-      console.log(value)
-    })
-    //this.oauthService.initCodeFlow();
-
-    userLoggedIn.pipe(
-        skipWhile(value => !value),
-        switchMap(() => this.metadataService.getMetadata()),
-        tap(registrySchemaList => this.metadataService.setSelectedRegistrySchema(registrySchemaList[0])),
-      ).subscribe({
-          next: registry => {
-            console.info(registry);
-          },
-          error: err => console.error(err)
-        }
-      )
-
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }
 
+  private loadMetadata() {
+    this.oauthService.events.pipe(
+      skipWhile(value => !this.oauthService.hasValidAccessToken()),
+      switchMap(() => this.metadataService.getMetadata()),
+      tap(registrySchemaList => this.metadataService.setSelectedRegistrySchema(registrySchemaList[0])),
+    ).subscribe({
+        next: registry => {
+          console.info(registry);
+        },
+        error: err => console.error(err)
+      }
+    )
+  }
 }
