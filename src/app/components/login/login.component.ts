@@ -33,7 +33,6 @@ export class LoginComponent {
   }
 
   private configureOAuthService() {
-    this.oauthService.events.subscribe(e => console.log(e));
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();

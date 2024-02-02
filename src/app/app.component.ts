@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 import {DemoModeService} from "./service/demo-mode.service";
 import {RegistrySchema} from "./domain/registry.schema";
-import {filter, map, skipWhile, switchMap, tap} from "rxjs";
+import {filter, map, Observable, skipWhile} from "rxjs";
 import {MetadataService} from "./service/metadata.service";
 import {OAuthService} from "angular-oauth2-oidc";
 
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
   }
 
   private initUserAuthenticatedFlow() {
-    this.metadataService.selectedRegistrySchema$.subscribe(value=> this.registrySchema=value);
+    this.metadataService.selectedRegistrySchema$.subscribe(value => this.registrySchema = value)
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationStart),

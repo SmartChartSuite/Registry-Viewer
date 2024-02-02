@@ -10,9 +10,6 @@ import {CaseRecordApiResponse} from "../../domain/case.record.api.response";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 import {UtilsService} from "../../service/utils.service";
-//import {AuthService} from "@auth0/auth0-angular";
-import {combineLatest, from, mergeMap, Observable, of, skipWhile, switchMap, tap} from "rxjs";
-import {RegistrySchema} from "../../domain/registry.schema";
 import {OAuthService} from "angular-oauth2-oidc";
 
 @Component({
@@ -47,40 +44,7 @@ export class CaseExplorerComponent implements OnInit {
   ) { }
 
   getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
-    console.log(this.oauthService.getIdToken());
-    // this.isLoading = true;
-    // let search$ = this.caseRecordsService.searchCases(registrySchema, searchTerms);
-    // let authenticatedSearch$ = combineLatest(
-    //   [this.auth.user$, search$]).pipe(
-    //     skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
-    //     mergeMap(combinedResults => {
-    //       return of(combinedResults[1]);
-    //     })
-    // )
-    // authenticatedSearch$.subscribe({
-    //   next: (response: CaseRecordApiResponse) => {
-    //     this.dataSource = new MatTableDataSource(response.data);
-    //     this.isLoading = false;
-    //     this.dataSource.paginator = this.paginator;
-    //     this.dataSource.sort = this.sort;
-    //   },
-    //   error: err => {
-    //     console.error(err);
-    //     this.isLoading = false;
-    //     this.utilService.showErrorMessage( `${err.status} Server Error loading records.`);
-    //   }
-    // })
-
-
-    const userLoggedIn: Observable<boolean> = from(this.oauthService.loadDiscoveryDocumentAndTryLogin());
-
-    userLoggedIn.pipe(
-      skipWhile(value => {
-        console.log(value);
-        return !value
-      }),
-      switchMap(() => this.caseRecordsService.searchCases(registrySchema, searchTerms)),
-    ).subscribe({
+    this.caseRecordsService.searchCases(registrySchema, searchTerms).subscribe({
       next: (response: CaseRecordApiResponse) => {
         this.dataSource = new MatTableDataSource(response.data);
         this.isLoading = false;
@@ -90,35 +54,9 @@ export class CaseExplorerComponent implements OnInit {
       error: err => {
         console.error(err);
         this.isLoading = false;
-        this.utilService.showErrorMessage( `${err.status} Server Error loading records.`);
+        this.utilService.showErrorMessage(`${err.status} Server Error loading records.`);
       }
     });
-
-
-    // this.isLoading = true;
-    // let search$ = this.caseRecordsService.searchCases(registrySchema, searchTerms);
-    // const userLoggedIn: Observable<boolean> = from(this.oauthService.loadDiscoveryDocumentAndTryLogin());
-    // let authenticatedSearch$ = combineLatest(
-    //   [userLoggedIn, search$]).pipe(
-    //     skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
-    //     mergeMap(combinedResults => {
-    //       return of(combinedResults[1]);
-    //     })
-    // )
-    // authenticatedSearch$.subscribe({
-    //   next: (response: CaseRecordApiResponse) => {
-    //     this.dataSource = new MatTableDataSource(response.data);
-    //     this.isLoading = false;
-    //     this.dataSource.paginator = this.paginator;
-    //     this.dataSource.sort = this.sort;
-    //   },
-    //   error: err => {
-    //     console.error(err);
-    //     this.isLoading = false;
-    //     this.utilService.showErrorMessage( `${err.status} Server Error loading records.`);
-    //   }
-    // })
-
   }
 
   ngOnInit(): void {

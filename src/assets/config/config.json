@@ -8,6 +8,7 @@
     "scope": "profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis",
     "showDebugInformation": true,
     "responseType": "code",
+    "logoutUrl": "http://localhost:4200",
     "customQueryParams": {
       "audience": [
         "http://smartchartsuite.grady/registry-viewer-api/"

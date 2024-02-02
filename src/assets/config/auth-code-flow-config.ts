@@ -8,6 +8,6 @@ export const authCodeFlowConfig: AuthConfig = {
   responseType: config.auth.responseType,
   scope: config.auth.scope,
   showDebugInformation: config.auth.showDebugInformation,
-  logoutUrl: `${config.auth.domain}/v2/logout`,
+  logoutUrl: config.auth.logoutUrl,
   customQueryParams: config.auth.customQueryParams
 }

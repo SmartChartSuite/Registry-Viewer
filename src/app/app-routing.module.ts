@@ -11,7 +11,6 @@ const routes: Routes = [
   {
     path: '',
     component: LandingComponent,
-   // canActivate: [AuthGuard]
   },
   {
     path: 'case',
@@ -21,12 +20,12 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent,
-  //  canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'case/:id',
     component: RegistryViewerComponent,
-  //  canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   { // This path MUST ALWAYS be the last path!!!
     // Do not add any paths below this point or they will not work and will be redirected to landing.

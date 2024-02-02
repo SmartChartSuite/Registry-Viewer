@@ -12,7 +12,7 @@
 
   <span class="margin-md">
     <button *ngIf="isReturnBtnVisible && registrySchema" mat-button (click)="onReturnToRegistry()">
-      <mat-icon>navigate_before</mat-icon>Return to {{registrySchema.name}}
+      <mat-icon>navigate_before</mat-icon>Return to {{registrySchema?.name}}
       Case Search
     </button>
   </span>
@@ -28,12 +28,10 @@
 
 </mat-toolbar>
 
-
-<!-- TODO: Update to @ngIf -->
-<div *ngIf="oauthService.hasValidAccessToken(); else login;">
+@if (oauthService.hasValidAccessToken()) {
   <router-outlet></router-outlet>
-</div>
-<ng-template #login>
+}
+@else {
   <app-login [isLocatedInMainMenu]="false"></app-login>
-</ng-template>
+}
 
