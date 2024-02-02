@@ -149,6 +149,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
   }
 }
 
+.registry-card {
+  margin-top: 64px;
+  max-width: 512px;
+  min-width: 256px;
+  min-height: 128px;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 /* Margins and Paddings */
 $xs: 4px;
 $sm: 8px;

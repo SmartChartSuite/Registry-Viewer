@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 import {DemoModeService} from "./service/demo-mode.service";
 import {RegistrySchema} from "./domain/registry.schema";
-import {filter, map} from "rxjs";
+import {filter, map, skipWhile, switchMap, tap} from "rxjs";
 import {MetadataService} from "./service/metadata.service";
+import {OAuthService} from "angular-oauth2-oidc";
 
 @Component({
   selector: 'app-root',
@@ -20,25 +21,24 @@ export class AppComponent implements OnInit {
     private demoModeService: DemoModeService,
     private router: Router,
     private route: ActivatedRoute,
-    private metadataService: MetadataService
+    private metadataService: MetadataService,
+    public oauthService: OAuthService
   ) {
   }
 
   ngOnInit(): void {
+
     this.demoModeService.isDemoModeActive$.subscribe({
       next: value => this.isDemoModeActive = value
     });
 
-    this.metadataService.selectedRegistrySchema$.subscribe(value=> this.registrySchema=value);
-
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationStart),
-      map(event => event as NavigationStart))
-      .subscribe(event => {
-        // check if the url has "case" followed by a digit. If this is the case, we should render the "Return to Registry x" button
-        this.isReturnBtnVisible = /case\/\d+/.test(event.url);
-        this.isRegistryDescriptionVisible = event.url != '/'; //hide the selected registry when the route is root (this is where a user selects a route)
-      });
+    this.oauthService.events.pipe(
+      skipWhile(value => !this.oauthService.hasValidAccessToken()),
+    ).subscribe({
+        next: () => this.initUserAuthenticatedFlow(),
+        error: err => console.error(err)
+      }
+    )
   }
 
   onRouteChanged(route: string) {
@@ -64,5 +64,18 @@ export class AppComponent implements OnInit {
 
   onSelectRegistry() {
     this.router.navigate(['/']);
+  }
+
+  private initUserAuthenticatedFlow() {
+    this.metadataService.selectedRegistrySchema$.subscribe(value=> this.registrySchema=value);
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationStart),
+      map(event => event as NavigationStart))
+      .subscribe(event => {
+        // check if the url has "case" followed by a digit. If this is the case, we should render the "Return to Registry x" button
+        this.isReturnBtnVisible = /case\/\d+/.test(event.url);
+        this.isRegistryDescriptionVisible = event.url != '/'; //hide the selected registry when the route is root (this is where a user selects a route)
+      });
   }
 }

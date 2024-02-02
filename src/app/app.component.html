@@ -24,11 +24,16 @@
     <span class="menu-text">Demo Mode</span>
   </mat-slide-toggle>
 
-  <app-auth0-login></app-auth0-login>
+  <app-login [isLocatedInMainMenu]="true"></app-login>
 
 </mat-toolbar>
 
 
-<router-outlet></router-outlet>
-
+<!-- TODO: Update to @ngIf -->
+<div *ngIf="oauthService.hasValidAccessToken(); else login;">
+  <router-outlet></router-outlet>
+</div>
+<ng-template #login>
+  <app-login [isLocatedInMainMenu]="false"></app-login>
+</ng-template>
 
