@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, NavigationStart, Router} from "@angular/router";
 import {DemoModeService} from "./service/demo-mode.service";
 import {RegistrySchema} from "./domain/registry.schema";
-import {filter, map, Observable, skipWhile} from "rxjs";
+import {filter, map, skipWhile} from "rxjs";
 import {MetadataService} from "./service/metadata.service";
 import {OAuthService} from "angular-oauth2-oidc";
 
