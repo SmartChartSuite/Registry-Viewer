@@ -55,7 +55,9 @@ export class AppComponent implements OnInit {
   }
 
   isDemoModeEnabled() {
-    return this.router.url.indexOf('case') != -1;
+    const url = this.router.url.substring(1); //remove the '/' from the url;
+    const regex = /case\/\d+\?[\w=]+/; // detects "case" followed by a number, followed by "?" followed by anything
+    return regex.test(url);
   }
 
   onReturnToRegistry() {
