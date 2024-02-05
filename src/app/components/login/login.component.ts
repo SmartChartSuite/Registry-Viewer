@@ -9,6 +9,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatMenuModule} from "@angular/material/menu";
 import {NgIf} from "@angular/common";
 import {MatCardModule} from "@angular/material/card";
+import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,10 @@ import {MatCardModule} from "@angular/material/card";
 export class LoginComponent {
   @Input({ required: true }) isLocatedInMainMenu: boolean;
 
-  constructor(public oauthService: OAuthService, private metadataService: MetadataService) {
+  constructor(
+    public oauthService: OAuthService,
+    private metadataService: MetadataService,
+    private utilService: UtilsService) {
     this.configureOAuthService();
     this.loadMetadata();
   }
@@ -44,10 +48,11 @@ export class LoginComponent {
       switchMap(() => this.metadataService.getMetadata()),
       tap(registrySchemaList => this.metadataService.setSelectedRegistrySchema(registrySchemaList[0])),
     ).subscribe({
-        next: registry => {
-          console.info(registry);
-        },
-        error: err => console.error(err)
+        next: ()=> {},
+        error: err => {
+          console.error(err);
+          this.utilService.showErrorMessage("Server error loading registry data.");
+        }
       }
     )
   }
