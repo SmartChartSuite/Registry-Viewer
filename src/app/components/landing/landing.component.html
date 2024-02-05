@@ -1,21 +1,23 @@
 <div class="box">
-  <mat-card class="registry-card">
+  <mat-card class="registry-card"x>
     <mat-card-header>
       <mat-card-title>
         Select Registry
       </mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-      <mat-radio-group class="radio-group" [(ngModel)]="selectedRegistrySchema">
-        <mat-radio-button
-          *ngFor="let registrySchema of registrySchemaList$ | async" [value]="registrySchema"
-          (change)="onSelectionChanged(registrySchema)">
-          {{ registrySchema.description }}
-        </mat-radio-button>
-      </mat-radio-group>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onContinue()" [disabled]="!(registrySchemaList$ | async)">Continue</button>
-    </mat-card-actions>
+    @if(registrySchemaList$ | async){
+      <mat-card-content>
+        <mat-radio-group class="radio-group" [(ngModel)]="selectedRegistrySchema">
+          <mat-radio-button
+            *ngFor="let registrySchema of registrySchemaList$ | async" [value]="registrySchema"
+            (change)="onSelectionChanged(registrySchema)">
+            {{ registrySchema.description }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="onContinue()" [disabled]="!(registrySchemaList$ | async)">Continue</button>
+      </mat-card-actions>
+    }
   </mat-card>
 </div>
