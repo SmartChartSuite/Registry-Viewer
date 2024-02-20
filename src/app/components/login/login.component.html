@@ -15,7 +15,7 @@
         [src]="user?.['picture'] ? user?.['picture'] : '/assets/portrait_placeholder.png'"
         referrerpolicy="no-referrer"
         class="profile-image"
-        [matMenuTriggerFor]="userMenu">
+        [matMenuTriggerFor]="userMenu" alt="Profile Image">
       <mat-menu #userMenu="matMenu" style="width: 250px;">
         <div mat-menu-item>
           <div class="user-card">
@@ -40,7 +40,7 @@
     </div>
   </div>
 } @else {
-  <div class="box">
+  <div class="centered-content">
     <mat-card class="registry-card">
       <mat-card-header>
         <mat-card-title>

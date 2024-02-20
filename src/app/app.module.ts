@@ -45,7 +45,7 @@ import {ConfigService} from "./service/config.service";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker";
+import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker"
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
 import { LandingComponent } from './components/landing/landing.component';
