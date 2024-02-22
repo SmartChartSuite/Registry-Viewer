@@ -3,25 +3,10 @@ import {JwksValidationHandler, OAuthService} from "angular-oauth2-oidc";
 import {authCodeFlowConfig} from "../../../assets/config/auth-code-flow-config";
 import {MetadataService} from "../../service/metadata.service";
 import {skipWhile, switchMap, tap} from "rxjs";
-import {MatButtonModule} from "@angular/material/button";
-import {MatDividerModule} from "@angular/material/divider";
-import {MatIconModule} from "@angular/material/icon";
-import {MatMenuModule} from "@angular/material/menu";
-import {NgIf} from "@angular/common";
-import {MatCardModule} from "@angular/material/card";
 import {UtilsService} from "../../service/utils.service";
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [
-    MatButtonModule,
-    MatDividerModule,
-    MatIconModule,
-    MatMenuModule,
-    NgIf,
-    MatCardModule
-  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })

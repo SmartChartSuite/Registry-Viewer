@@ -78,6 +78,7 @@ export const configFactory = (configService: ConfigService) => {
     ConformationDialogComponent,
     DemoModeComponent,
     LandingComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -116,7 +117,6 @@ export const configFactory = (configService: ConfigService) => {
     MatMenuModule,
     MatDividerModule,
     MatRadioModule,
-    LoginComponent
   ],
   providers: [
     DrawerService,
