@@ -1,4 +1,4 @@
-import {AuthConfig, OAuthModuleConfig} from "angular-oauth2-oidc";
+import {AuthConfig} from "angular-oauth2-oidc";
 import config from "../config/config.json";
 
 export const authCodeFlowConfig: AuthConfig = {

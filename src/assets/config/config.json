@@ -13,6 +13,14 @@
       "audience": [
         "http://smartchartsuite.grady/registry-viewer-api/"
       ]
+    },
+    "moduleConfig" : {
+      "resourceServer": {
+        "allowedUrls": [
+          "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api"
+        ],
+        "sendAccessToken": true
+      }
     }
   }
 }
