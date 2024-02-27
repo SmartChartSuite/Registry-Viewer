@@ -14,7 +14,7 @@ export class AddRecordDialogComponent implements OnInit {
 
   form = this.formBuilder.group({
     value: ['', Validators.required],
-    date: ['', Validators.required],
+    date: [new Date(), Validators.required],
     question: ['', Validators.required]
   });
 

@@ -135,7 +135,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 
 //Snackbar offsets
 .snackbar-offset{
-  transform: translateY(24vh) !important;
+  transform: translateY(90vh) !important;
 }
 
 //TODO figure out how to replace those colors with variables
@@ -148,6 +148,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
     --mdc-snackbar-container-color: #2E7D32;
   }
 }
+
+.registry-card {
+  margin-top: 64px;
+  max-width: 512px;
+  min-width: 256px;
+  min-height: 128px;
+}
+
+.centered-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 /* Margins and Paddings */
 $xs: 4px;

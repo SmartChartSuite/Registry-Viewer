@@ -1,5 +1,27 @@
 {
   "version": "",
   "title": "Registry Viewer",
-  "api": "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/"
+  "api": "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/",
+  "auth": {
+    "domain": "grady-temp.us.auth0.com",
+    "clientId": "4T568aTy0dj7keOCla7FubFQO7hJ9iiH",
+    "scope": "profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis",
+    "showDebugInformation": true,
+    "responseType": "code",
+    "logoutUrl": "https://localhost:4200",
+    "customQueryParams": {
+      "audience": [
+        "http://smartchartsuite.grady/registry-viewer-api/"
+      ]
+    },
+    "moduleConfig" : {
+      "resourceServer": {
+        "allowedUrls": [
+          "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api"
+        ],
+        "sendAccessToken": true
+      }
+    }
+  }
 }
+
