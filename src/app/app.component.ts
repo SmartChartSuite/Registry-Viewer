@@ -5,6 +5,7 @@ import {RegistrySchema} from "./domain/registry.schema";
 import {filter, map, skipWhile} from "rxjs";
 import {MetadataService} from "./service/metadata.service";
 import {OAuthService} from "angular-oauth2-oidc";
+import  packageInfo from '../../package.json';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
   registrySchema: RegistrySchema;
   isReturnBtnVisible = false;
   isRegistryDescriptionVisible: boolean = false;
+  version = packageInfo.version;
 
   constructor(
     private demoModeService: DemoModeService,
