@@ -10,9 +10,7 @@ import {CaseRecordApiResponse} from "../../domain/case.record.api.response";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 import {UtilsService} from "../../service/utils.service";
-import {AuthService} from "@auth0/auth0-angular";
-import {combineLatest, mergeMap, of, skipWhile} from "rxjs";
-import {RegistrySchema} from "../../domain/registry.schema";
+import {OAuthService} from "angular-oauth2-oidc";
 
 @Component({
   selector: 'app-case-explorer',
@@ -41,20 +39,12 @@ export class CaseExplorerComponent implements OnInit {
     private caseRecordsService: CaseRecordsService,
     private formBuilder: FormBuilder,
     private utilService: UtilsService,
-    public auth: AuthService
+    public oauthService: OAuthService,
+ //   public auth: AuthService
   ) { }
 
   getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
-    this.isLoading = true;
-    let search$ = this.caseRecordsService.searchCases(registrySchema, searchTerms);
-    let authenticatedSearch$ = combineLatest(
-      [this.auth.user$, search$]).pipe(
-        skipWhile(combinedResults => combinedResults.some(result => result === undefined)),
-        mergeMap(combinedResults => {
-          return of(combinedResults[1]);
-        })
-    )
-    authenticatedSearch$.subscribe({
+    this.caseRecordsService.searchCases(registrySchema, searchTerms).subscribe({
       next: (response: CaseRecordApiResponse) => {
         this.dataSource = new MatTableDataSource(response.data);
         this.isLoading = false;
@@ -64,9 +54,9 @@ export class CaseExplorerComponent implements OnInit {
       error: err => {
         console.error(err);
         this.isLoading = false;
-        this.utilService.showErrorMessage( `${err.status} Server Error loading records.`);
+        this.utilService.showErrorMessage(`${err.status} Server Error loading records.`);
       }
-    })
+    });
   }
 
   ngOnInit(): void {
