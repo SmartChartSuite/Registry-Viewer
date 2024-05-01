@@ -1,5 +1,18 @@
+export enum StatusCode {
+  paused = 'paused',
+  error = 'error',
+  fatal = 'fatal',
+  information = 'information'
+
+}
+
 export interface Status {
-  severity: 'fatal' | 'error' | 'warning' | 'information' | 'active' | 'inactive';
+  code: StatusCode;
   lastUpdated: string;
-  information: string;
+  detail: string;
+  createdDateTime: Date;
+  activatedDateTime: string;
+  lastSuccessfulDateTime: string;
+  nextScheduledDateTime: string;
+  caseStartedRunningDateTime: string;
 }
