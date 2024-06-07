@@ -28,7 +28,7 @@ export class CaseExplorerComponent implements OnInit {
   @ViewChild('input') input: ElementRef;
 
   dataSource : MatTableDataSource<CaseRecord>;
-  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'lastUpdated', 'status'];
+  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'status'];
   isLoading = true;
   searchForm: FormGroup;
   registrySchema: string;
