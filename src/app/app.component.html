@@ -4,14 +4,16 @@
   <span class="margin-left-md" *ngIf="isRegistryDescriptionVisible">{{registrySchema?.name}}</span>
 
   <span class="margin-md">
-    <button *ngIf="isReturnBtnVisible && registrySchema" mat-button (click)="onReturnToRegistry()"> <mat-icon>navigate_before</mat-icon>Return to {{registrySchema.name}}
-      Case Search
+    <button *ngIf="isRegistryDescriptionVisible" mat-button (click)="onSelectRegistry()">
+      <mat-icon>navigate_before</mat-icon>
+      Return to Select Registry
     </button>
   </span>
 
   <span class="margin-md">
-    <button *ngIf="isRegistryDescriptionVisible" mat-button (click)="onSelectRegistry()"> <mat-icon>navigate_before</mat-icon>
-      Return to Select Registry
+    <button *ngIf="isReturnBtnVisible && registrySchema" mat-button (click)="onReturnToRegistry()">
+      <mat-icon>navigate_before</mat-icon>Return to {{registrySchema?.name}}
+      Case Search
     </button>
   </span>
 
@@ -22,11 +24,20 @@
     <span class="menu-text">Demo Mode</span>
   </mat-slide-toggle>
 
-  <app-auth0-login></app-auth0-login>
+  @if(version){
+    <div class="version-label">
+      Version: {{ version }}
+    </div>
+  }
+
+  <app-login [isLocatedInMainMenu]="true"></app-login>
 
 </mat-toolbar>
 
-
-<router-outlet></router-outlet>
-
+@if (oauthService.hasValidAccessToken()) {
+  <router-outlet></router-outlet>
+}
+@else {
+  <app-login [isLocatedInMainMenu]="false"></app-login>
+}
 

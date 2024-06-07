@@ -18,7 +18,9 @@ export class LandingComponent implements OnInit {
   }
   ngOnInit(): void {
     this.registrySchemaList$ = this.metadataService.registrySchemaList$;
-    this.metadataService.selectedRegistrySchema$.subscribe(schema=> this.selectedRegistrySchema = schema);
+    this.metadataService.selectedRegistrySchema$.subscribe(schema=> {
+      this.selectedRegistrySchema = schema
+    });
   }
 
   onSelectionChanged(registrySchema: RegistrySchema) {

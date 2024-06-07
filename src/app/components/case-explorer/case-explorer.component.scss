@@ -33,6 +33,10 @@ table {
   flex: 0 0 5%;
 }
 
+.mat-column-dob .mat-column-initialReportDate .mat-column-phone {
+  white-space: nowrap;
+}
+
 .no-records-found{
   padding: 16px 0;
   font-weight: bold;
@@ -41,3 +45,24 @@ table {
 .no-records-found-text{
   padding: 16px; font-weight: bold;
 }
+
+.mat-column-dob {
+  white-space: nowrap;
+}
+
+.mat-column-dob {
+  white-space: nowrap;
+}
+
+.mat-column-lastUpdated{
+  white-space: nowrap;
+}
+
+.mat-column-initialReportDate{
+  white-space: nowrap;
+}
+
+.mat-column-phone{
+  white-space: nowrap;
+}
+
