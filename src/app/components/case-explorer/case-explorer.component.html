@@ -92,6 +92,7 @@
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
           <td mat-cell *matCellDef="let caseRecord">
+            <mat-icon color="primary" class="margin-right-md" [matTooltip]="caseRecord.status?.detail">info</mat-icon>
             {{ caseRecord.status?.code | titlecase }}
           </td>
         </ng-container>
