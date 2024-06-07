@@ -2,7 +2,7 @@
   "version": "",
   "title": "Registry Viewer",
   "api": "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/",
-  "callbackUrl": "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer/",
+  "callbackUrl": "https://localhost:4200/",
   "auth": {
     "domain": "grady-temp.us.auth0.com",
     "clientId": "4T568aTy0dj7keOCla7FubFQO7hJ9iiH",
