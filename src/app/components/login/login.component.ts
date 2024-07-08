@@ -24,7 +24,7 @@ export class LoginComponent {
   }
 
   private configureOAuthService() {
-    this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.configure(this.configService.authConfig);
     this.oauthService.customQueryParams = this.configService.config["auth"]["customQueryParams"];
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
