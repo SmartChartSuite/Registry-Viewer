@@ -3,6 +3,7 @@ import {Config} from "../domain/config";
 import {HttpBackend, HttpClient} from "@angular/common/http";
 import packageInfo from "../../../package.json";
 import {catchError, map, of} from "rxjs";
+import {AuthConfig} from "angular-oauth2-oidc";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {catchError, map, of} from "rxjs";
 export class ConfigService {
   defaultConfigPath = 'assets/config/config.json'
   config: Config = new Config();
+  authConfig: AuthConfig;
 
   private http: HttpClient
   packageInfo = packageInfo;
@@ -23,6 +25,7 @@ export class ConfigService {
       map(config => {
         config.version = "v" + this.packageInfo.version;
         this.config = config;
+        this.authConfig = this.buildAuthConfig(config);
         return true;
       }),
       catchError(error => {
@@ -31,5 +34,18 @@ export class ConfigService {
         return of(false);
       })
     )
+  }
+
+  buildAuthConfig(config: Config): AuthConfig {
+    return new AuthConfig({
+      issuer: config.auth.issuer,
+      redirectUri: config.auth.callbackUrl,
+      clientId: config.auth.clientId,
+      responseType: 'code',
+      scope: config.auth.scope,
+      showDebugInformation: true,
+      requireHttps: false,
+      logoutUrl: config.auth.logoutUrl
+    });
   }
 }

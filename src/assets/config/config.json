@@ -2,8 +2,8 @@
   "version": "",
   "title": "Registry Viewer",
   "api": "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/",
-  "callbackUrl": "https://localhost:4200/",
   "auth": {
+    "callbackUrl": "https://localhost:4200/",
     "domain": "dev-heat-gtri-smartchart.us.auth0.com",
     "clientId": "V0YaqO8mSVY7Ft5KpVBOBoKSB8P42KNB",
     "scope": "profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis",
