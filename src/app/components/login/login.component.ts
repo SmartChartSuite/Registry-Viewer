@@ -4,6 +4,7 @@ import {authCodeFlowConfig} from "../../../assets/config/auth-code-flow-config";
 import {MetadataService} from "../../service/metadata.service";
 import {skipWhile, switchMap, tap} from "rxjs";
 import {UtilsService} from "../../service/utils.service";
+import {ConfigService} from "../../service/config.service";
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent {
 
   constructor(
     public oauthService: OAuthService,
+    public configService: ConfigService,
     private metadataService: MetadataService,
     private utilService: UtilsService) {
     this.configureOAuthService();
@@ -23,6 +25,7 @@ export class LoginComponent {
 
   private configureOAuthService() {
     this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.customQueryParams = this.configService.config["auth"]["customQueryParams"];
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }
