@@ -51,7 +51,6 @@ import {MatDividerModule} from "@angular/material/divider";
 import { LandingComponent } from './components/landing/landing.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {OAuthModule} from "angular-oauth2-oidc";
-import {authModuleConfig} from "../assets/config/auth-module-config";
 import {LoginComponent} from "./components/login/login.component";
 
 export const configFactory = (configService: ConfigService) => {
@@ -111,9 +110,7 @@ export const configFactory = (configService: ConfigService) => {
     MatDatepickerModule,
     NgOptimizedImage,
     MatTooltipModule,
-    OAuthModule.forRoot(
-      authModuleConfig
-    ),
+    OAuthModule.forRoot(),
     MatMenuModule,
     MatDividerModule,
     MatRadioModule,
