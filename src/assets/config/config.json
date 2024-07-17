@@ -3,19 +3,17 @@
   "title": "Registry Viewer",
   "api": "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/",
   "auth": {
+    "callbackUrl": "https://localhost:4200/",
     "domain": "dev-heat-gtri-smartchart.us.auth0.com",
     "clientId": "V0YaqO8mSVY7Ft5KpVBOBoKSB8P42KNB",
-    "callbackUrl": "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer/",
     "scope": "profile email openid read:scd read:syphilis write:metadata write:scd write:syphilis",
     "showDebugInformation": true,
     "responseType": "code",
-    "logoutUrl": "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer",
+    "logoutUrl": "https://localhost:4200/",
     "customQueryParams": {
-      "audience": [
-        "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/"
-      ]
+      "audience": "https://smartchartsuite.dev.heat.icl.gtri.org/registry-viewer-api/"
     },
-    "issuer": "https://dev-heat-gtri-smartchart.us.auth0.com.us.auth0.com/",
+    "issuer": "https://dev-heat-gtri-smartchart.us.auth0.com/",
     "moduleConfig" : {
       "resourceServer": {
         "allowedUrls": [
