@@ -8,7 +8,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {AboutComponent} from './components/about/about.component';
 import {CaseExplorerComponent} from './components/case-explorer/case-explorer.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {MatSortModule} from "@angular/material/sort";
 import {RegistryViewerComponent} from './components/registry-viewer/registry-viewer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -50,8 +50,9 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
 import { LandingComponent } from './components/landing/landing.component';
 import {MatRadioModule} from "@angular/material/radio";
-import {OAuthModule} from "angular-oauth2-oidc";
+import {OAuthModule, OAuthStorage} from "angular-oauth2-oidc";
 import {LoginComponent} from "./components/login/login.component";
+import {Oauth2Interceptor} from "./interceptors/oauth2.interceptor";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -116,16 +117,23 @@ export const configFactory = (configService: ConfigService) => {
     MatRadioModule,
   ],
   providers: [
-    DrawerService,
-    DatePipe,
-    {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
+    ConfigService,
     {
       provide: APP_INITIALIZER,
       useFactory: configFactory,
+      deps: [ConfigService, OAuthStorage],
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Oauth2Interceptor,
       deps: [ConfigService],
       multi: true
     },
+    DrawerService,
+    DatePipe,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ],
   bootstrap: [AppComponent]
 })
