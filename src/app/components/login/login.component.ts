@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {JwksValidationHandler, OAuthService} from "angular-oauth2-oidc";
 import {MetadataService} from "../../service/metadata.service";
 import {skipWhile, switchMap, tap} from "rxjs";
-import {UtilsService} from "../../service/utils.service";
 import {ConfigService} from "../../service/config.service";
 
 @Component({
