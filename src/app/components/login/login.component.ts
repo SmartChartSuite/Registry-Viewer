@@ -38,7 +38,6 @@ export class LoginComponent {
         next: ()=> {},
         error: err => {
           console.error(err);
-          this.utilService.showErrorMessage("Server error loading registry data.");
         }
       }
     )
