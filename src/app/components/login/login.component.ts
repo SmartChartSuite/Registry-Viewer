@@ -16,8 +16,7 @@ export class LoginComponent {
   constructor(
     public oauthService: OAuthService,
     public configService: ConfigService,
-    private metadataService: MetadataService,
-    private utilService: UtilsService) {
+    private metadataService: MetadataService) {
     this.configure();
     this.loadMetadata();
   }
