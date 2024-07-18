@@ -1,6 +1,6 @@
-import {inject, Injectable, OnInit} from '@angular/core';
-import {OAuthModuleConfig, OAuthResourceServerErrorHandler, OAuthStorage} from 'angular-oauth2-oidc';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import {inject, Injectable} from '@angular/core';
+import {OAuthResourceServerErrorHandler, OAuthStorage} from 'angular-oauth2-oidc';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,} from '@angular/common/http';
 import {ConfigService} from "../service/config.service";
 import {Observable} from "rxjs";
 
@@ -21,8 +21,6 @@ export class Oauth2Interceptor implements HttpInterceptor {
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let moduleConfig = inject(ConfigService).getModuleConfig();
-    console.log("INTERCEPTING")
-    console.log(moduleConfig)
     let url = req.url.toLowerCase();
 
     if (!moduleConfig) return next.handle(req);

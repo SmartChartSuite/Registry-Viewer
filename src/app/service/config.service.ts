@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Config} from "../models/config";
 import {HttpBackend, HttpClient} from "@angular/common/http";
 import packageInfo from "../../../package.json";
-import {BehaviorSubject, catchError, map, of} from "rxjs";
+import {catchError, map, of} from "rxjs";
 import {AuthConfig, OAuthModuleConfig} from "angular-oauth2-oidc";
 
 @Injectable({
@@ -18,7 +18,6 @@ export class ConfigService {
   packageInfo = packageInfo;
   constructor(handler: HttpBackend) {
     this.http = new HttpClient(handler);
-    console.info("Config Service Instantiated");
     this.loadConfig();
   }
 
