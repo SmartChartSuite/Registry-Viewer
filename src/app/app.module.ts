@@ -8,7 +8,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {AboutComponent} from './components/about/about.component';
 import {CaseExplorerComponent} from './components/case-explorer/case-explorer.component';
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import {HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi} from "@angular/common/http";
 import {MatSortModule} from "@angular/material/sort";
 import {RegistryViewerComponent} from './components/registry-viewer/registry-viewer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -50,78 +50,92 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
 import { LandingComponent } from './components/landing/landing.component';
 import {MatRadioModule} from "@angular/material/radio";
-import {OAuthModule} from "angular-oauth2-oidc";
+import {OAuthModule, OAuthStorage} from "angular-oauth2-oidc";
 import {LoginComponent} from "./components/login/login.component";
+import {Oauth2Interceptor} from "./interceptors/oauth2.interceptor";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
 };
 
 
-@NgModule({ declarations: [
-        AppComponent,
-        AboutComponent,
-        CaseExplorerComponent,
-        RegistryViewerComponent,
-        ChronologicalViewComponent,
-        DemographicDataComponent,
-        SummaryViewComponent,
-        ChronologicalViewComponent,
-        SidePanelComponent,
-        DetailsComponent,
-        FlagComponent,
-        AnnotationsComponent,
-        AddRecordDialogComponent,
-        SectionComponent,
-        ConformationDialogComponent,
-        DemoModeComponent,
-        LandingComponent,
-        LoginComponent
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        MatSortModule,
-        ReactiveFormsModule,
-        MatNativeDateModule,
-        MatExpansionModule,
-        FormsModule,
-        MatMultiSortModule,
-        ScrollingModule,
-        MatGridListModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatInputModule,
-        MatPaginatorModule,
-        MatDialogModule,
-        MatTableModule,
-        MatSelectModule,
-        MatProgressSpinnerModule,
-        MatButtonToggleModule,
-        MatButtonModule,
-        MatSlideToggleModule,
-        MatSnackBarModule,
-        MatDatepickerModule,
-        NgOptimizedImage,
-        MatTooltipModule,
-        OAuthModule.forRoot(),
-        MatMenuModule,
-        MatDividerModule,
-        MatRadioModule], providers: [
-        DrawerService,
-        DatePipe,
-        { provide: DateAdapter, useClass: AppDateAdapter },
-        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
-        {
-            provide: APP_INITIALIZER,
-            useFactory: configFactory,
-            deps: [ConfigService],
-            multi: true
-        },
-        provideHttpClient(withInterceptorsFromDi()),
-    ] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    AboutComponent,
+    CaseExplorerComponent,
+    RegistryViewerComponent,
+    ChronologicalViewComponent,
+    DemographicDataComponent,
+    SummaryViewComponent,
+    ChronologicalViewComponent,
+    SidePanelComponent,
+    DetailsComponent,
+    FlagComponent,
+    AnnotationsComponent,
+    AddRecordDialogComponent,
+    SectionComponent,
+    ConformationDialogComponent,
+    DemoModeComponent,
+    LandingComponent,
+    LoginComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatSortModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatExpansionModule,
+    FormsModule,
+    MatMultiSortModule,
+    ScrollingModule,
+    MatGridListModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatTableModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
+    MatButtonToggleModule,
+    MatButtonModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    NgOptimizedImage,
+    MatTooltipModule,
+    OAuthModule.forRoot(),
+    MatMenuModule,
+    MatDividerModule,
+    MatRadioModule,
+  ],
+  providers: [
+    ConfigService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configFactory,
+      deps: [ConfigService, OAuthStorage],
+      multi: true
+    },
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: Oauth2Interceptor,
+      deps: [ConfigService],
+      multi: true
+    },
+    DrawerService,
+    DatePipe,
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ],
+  bootstrap: [AppComponent]
+})
 export class AppModule {
 }
