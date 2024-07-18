@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Config} from "../domain/config";
-import {HttpBackend, HttpClient} from "@angular/common/http";
+import { HttpBackend, HttpClient } from "@angular/common/http";
 import packageInfo from "../../../package.json";
 import {catchError, map, of} from "rxjs";
 import {AuthConfig} from "angular-oauth2-oidc";

@@ -8,7 +8,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {AboutComponent} from './components/about/about.component';
 import {CaseExplorerComponent} from './components/case-explorer/case-explorer.component';
-import {HttpClientModule} from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {MatSortModule} from "@angular/material/sort";
 import {RegistryViewerComponent} from './components/registry-viewer/registry-viewer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -58,76 +58,70 @@ export const configFactory = (configService: ConfigService) => {
 };
 
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    AboutComponent,
-    CaseExplorerComponent,
-    RegistryViewerComponent,
-    ChronologicalViewComponent,
-    DemographicDataComponent,
-    SummaryViewComponent,
-    ChronologicalViewComponent,
-    SidePanelComponent,
-    DetailsComponent,
-    FlagComponent,
-    AnnotationsComponent,
-    AddRecordDialogComponent,
-    SectionComponent,
-    ConformationDialogComponent,
-    DemoModeComponent,
-    LandingComponent,
-    LoginComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatSortModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatNativeDateModule,
-    MatExpansionModule,
-    FormsModule,
-    MatMultiSortModule,
-    ScrollingModule,
-    MatGridListModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatDialogModule,
-    MatTableModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatDatepickerModule,
-    NgOptimizedImage,
-    MatTooltipModule,
-    OAuthModule.forRoot(),
-    MatMenuModule,
-    MatDividerModule,
-    MatRadioModule,
-  ],
-  providers: [
-    DrawerService,
-    DatePipe,
-    {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS},
-    {
-      provide: APP_INITIALIZER,
-      useFactory: configFactory,
-      deps: [ConfigService],
-      multi: true
-    },
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        AboutComponent,
+        CaseExplorerComponent,
+        RegistryViewerComponent,
+        ChronologicalViewComponent,
+        DemographicDataComponent,
+        SummaryViewComponent,
+        ChronologicalViewComponent,
+        SidePanelComponent,
+        DetailsComponent,
+        FlagComponent,
+        AnnotationsComponent,
+        AddRecordDialogComponent,
+        SectionComponent,
+        ConformationDialogComponent,
+        DemoModeComponent,
+        LandingComponent,
+        LoginComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatSortModule,
+        ReactiveFormsModule,
+        MatNativeDateModule,
+        MatExpansionModule,
+        FormsModule,
+        MatMultiSortModule,
+        ScrollingModule,
+        MatGridListModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        MatTableModule,
+        MatSelectModule,
+        MatProgressSpinnerModule,
+        MatButtonToggleModule,
+        MatButtonModule,
+        MatSlideToggleModule,
+        MatSnackBarModule,
+        MatDatepickerModule,
+        NgOptimizedImage,
+        MatTooltipModule,
+        OAuthModule.forRoot(),
+        MatMenuModule,
+        MatDividerModule,
+        MatRadioModule], providers: [
+        DrawerService,
+        DatePipe,
+        { provide: DateAdapter, useClass: AppDateAdapter },
+        { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: configFactory,
+            deps: [ConfigService],
+            multi: true
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {
 }
