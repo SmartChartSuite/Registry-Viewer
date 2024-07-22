@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {Config} from "../domain/config";
+import {Config} from "../models/config";
 import {HttpBackend, HttpClient} from "@angular/common/http";
 import packageInfo from "../../../package.json";
 import {catchError, map, of} from "rxjs";
-import {AuthConfig} from "angular-oauth2-oidc";
+import {AuthConfig, OAuthModuleConfig} from "angular-oauth2-oidc";
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,13 @@ export class ConfigService {
   defaultConfigPath = 'assets/config/config.json'
   config: Config = new Config();
   authConfig: AuthConfig;
+  private oAuthModuleConfig: OAuthModuleConfig;
 
   private http: HttpClient
   packageInfo = packageInfo;
   constructor(handler: HttpBackend) {
     this.http = new HttpClient(handler);
+    this.loadConfig();
   }
 
   loadConfig() {
@@ -26,6 +28,7 @@ export class ConfigService {
         config.version = "v" + this.packageInfo.version;
         this.config = config;
         this.authConfig = this.buildAuthConfig(config);
+        this.oAuthModuleConfig = config.auth.moduleConfig;
         return true;
       }),
       catchError(error => {
@@ -47,5 +50,9 @@ export class ConfigService {
       requireHttps: false,
       logoutUrl: config.auth.logoutUrl
     });
+  }
+
+  getModuleConfig(): OAuthModuleConfig {
+    return this.oAuthModuleConfig;
   }
 }

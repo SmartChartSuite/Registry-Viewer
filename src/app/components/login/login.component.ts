@@ -1,9 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {JwksValidationHandler, OAuthService} from "angular-oauth2-oidc";
-import {authCodeFlowConfig} from "../../../assets/config/auth-code-flow-config";
 import {MetadataService} from "../../service/metadata.service";
 import {skipWhile, switchMap, tap} from "rxjs";
-import {UtilsService} from "../../service/utils.service";
 import {ConfigService} from "../../service/config.service";
 
 @Component({
@@ -17,15 +15,14 @@ export class LoginComponent {
   constructor(
     public oauthService: OAuthService,
     public configService: ConfigService,
-    private metadataService: MetadataService,
-    private utilService: UtilsService) {
-    this.configureOAuthService();
+    private metadataService: MetadataService) {
+    this.configure();
     this.loadMetadata();
   }
 
-  private configureOAuthService() {
-    this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.customQueryParams = this.configService.config["auth"]["customQueryParams"];
+  private configure() {
+    this.oauthService.configure(this.configService.authConfig);
+    this.oauthService.customQueryParams = this.configService.config.auth.customQueryParams;
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }
@@ -39,7 +36,6 @@ export class LoginComponent {
         next: ()=> {},
         error: err => {
           console.error(err);
-          this.utilService.showErrorMessage("Server error loading registry data.");
         }
       }
     )

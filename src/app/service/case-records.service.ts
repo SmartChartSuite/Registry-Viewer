@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import {BehaviorSubject, map, Observable} from "rxjs";
 import {CaseRecordApiResponse} from "../domain/case.record.api.response";
 import {CaseRecord} from "../domain/case.record";
