@@ -10,7 +10,7 @@
         Sign In
       </button>
     </ng-template>
-    <div *ngIf="oauthService.getIdentityClaims() as user">
+    @if(oauthService.getIdentityClaims(); as user){
       <img
         [src]="user?.['picture'] ? user?.['picture'] : '/assets/portrait_placeholder.png'"
         referrerpolicy="no-referrer"
@@ -20,12 +20,13 @@
         <div mat-menu-item>
           <div class="user-card">
             <img
-              [src]="user?.['picture']"
+              [src]="user?.['picture'] ? user?.['picture'] : '/assets/portrait_placeholder.png'"
               referrerpolicy="no-referrer"
               class="profile-image"
+              alt="Profile Image"
             >
-            <div class="details" *ngIf="oauthService.getIdentityClaims() as user">
-              <div class="name">{{ user?.['given_name'] }}</div>
+            <div class="details">
+              <div class="name">{{ user?.['full_name'] }}</div>
               <div class="email">{{ user?.['email'] }}</div>
             </div>
           </div>
@@ -37,7 +38,7 @@
           Sign Out
         </button>
       </mat-menu>
-    </div>
+    }
   </div>
 } @else {
   <div class="centered-content">
