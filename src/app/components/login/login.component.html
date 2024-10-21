@@ -11,20 +11,39 @@
       </button>
     </ng-template>
     @if(oauthService.getIdentityClaims(); as user){
-      <img
-        [src]="user?.['picture'] ? user?.['picture'] : '/assets/portrait_placeholder.png'"
-        referrerpolicy="no-referrer"
-        class="profile-image"
-        [matMenuTriggerFor]="userMenu" alt="Profile Image">
+      @if (!pictureLoadFailed) {
+        <img alt="User profile picture"
+             [src]=profilePictureUrl
+             referrerpolicy="no-referrer"
+             class="profile-image"
+             (error)="onImageError()"
+             [matMenuTriggerFor]="userMenu"/>
+
+      } @else {
+        <img
+          ngSrc='/assets/portrait_placeholder.png'
+          alt="Default avatar"
+          referrerpolicy="no-referrer"
+          class="profile-image"
+          [matMenuTriggerFor]="userMenu" height="600" width="600"/>
+      }
       <mat-menu #userMenu="matMenu" style="width: 250px;">
         <div mat-menu-item>
           <div class="user-card">
-            <img
-              [src]="user?.['picture'] ? user?.['picture'] : '/assets/portrait_placeholder.png'"
-              referrerpolicy="no-referrer"
-              class="profile-image"
-              alt="Profile Image"
-            >
+            @if (!pictureLoadFailed) {
+              <img alt="User profile picture"
+                   [src]=profilePictureUrl
+                   referrerpolicy="no-referrer"
+                   class="profile-image"
+                   (error)="onImageError()"/>
+
+            } @else {
+              <img
+                src='/assets/portrait_placeholder.png'
+                alt="Default avatar"
+                referrerpolicy="no-referrer"
+                class="profile-image"/>
+            }
             <div class="details">
               <div class="name">{{ user?.['name'] }}</div>
               <div class="email">{{ user?.['email'] }}</div>
