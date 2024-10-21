@@ -12,6 +12,9 @@ import {ConfigService} from "../../service/config.service";
 export class LoginComponent {
   @Input({ required: true }) isLocatedInMainMenu: boolean;
 
+  profilePictureUrl: string | null;
+  pictureLoadFailed: boolean = false;
+
   constructor(
     public oauthService: OAuthService,
     public configService: ConfigService,
@@ -24,7 +27,8 @@ export class LoginComponent {
     this.oauthService.configure(this.configService.authConfig);
     this.oauthService.customQueryParams = this.configService.config.auth.customQueryParams;
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    this.oauthService.loadDiscoveryDocumentAndTryLogin()
+      .then(() => this.oauthService.getIdentityClaims() ? this.profilePictureUrl = this.oauthService.getIdentityClaims()['picture'] : null);
   }
 
   private loadMetadata() {
@@ -39,5 +43,8 @@ export class LoginComponent {
         }
       }
     )
+  }
+  onImageError(): void {
+    this.pictureLoadFailed = true;  // Mark that the image failed to load
   }
 }
