@@ -11,9 +11,9 @@
       </button>
     </ng-template>
     @if(oauthService.getIdentityClaims(); as user){
-      @if (!pictureLoadFailed) {
+      @if (cdnProfilePictureUrl) {
         <img alt="User profile picture"
-             [src]=profilePictureUrl
+             [src]=cdnProfilePictureUrl
              referrerpolicy="no-referrer"
              class="profile-image"
              (error)="onImageError()"
@@ -30,9 +30,9 @@
       <mat-menu #userMenu="matMenu" style="width: 250px;">
         <div mat-menu-item>
           <div class="user-card">
-            @if (!pictureLoadFailed) {
+            @if (cdnProfilePictureUrl) {
               <img alt="User profile picture"
-                   [src]=profilePictureUrl
+                   [src]=cdnProfilePictureUrl
                    referrerpolicy="no-referrer"
                    class="profile-image"
                    (error)="onImageError()"/>
