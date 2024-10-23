@@ -10,41 +10,21 @@
         Sign In
       </button>
     </ng-template>
-    @if(oauthService.getIdentityClaims(); as user){
-      @if (!pictureLoadFailed) {
-        <img alt="User profile picture"
-             [src]=profilePictureUrl
-             referrerpolicy="no-referrer"
-             class="profile-image"
-             (error)="onImageError()"
-             [matMenuTriggerFor]="userMenu"/>
-
-      } @else {
-        <img
-          ngSrc='/assets/portrait_placeholder.png'
-          alt="Default avatar"
-          referrerpolicy="no-referrer"
-          class="profile-image"
-          [matMenuTriggerFor]="userMenu" height="600" width="600"/>
-      }
+    <div *ngIf="oauthService.getIdentityClaims() as user">
+      <img
+        [src]="user?.['picture'] ? user?.['picture'] : '/assets/portrait_placeholder.png'"
+        referrerpolicy="no-referrer"
+        class="profile-image"
+        [matMenuTriggerFor]="userMenu" alt="Profile Image">
       <mat-menu #userMenu="matMenu" style="width: 250px;">
         <div mat-menu-item>
           <div class="user-card">
-            @if (!pictureLoadFailed) {
-              <img alt="User profile picture"
-                   [src]=profilePictureUrl
-                   referrerpolicy="no-referrer"
-                   class="profile-image"
-                   (error)="onImageError()"/>
-
-            } @else {
-              <img
-                src='/assets/portrait_placeholder.png'
-                alt="Default avatar"
-                referrerpolicy="no-referrer"
-                class="profile-image"/>
-            }
-            <div class="details">
+            <img
+              [src]="user?.['picture']"
+              referrerpolicy="no-referrer"
+              class="profile-image"
+            >
+            <div class="details" *ngIf="oauthService.getIdentityClaims() as user">
               <div class="name">{{ user?.['name'] }}</div>
               <div class="email">{{ user?.['email'] }}</div>
             </div>
@@ -57,7 +37,7 @@
           Sign Out
         </button>
       </mat-menu>
-    }
+    </div>
   </div>
 } @else {
   <div class="centered-content">
