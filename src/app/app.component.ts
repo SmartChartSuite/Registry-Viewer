@@ -6,6 +6,7 @@ import {filter, map, skipWhile} from "rxjs";
 import {MetadataService} from "./service/metadata.service";
 import {OAuthService} from "angular-oauth2-oidc";
 import  packageInfo from '../../package.json';
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -82,4 +83,5 @@ export class AppComponent implements OnInit {
         this.isRegistryDescriptionVisible = event.url != '/'; //hide the selected registry when the route is root (this is where a user selects a route)
       });
   }
+
 }

@@ -11,6 +11,8 @@ import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 import {UtilsService} from "../../service/utils.service";
 import {OAuthService} from "angular-oauth2-oidc";
+import {MetadataService} from "../../service/metadata.service";
+import {RegistrySchema} from "../../domain/registry.schema";
 
 @Component({
   selector: 'app-case-explorer',
@@ -30,8 +32,8 @@ export class CaseExplorerComponent implements OnInit {
   dataSource : MatTableDataSource<CaseRecord>;
   displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'status'];
   isLoading = true;
-  searchForm: FormGroup;
-  registrySchema: string;
+  searchForm: FormGroup = new FormGroup({});
+  selectedRegistrySchema: RegistrySchema;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,8 +42,14 @@ export class CaseExplorerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private utilService: UtilsService,
     public oauthService: OAuthService,
+  private metadataService: MetadataService,
  //   public auth: AuthService
-  ) { }
+  ) {
+    this.searchForm = this.formBuilder.group({
+      searchQuery: [null],
+      dob: [null]
+    });
+  }
 
   getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
     this.caseRecordsService.searchCases(registrySchema, searchTerms).subscribe({
@@ -60,16 +68,22 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.registrySchema = this.route.snapshot.queryParams['registrySchema'];
-    if(!this.registrySchema){
-        this.router.navigate(["/"]);
-        return;
-    }
-    this.getCaseRecords(this.registrySchema);
-    this.searchForm = this.formBuilder.group({
-      searchQuery: [null],
-      dob: [null]
-    });
+    // this.registrySchema = this.route.snapshot.queryParams['registrySchema'];
+    // if(!this.registrySchema){
+    //     this.router.navigate(["/"]);
+    //     return;
+    // }
+    this.metadataService.selectedRegistrySchema$.subscribe({
+      next: selectedRegistrySchema => {
+        if (selectedRegistrySchema) {
+          this.selectedRegistrySchema = selectedRegistrySchema;
+          this.getCaseRecords(selectedRegistrySchema.tag);
+        }
+      }
+    })
+
+
+
   }
 
   applyFilter(event: Event) {
@@ -81,7 +95,7 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   onRowClicked(row: any) {
-    this.router.navigate(['case', row.caseId], { queryParams: {registrySchema: this.registrySchema}} );
+    this.router.navigate(['case', row.caseId], { queryParams: {registrySchema: this.selectedRegistrySchema.tag}} );
   }
 
   getDateStr(date: Date): string {
@@ -105,7 +119,7 @@ export class CaseExplorerComponent implements OnInit {
     }
 
     if(searchTerms){
-      this.getCaseRecords(this.registrySchema, searchTerms);
+      this.getCaseRecords(this.selectedRegistrySchema.tag, searchTerms);
     }
   }
 }

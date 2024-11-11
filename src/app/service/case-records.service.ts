@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
-import {BehaviorSubject, map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {CaseRecordApiResponse} from "../domain/case.record.api.response";
 import {CaseRecord} from "../domain/case.record";
 import {ChronologicalCaseRecord} from "../domain/chronological.case.record";
@@ -20,6 +20,13 @@ export class CaseRecordsService {
 
   caseRecordChronologicalDataStored:  ChronologicalCaseRecord [] = [];
   caseRecordChronologicalDataStored$: BehaviorSubject<ChronologicalCaseRecord []>;
+
+  private demographicsData =  new Subject<any>;
+  public demographicsData$ = this.demographicsData.asObservable();
+
+  private headerData =  new Subject<any>;
+  public headerData$ = this.headerData.asObservable();
+
 
   sections: string[] = [];
   sections$: BehaviorSubject<string[]>;
@@ -43,6 +50,33 @@ export class CaseRecordsService {
         }
       }
     });
+  }
+
+  setCustomHeaderData(data) {
+    const groupedData = data.reduce((acc, item) => {
+      const key = `${item.category}-${item.question}`;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(item);
+      return acc;
+    }, {});
+    // const result = [];
+    // let n =1;
+    // for (const key in groupedData) {
+    //   const items = groupedData[key];
+    //   // Split items into chunks of `n` size
+    //   for (let i = 0; i < items.length; i += n) {
+    //     result.push(items.slice(i, i + n));
+    //   }
+    // }
+    console.log(groupedData);
+    this.headerData.next(groupedData);
+    return groupedData;
+  }
+
+  setDemographicsData(demographicsData) {
+    this.demographicsData.next(demographicsData);
   }
 
   setSelectedRecord(selectedCaseRecord) {
@@ -211,4 +245,6 @@ export class CaseRecordsService {
      });
     this.caseRecordChronologicalData$.next(currentRecords);
   }
+
+
 }

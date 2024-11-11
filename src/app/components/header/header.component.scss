@@ -1,0 +1,67 @@
+@import "../../../styles.scss";
+$primary-color: #607D8B;
+
+.header-wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: $primary-color;
+  color: white;
+  >.main-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    border: 1px solid black;
+    >.left-section{
+      display: flex;
+      align-items: center;
+      >.title{
+        cursor: pointer;
+        font-weight: 600;
+        font-size: x-large;
+        padding: 0 16px;
+      }
+    }
+    >.right-section{
+      display: flex;
+      align-items: center;
+      >.version-label {
+        font-weight: bold;
+        font-size: small;
+        margin: 8px;
+      }
+
+    }
+
+  }
+  >.navigation-section{
+    background-color: white;
+    color: $primary-color;
+    min-height: 32px;
+    border: 1px solid black;
+    display: flex;
+    >.nav-item {
+      padding-left: 16px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      &:hover{
+        opacity: 0.85;
+      }
+    }
+  }
+  >.patient-demographics-section{
+
+  }
+  >.custom-section{
+
+  }
+}
+
+.no-wrapper{
+  margin-bottom: -1.0em;
+}
+
+.menu-text {
+  color: whitesmoke; font-size: large
+}

@@ -1,0 +1,60 @@
+<div class="header-wrapper mat-primary">
+
+  <!--  Begin Main Section  -->
+  <div class="main-section">
+    <div class="left-section">
+      <div class="title" (click)="onRouteChanged('/')">Smart Chart Registry Viewer</div>
+      <div>
+        <mat-form-field class="no-wrapper">
+          <mat-label>Selected Registry</mat-label>
+          <mat-select [(ngModel)]="selectedRegistrySchema" (selectionChange)="onRegistrySelectionChange()">
+            @for (schema of registrySchemaList; track schema.tag) {
+              <mat-option [value]="schema">{{ schema.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="right-section">
+      <div>
+        <mat-slide-toggle
+          class="margin-right-md" (toggleChange)="onToggleDemoMode()" [checked]="isDemoModeActive"
+          [disabled]="!isDemoModeEnabled()">
+          <span class="menu-text">Demo Mode</span>
+        </mat-slide-toggle>
+      </div>
+      @if (version) {
+        <div class="version-label">
+          Version: {{ version }}
+        </div>
+      }
+      <div>
+        <app-login [isLocatedInMainMenu]="true"></app-login>
+      </div>
+    </div>
+
+  </div>
+  <!--  End Main Section  -->
+
+
+  <div class="navigation-section">
+    @if (isReturnBtnVisible) {
+      <div class="nav-item" (click)="onReturnToRegistry()">
+        <mat-icon>navigate_before</mat-icon>
+        <span class="margin-left-sm">Return to case selection</span>
+      </div>
+    }
+  </div>
+  @if (demographicsData) {
+    <div class="patient-demographics-section">
+      <app-demographic-data [demographicsData]="demographicsData"></app-demographic-data>
+    </div>
+  }
+
+  <div class="custom-section">
+    <app-custom-header [headerData]="headerData"/>
+  </div>
+
+
+</div>

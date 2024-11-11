@@ -53,6 +53,8 @@ import {MatRadioModule} from "@angular/material/radio";
 import {OAuthModule, OAuthStorage} from "angular-oauth2-oidc";
 import {LoginComponent} from "./components/login/login.component";
 import {Oauth2Interceptor} from "./interceptors/oauth2.interceptor";
+import { HeaderComponent } from './components/header/header.component';
+import { CustomHeaderComponent } from './components/header/custom-header/custom-header.component';
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -78,7 +80,9 @@ export const configFactory = (configService: ConfigService) => {
     ConformationDialogComponent,
     DemoModeComponent,
     LandingComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent,
+    CustomHeaderComponent
   ],
   imports: [
     BrowserModule,

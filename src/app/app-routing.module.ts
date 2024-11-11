@@ -8,12 +8,12 @@ import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   //We need to add Login guard to this section
+  // {
+  //   path: '',
+  //   component: LandingComponent,
+  // },
   {
     path: '',
-    component: LandingComponent,
-  },
-  {
-    path: 'case',
     component: CaseExplorerComponent,
     canActivate: [AuthGuard],
   },
