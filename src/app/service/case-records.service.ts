@@ -53,26 +53,41 @@ export class CaseRecordsService {
   }
 
   setCustomHeaderData(data) {
-    const groupedData = data.reduce((acc, item) => {
-      const key = `${item.category}-${item.question}`;
-      if (!acc[key]) {
-        acc[key] = [];
+    let result = [];
+    data.forEach(outerItem => {
+      const question = outerItem.question
+      const questionExist = result.some(obj => obj['label']);
+
+      if(questionExist){
+        const inner = {
+          date: new Date(outerItem.date),
+          display: outerItem.derivedValue.coding.display,
+        }
+        result.forEach(el => {
+          if(el.label == question){
+            el.dateEntries.push(inner);
+            console.log(el.dateEntries);
+            el.dataEntries = el.dateEntries.sort((a, b) => b.date.getTime() - a.date.getTime());
+          }
+        });
+
+
       }
-      acc[key].push(item);
-      return acc;
-    }, {});
-    // const result = [];
-    // let n =1;
-    // for (const key in groupedData) {
-    //   const items = groupedData[key];
-    //   // Split items into chunks of `n` size
-    //   for (let i = 0; i < items.length; i += n) {
-    //     result.push(items.slice(i, i + n));
-    //   }
-    // }
-    console.log(groupedData);
-    this.headerData.next(groupedData);
-    return groupedData;
+      else{
+        const inner = {
+          date: new Date(outerItem.date),
+          display: outerItem.derivedValue.coding.display,
+        }
+        const item = {
+          label: question,
+          dateEntries : [inner]
+        }
+        result.push(item);
+      }
+    })
+    console.log(result);
+    this.headerData.next(result);
+    return result;
   }
 
   setDemographicsData(demographicsData) {

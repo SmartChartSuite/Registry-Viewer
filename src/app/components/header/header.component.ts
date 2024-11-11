@@ -3,7 +3,7 @@ import packageInfo from "../../../../package.json";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {DemoModeService} from "../../service/demo-mode.service";
 import {RegistrySchema} from "../../domain/registry.schema";
-import {filter, map, Observable, Subject} from "rxjs";
+import {filter, map} from "rxjs";
 import {MetadataService} from "../../service/metadata.service";
 import {CaseRecordsService} from "../../service/case-records.service";
 

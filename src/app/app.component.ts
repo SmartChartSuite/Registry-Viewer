@@ -6,7 +6,6 @@ import {filter, map, skipWhile} from "rxjs";
 import {MetadataService} from "./service/metadata.service";
 import {OAuthService} from "angular-oauth2-oidc";
 import  packageInfo from '../../package.json';
-import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -44,32 +43,32 @@ export class AppComponent implements OnInit {
     )
   }
 
-  onRouteChanged(route: string) {
-    this.router.navigate([route]);
-    this.demoModeService.setDemoModeActive(false);
-  }
-
-  onToggleDemoMode() {
-    this.isDemoModeActive = !this.isDemoModeActive;
-    this.demoModeService.setDemoModeActive(this.isDemoModeActive);
-    if(!this.isDemoModeActive){
-      this.demoModeService.setLatestDate(null);
-    }
-  }
-
-  isDemoModeEnabled() {
-    const url = this.router.url.substring(1); //remove the '/' from the url;
-    const regex = /case\/\d+\?[\w=]+/; // detects "case" followed by a number, followed by "?" followed by anything
-    return regex.test(url);
-  }
-
-  onReturnToRegistry() {
-    this.router.navigate(['case'], { queryParams: {registrySchema: this.registrySchema.tag}} );
-  }
-
-  onSelectRegistry() {
-    this.router.navigate(['/']);
-  }
+  // onRouteChanged(route: string) {
+  //   this.router.navigate([route]);
+  //   this.demoModeService.setDemoModeActive(false);
+  // }
+  //
+  // onToggleDemoMode() {
+  //   this.isDemoModeActive = !this.isDemoModeActive;
+  //   this.demoModeService.setDemoModeActive(this.isDemoModeActive);
+  //   if(!this.isDemoModeActive){
+  //     this.demoModeService.setLatestDate(null);
+  //   }
+  // }
+  //
+  // isDemoModeEnabled() {
+  //   const url = this.router.url.substring(1); //remove the '/' from the url;
+  //   const regex = /case\/\d+\?[\w=]+/; // detects "case" followed by a number, followed by "?" followed by anything
+  //   return regex.test(url);
+  // }
+  //
+  // onReturnToRegistry() {
+  //   this.router.navigate(['case'], { queryParams: {registrySchema: this.registrySchema.tag}} );
+  // }
+  //
+  // onSelectRegistry() {
+  //   this.router.navigate(['/']);
+  // }
 
   private initUserAuthenticatedFlow() {
     this.metadataService.selectedRegistrySchema$.subscribe(value => this.registrySchema = value)
@@ -83,5 +82,4 @@ export class AppComponent implements OnInit {
         this.isRegistryDescriptionVisible = event.url != '/'; //hide the selected registry when the route is root (this is where a user selects a route)
       });
   }
-
 }
