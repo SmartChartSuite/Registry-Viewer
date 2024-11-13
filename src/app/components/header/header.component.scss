@@ -2,8 +2,8 @@
 $primary-color: #607D8B;
 
 .header-wrapper {
-  display: flex;
-  flex-direction: column;
+  //display: flex;
+  //flex-direction: column;
   background-color: $primary-color;
   color: white;
   >.main-section{
@@ -11,7 +11,6 @@ $primary-color: #607D8B;
     align-items: center;
     justify-content: space-between;
     padding: 8px;
-    border: 1px solid black;
     >.left-section{
       display: flex;
       align-items: center;

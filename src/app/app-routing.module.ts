@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import {AboutComponent} from "./components/about/about.component";
 import {CaseExplorerComponent} from "./components/case-explorer/case-explorer.component";
 import {RegistryViewerComponent} from "./components/registry-viewer/registry-viewer.component";
-import {LandingComponent} from "./components/landing/landing.component";
 import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
@@ -11,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     component: CaseExplorerComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'about',

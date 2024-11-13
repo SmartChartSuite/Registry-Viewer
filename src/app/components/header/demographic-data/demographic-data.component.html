@@ -1,0 +1,28 @@
+<div class="wrapper">
+  <div class="name-section">
+    <div class="name-label">Name:</div>
+    <div class="name-value">{{ demographicsData?.lastName }}, {{ demographicsData?.givenName }} </div>
+  </div>
+  <div class="info-section">
+    <div class="column">
+      <div class="label">Date of Birth:</div>
+      <div class="label">Gender:</div>
+    </div>
+    <div class="column">
+      <div class="value"> {{ demographicsData?.dob | date }}</div>
+      <div class="value">{{ demographicsData?.gender }}</div>
+    </div>
+  </div>
+
+  <div class="address-section">
+      <div class="label">Address: </div>
+      <div>
+        <div>
+      {{ demographicsData?.street  }}
+        </div>
+        <div>
+      {{ demographicsData?.city }},  {{ demographicsData?.state }} {{ demographicsData?.zip }}
+        </div>
+      </div>
+  </div>
+</div>

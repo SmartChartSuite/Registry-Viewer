@@ -32,8 +32,6 @@ export class CaseRecordsService {
   sections$: BehaviorSubject<string[]>;
 
   baseApiUrl: string;
-
-  selectedCaseRecord: any;
   selectedCaseRecord$: BehaviorSubject<any>;
 
   constructor(private http: HttpClient, private demoModeService: DemoModeService, private environmentHandler: EnvironmentHandlerService) {
@@ -55,10 +53,11 @@ export class CaseRecordsService {
   setCustomHeaderData(data) {
     let result = [];
     data.forEach(outerItem => {
-      const question = outerItem.question
-      const questionExist = result.some(obj => obj['label']);
-
-      if(questionExist){
+      const question = outerItem.question;
+      // per requirements uniques is determined by outerItem.question AND outerItem.category, we construct the string temporary for parsing
+      const uniqueStr = outerItem.question + outerItem.category;
+      const uniqueFlag = result.some(obj => obj['uniqueStr']);
+      if(uniqueFlag){
         const inner = {
           date: new Date(outerItem.date),
           display: outerItem.derivedValue.coding.display,
@@ -66,12 +65,10 @@ export class CaseRecordsService {
         result.forEach(el => {
           if(el.label == question){
             el.dateEntries.push(inner);
-            console.log(el.dateEntries);
-            el.dataEntries = el.dateEntries.sort((a, b) => b.date.getTime() - a.date.getTime());
+            // after every push we want to make sure the data is sorted by date in desc order.
+            el.dateEntries.sort((a, b) => b.date - a.date);
           }
-        });
-
-
+        })
       }
       else{
         const inner = {
@@ -80,14 +77,18 @@ export class CaseRecordsService {
         }
         const item = {
           label: question,
-          dateEntries : [inner]
+          dateEntries : [inner],
+          display: outerItem.derivedValue.coding.display,
+          uniqueStr: uniqueStr // we use this value only to determine uniqueness
         }
         result.push(item);
       }
-    })
-    console.log(result);
+      // The display for the other item is equivalent of the display of the first inner item.
+      // The first inner item is the last chronologically occurrence because the inner items are sorted by date in desc order
+      result = result.map(item=> ({...item, display: item.dateEntries[0].display}));
+    });
+    result = result.map(item=> { delete item.uniqueStr; return item }); //we don't need the unique str in our response
     this.headerData.next(result);
-    return result;
   }
 
   setDemographicsData(demographicsData) {
@@ -107,7 +108,7 @@ export class CaseRecordsService {
     }
 
     return this.http.put(this.baseApiUrl + 'case-record/' + registrySchemaTag, keyValue, {params}).pipe(
-      map((result: any) => {
+      map(() => {
         this.getByCaseId(registrySchemaTag, caseId).subscribe();
         }
       ),
@@ -260,6 +261,4 @@ export class CaseRecordsService {
      });
     this.caseRecordChronologicalData$.next(currentRecords);
   }
-
-
 }

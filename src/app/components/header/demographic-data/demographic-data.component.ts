@@ -9,7 +9,6 @@ import {DemoModeService} from "../../../service/demo-mode.service";
   styleUrls: ['./demographic-data.component.scss']
 })
 export class DemographicDataComponent implements OnInit {
-  cols: number = 3;
   width: string = "8em";
   isDemoModeActive = false;
   @Input() demographicsData;

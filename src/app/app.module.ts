@@ -13,7 +13,7 @@ import {MatSortModule} from "@angular/material/sort";
 import {RegistryViewerComponent} from './components/registry-viewer/registry-viewer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DateAdapter, MAT_DATE_FORMATS, MatNativeDateModule} from "@angular/material/core";
-import { DemographicDataComponent } from './components/registry-viewer/demographic-data/demographic-data.component';
+import { DemographicDataComponent } from './components/header/demographic-data/demographic-data.component';
 import { SummaryViewComponent } from './components/registry-viewer/summary-view/summary-view.component';
 import { ChronologicalViewComponent } from './components/registry-viewer/chronological-view/chronological-view.component';
 import {MatExpansionModule} from "@angular/material/expansion";

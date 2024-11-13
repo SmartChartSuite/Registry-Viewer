@@ -15,7 +15,6 @@ import {CaseRecordsService} from "../../service/case-records.service";
 export class HeaderComponent implements OnInit{
 
   isDemoModeActive: boolean = false;
-  registrySchema: RegistrySchema;
   isReturnBtnVisible = false;
   selectedRegistrySchema: RegistrySchema;
   registrySchemaList: RegistrySchema[] = [];
@@ -27,7 +26,6 @@ export class HeaderComponent implements OnInit{
     private router: Router,
     private demoModeService: DemoModeService,
     private metadataService: MetadataService,
-    private route: ActivatedRoute,
     public caseRecordsService: CaseRecordsService,
   ){
     this.router.events.pipe(
@@ -44,6 +42,7 @@ export class HeaderComponent implements OnInit{
   onRegistrySelectionChange() {
     console.log(this.selectedRegistrySchema);
     this.metadataService.setSelectedRegistrySchema(this.selectedRegistrySchema);
+    this.router.navigate(['/'])
   }
 
   onRouteChanged(route: string) {

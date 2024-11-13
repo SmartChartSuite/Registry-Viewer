@@ -1,12 +1,27 @@
-<!--<div *ngFor="let item of headerData | keyvalue">-->
-<!--  Key: {{ item.key }} | Value: {{ item.value }}-->
-<!--</div>-->
-<!--@for(item of headerData | keyvalue; track item){-->
-<!--  {{ item.key }}: {{ item.value }}-->
-<!--}-->
-<!--@for(item of headerData; track item){-->
-<!--  {{ item.key }}: {{ item.value }}-->
-<!--}-->
+@if(headerData){
+  <div class="relative-container">
+    @for (outer of headerData; track outer) {
+      <div class="flex-row">
+        <div class="flex-cell">{{ outer.label }}:</div>
+        <div class="flex-cell description">
+          <div>{{ outer.display }}</div>
+          <div class="icon">
+            <mat-icon>arrow_drop_down</mat-icon>
+          </div>
+        </div>
+      </div>
 
-<pre>{{ headerData| json }}</pre>
+      @if (outer.dateEntries.length > 1) {
+        <div class="floating-menu">
+          @for (inner of outer.dateEntries; track inner) {
+            <div class="flex-row">
+              <div class="flex-cell date"> {{ inner.date | date }}</div> <!-- Add 'date' class here -->
+              <div class="flex-cell"> {{ inner.display }}</div>
+            </div>
+          }
+        </div>
+      }
+    }
+  </div>
+}
 
