@@ -96,6 +96,8 @@ export class CaseRecordsService {
   }
 
   setSelectedRecord(selectedCaseRecord) {
+    this.setDemographicsData(null);
+    this.setCustomHeaderData([]);
     this.selectedCaseRecord$.next(selectedCaseRecord);
   }
 

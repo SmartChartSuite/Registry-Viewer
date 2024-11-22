@@ -5,14 +5,15 @@
         <div class="flex-cell">{{ outer.label }}:</div>
         <div class="flex-cell description">
           <div>{{ outer.display }}</div>
-          <div class="icon">
+          <div class="icon" (mouseover)="itemsRendered = true" (mouseout)="itemsRendered = false">
             <mat-icon>arrow_drop_down</mat-icon>
           </div>
         </div>
       </div>
 
-      @if (outer.dateEntries.length > 1) {
+      @if (outer.dateEntries.length > 1 && itemsRendered) {
         <div class="floating-menu">
+          <div class="flex-row bold-text">History:</div>
           @for (inner of outer.dateEntries; track inner) {
             <div class="flex-row">
               <div class="flex-cell date"> {{ inner.date | date }}</div> <!-- Add 'date' class here -->

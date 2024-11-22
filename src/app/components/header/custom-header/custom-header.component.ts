@@ -7,4 +7,5 @@ import {Component, Input} from '@angular/core';
 })
 export class CustomHeaderComponent {
   @Input() headerData: any[];
+  itemsRendered: boolean = false;
 }

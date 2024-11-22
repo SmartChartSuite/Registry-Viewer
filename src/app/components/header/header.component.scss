@@ -20,6 +20,9 @@ $primary-color: #607D8B;
         font-size: x-large;
         padding: 0 16px;
       }
+      >.left-border{
+        border-left: 2px solid whitesmoke;
+      }
     }
     >.right-section{
       display: flex;
@@ -37,7 +40,8 @@ $primary-color: #607D8B;
     background-color: white;
     color: $primary-color;
     min-height: 32px;
-    border: 1px solid black;
+    border-top: 1px solid $primary-color;
+    border-bottom: 1px solid $primary-color;
     display: flex;
     >.nav-item {
       padding-left: 16px;
@@ -63,4 +67,9 @@ $primary-color: #607D8B;
 
 .menu-text {
   color: whitesmoke; font-size: large
+}
+
+.select-registry-icon{
+  color: whitesmoke;
+  transform: scale(1.5);
 }

@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import packageInfo from "../../../../package.json";
-import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
+import { NavigationEnd, Router} from "@angular/router";
 import {DemoModeService} from "../../service/demo-mode.service";
 import {RegistrySchema} from "../../domain/registry.schema";
 import {filter, map} from "rxjs";
 import {MetadataService} from "../../service/metadata.service";
 import {CaseRecordsService} from "../../service/case-records.service";
+import {OAuthService} from "angular-oauth2-oidc";
 
 @Component({
   selector: 'app-header',
@@ -22,11 +23,13 @@ export class HeaderComponent implements OnInit{
   version = packageInfo.version;
   headerData: any[];
 
+
   constructor(
     private router: Router,
     private demoModeService: DemoModeService,
     private metadataService: MetadataService,
     public caseRecordsService: CaseRecordsService,
+    protected oauthService: OAuthService
   ){
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
@@ -39,10 +42,12 @@ export class HeaderComponent implements OnInit{
 
 
 
-  onRegistrySelectionChange() {
-    console.log(this.selectedRegistrySchema);
+  onRegistrySelectionChange(schema) {
+    this.selectedRegistrySchema = schema;
     this.metadataService.setSelectedRegistrySchema(this.selectedRegistrySchema);
-    this.router.navigate(['/'])
+    this.caseRecordsService.setSelectedRecord(null);
+    this.router.navigate(['/']);
+
   }
 
   onRouteChanged(route: string) {
@@ -50,19 +55,7 @@ export class HeaderComponent implements OnInit{
     this.demoModeService.setDemoModeActive(false);
   }
 
-  private initUserAuthenticatedFlow() {
-    //this.metadataService.selectedRegistrySchema$.subscribe(value => this.registrySchema = value)
-
-    // this.router.events.pipe(
-    //   filter(event => event instanceof NavigationStart),
-    //   map(event => event as NavigationStart))
-    //   .subscribe(event => {
-    //     console.log(event)
-    //   });
-  }
-
   ngOnInit(): void {
-
     this.demoModeService.isDemoModeActive$.subscribe({
       next: value => this.isDemoModeActive = value
     });
@@ -78,7 +71,9 @@ export class HeaderComponent implements OnInit{
     });
 
     this.caseRecordsService.demographicsData$.subscribe({next: value => this.demographicsData = value});
-    this.caseRecordsService.headerData$.subscribe({next: value => this.headerData = value});
+    this.caseRecordsService.headerData$.subscribe({
+      next: value => {this.headerData = value; console.log(value)}
+    });
 
   }
 
@@ -97,6 +92,7 @@ export class HeaderComponent implements OnInit{
   }
 
   onReturnToRegistry() {
+    this.caseRecordsService.setSelectedRecord(null);
     this.router.navigate([''] );
   }
 

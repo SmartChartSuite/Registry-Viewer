@@ -4,15 +4,18 @@
   <div class="main-section">
     <div class="left-section">
       <div class="title" (click)="onRouteChanged('/')">Smart Chart Registry Viewer</div>
-      <div>
-        <mat-form-field class="no-wrapper">
-          <mat-label>Selected Registry</mat-label>
-          <mat-select [(ngModel)]="selectedRegistrySchema" (selectionChange)="onRegistrySelectionChange()">
+      <div class="left-border">
+        @if (oauthService.hasValidIdToken() && selectedRegistrySchema) {
+          <span class="margin-left-md">{{ selectedRegistrySchema.name }} </span>
+          <button mat-button [matMenuTriggerFor]="selectRegistrySchema">
+            <mat-icon class="select-registry-icon" matTooltip="Change Registry">arrow_drop_down</mat-icon>
+          </button>
+          <mat-menu #selectRegistrySchema="matMenu" xPosition="after">
             @for (schema of registrySchemaList; track schema.tag) {
-              <mat-option [value]="schema">{{ schema.name }}</mat-option>
+              <button (click)="onRegistrySelectionChange(schema)" mat-menu-item>{{ schema.name }}</button>
             }
-          </mat-select>
-        </mat-form-field>
+          </mat-menu>
+        }
       </div>
     </div>
 
@@ -37,25 +40,25 @@
   </div>
   <!--  End Main Section  -->
 
+  @if (isReturnBtnVisible) {
+    <div class="navigation-section">
 
-  <div class="navigation-section">
-    @if (isReturnBtnVisible) {
       <div class="nav-item" (click)="onReturnToRegistry()">
         <mat-icon>navigate_before</mat-icon>
         <span class="margin-left-sm">Return to case selection</span>
       </div>
-    }
-  </div>
+
+    </div>
+  }
   @if (demographicsData) {
     <div class="patient-demographics-section">
       <app-demographic-data [demographicsData]="demographicsData"></app-demographic-data>
     </div>
   }
   <mat-divider></mat-divider>
-
-  <div class="custom-section">
-    <app-custom-header [headerData]="headerData"/>
-  </div>
-
-
+    @if(headerData?.length > 0){
+      <div class="custom-section">
+        <app-custom-header [headerData]="headerData"/>
+      </div>
+    }
 </div>
