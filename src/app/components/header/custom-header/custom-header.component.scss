@@ -1,11 +1,11 @@
 .flex-row {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 4px;
+  align-items: center;
 }
 
 .flex-cell {
   flex-basis: 0;
+  align-items: center;
 }
 
 .flex-cell:first-child {
@@ -25,7 +25,7 @@
 .relative-container {
   position: relative; /* Establish a reference for absolute positioning */
   max-width: 30%;
-  margin: 8px 24px;
+  margin: 0 24px;
 }
 
 .floating-menu {
@@ -38,6 +38,7 @@
   padding: 8px;
   z-index: 1000;
   color: black;
+  width: 100%;
 }
 
 .floating-menu .flex-row {
@@ -48,7 +49,6 @@
 
 .floating-menu .flex-cell {
   flex-basis: 0;
-  min-width: 100px;
 }
 
 .floating-menu .flex-cell:first-child {

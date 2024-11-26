@@ -55,12 +55,13 @@ $light-gray-color:	#D1D9DD;
     }
   }
   >.patient-demographics-section{
+    padding: 8px 0;
     color: black;
     background-color: $light-gray-color;
     border-bottom: 1px solid rgba(96,125,139, 0.5);
   }
   >.custom-section{
-    padding: 8px 0;
+    padding: 0 0;
     color: black;
     background-color: $light-gray-color;
     border-bottom: 1px solid rgba(96,125,139, 0.5);
