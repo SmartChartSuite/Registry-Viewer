@@ -1,6 +1,7 @@
-@import "../../../styles.scss";
 $primary-color: #607D8B;
+$primary-light-color: #9fa8da;
 
+$light-gray-color:	#D1D9DD;
 .header-wrapper {
   //display: flex;
   //flex-direction: column;
@@ -37,11 +38,11 @@ $primary-color: #607D8B;
 
   }
   >.navigation-section{
-    background-color: white;
-    color: $primary-color;
+    background-color: $primary-color;
+    color: whitesmoke;
     min-height: 32px;
-    border-top: 1px solid $primary-color;
-    border-bottom: 1px solid $primary-color;
+    border-top: 1px solid rgb(209,217,221, 0.5);;
+    border-bottom: 1px solid rgba(96,125,139, 0.5);
     display: flex;
     >.nav-item {
       padding-left: 16px;
@@ -54,10 +55,15 @@ $primary-color: #607D8B;
     }
   }
   >.patient-demographics-section{
-
+    color: black;
+    background-color: $light-gray-color;
+    border-bottom: 1px solid rgba(96,125,139, 0.5);
   }
   >.custom-section{
-
+    padding: 8px 0;
+    color: black;
+    background-color: $light-gray-color;
+    border-bottom: 1px solid rgba(96,125,139, 0.5);
   }
 }
 

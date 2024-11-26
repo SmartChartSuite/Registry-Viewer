@@ -41,6 +41,7 @@
   <!--  End Main Section  -->
 
   @if (isReturnBtnVisible) {
+    <mat-divider></mat-divider>
     <div class="navigation-section">
 
       <div class="nav-item" (click)="onReturnToRegistry()">
@@ -55,7 +56,6 @@
       <app-demographic-data [demographicsData]="demographicsData"></app-demographic-data>
     </div>
   }
-  <mat-divider></mat-divider>
     @if(headerData?.length > 0){
       <div class="custom-section">
         <app-custom-header [headerData]="headerData"/>
