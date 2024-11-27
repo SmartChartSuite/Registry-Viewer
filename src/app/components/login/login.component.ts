@@ -35,7 +35,6 @@ export class LoginComponent {
 
   private loadMetadata() {
     this.oauthService.events.pipe(
-      tap(value=> console.log(value)),
       skipWhile(value => !this.oauthService.hasValidAccessToken()),
       switchMap(() => this.metadataService.getMetadata()),
       tap(registrySchemaList => this.metadataService.setSelectedRegistrySchema(registrySchemaList[0])),
