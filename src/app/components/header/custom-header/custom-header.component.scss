@@ -67,11 +67,13 @@
 
 .description{
   display: flex;
-  justify-content: space-between;
 }
 
 .icon {
+  margin-left: 4px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .bold-text{
