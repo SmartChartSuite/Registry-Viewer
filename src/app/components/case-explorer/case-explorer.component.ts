@@ -42,8 +42,7 @@ export class CaseExplorerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private utilService: UtilsService,
     public oauthService: OAuthService,
-  private metadataService: MetadataService,
- //   public auth: AuthService
+    private metadataService: MetadataService
   ) {
     this.searchForm = this.formBuilder.group({
       searchQuery: [null],
@@ -68,11 +67,6 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.registrySchema = this.route.snapshot.queryParams['registrySchema'];
-    // if(!this.registrySchema){
-    //     this.router.navigate(["/"]);
-    //     return;
-    // }
     this.metadataService.selectedRegistrySchema$.subscribe({
       next: selectedRegistrySchema => {
         if (selectedRegistrySchema) {
