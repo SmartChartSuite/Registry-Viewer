@@ -1,0 +1,38 @@
+.wrapper{
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  >.name-section{
+    display: flex;
+    margin:0 16px;
+    align-items: baseline;
+    >.name-label{
+      font-size: larger;
+      margin: 0 8px;
+    }
+    >.name-value{
+      font-size: x-large;
+    }
+  }
+  >.info-section{
+    display: flex;
+    margin: 0 32px;
+      .column{
+        >.label{
+          margin: 0 8px;
+          font-weight: 200;
+        }
+        >.value{
+        }
+      }
+  }
+  >.address-section{
+    display: flex;
+    margin: 0 32px;
+    justify-content: flex-start;
+    >.label{
+      margin: 0 8px;
+      font-weight: 200;
+    }
+  }
+}

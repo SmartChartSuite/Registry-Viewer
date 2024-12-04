@@ -54,8 +54,21 @@ export class RegistryViewerComponent implements OnInit, AfterViewInit {
     this.breakpoint = (window.innerWidth<= 992) ? 1 : 2;
     this.setMatCardContentHeight(window.innerWidth);
     this.isLoading = true;
+
+    this.caseRecordsService.searchCases(this.registrySchema, [this.route.snapshot.paramMap.get('id')], ['caseId']).subscribe(
+      {
+        next: value => {
+          this.caseRecordsService.setDemographicsData(value?.data[0])
+        }
+      }
+    );
+
+
     this.caseRecordsService.getByCaseId(this.registrySchema, this.route.snapshot.paramMap.get('id')).subscribe({
-      next: value => this.isLoading = false,
+      next: value => {
+        this.isLoading = false;
+        this.caseRecordsService.setCustomHeaderData(value.contents.filter(data=> data.section == 'Header'));
+      },
       error: err => {
         this.isLoading = false;
         this.utilsService.showErrorMessage("Server Error when loading data.");

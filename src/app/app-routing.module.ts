@@ -3,19 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import {AboutComponent} from "./components/about/about.component";
 import {CaseExplorerComponent} from "./components/case-explorer/case-explorer.component";
 import {RegistryViewerComponent} from "./components/registry-viewer/registry-viewer.component";
-import {LandingComponent} from "./components/landing/landing.component";
 import {AuthGuard} from "./guards/auth.guard";
 
 const routes: Routes = [
   //We need to add Login guard to this section
   {
     path: '',
-    component: LandingComponent,
-  },
-  {
-    path: 'case',
     component: CaseExplorerComponent,
-    canActivate: [AuthGuard],
   },
   {
     path: 'about',

@@ -1,0 +1,82 @@
+$primary-color: #607D8B;
+$primary-light-color: #9fa8da;
+
+$light-gray-color:	#D1D9DD;
+.header-wrapper {
+  //display: flex;
+  //flex-direction: column;
+  background-color: $primary-color;
+  color: white;
+  >.main-section{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    >.left-section{
+      display: flex;
+      align-items: center;
+      >.title{
+        cursor: pointer;
+        font-weight: 600;
+        font-size: x-large;
+        padding: 0 16px;
+      }
+      >.left-border{
+        border-left: 2px solid whitesmoke;
+      }
+    }
+    >.right-section{
+      display: flex;
+      align-items: center;
+      >.version-label {
+        font-weight: bold;
+        font-size: small;
+        margin: 8px;
+      }
+
+    }
+
+  }
+  >.navigation-section{
+    background-color: $primary-color;
+    color: whitesmoke;
+    min-height: 32px;
+    border-top: 1px solid rgb(209,217,221, 0.5);;
+    border-bottom: 1px solid rgba(96,125,139, 0.5);
+    display: flex;
+    >.nav-item {
+      padding-left: 16px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      &:hover{
+        opacity: 0.85;
+      }
+    }
+  }
+  >.patient-demographics-section{
+    padding: 8px 0;
+    color: black;
+    background-color: $light-gray-color;
+    border-bottom: 1px solid rgba(96,125,139, 0.5);
+  }
+  >.custom-section{
+    padding: 0 0;
+    color: black;
+    background-color: $light-gray-color;
+    border-bottom: 1px solid rgba(96,125,139, 0.5);
+  }
+}
+
+.no-wrapper{
+  margin-bottom: -1.0em;
+}
+
+.menu-text {
+  color: whitesmoke; font-size: large
+}
+
+.select-registry-icon{
+  color: whitesmoke;
+  transform: scale(1.5);
+}

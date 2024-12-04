@@ -1,6 +1,5 @@
-import {Component, OnInit } from '@angular/core';
-import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
-import {CaseRecordsService} from "../../../service/case-records.service";
+import {Component, Input, OnInit} from '@angular/core';
+import {BreakpointObserver} from "@angular/cdk/layout";
 import {ActivatedRoute} from "@angular/router";
 import {DemoModeService} from "../../../service/demo-mode.service";
 
@@ -10,28 +9,17 @@ import {DemoModeService} from "../../../service/demo-mode.service";
   styleUrls: ['./demographic-data.component.scss']
 })
 export class DemographicDataComponent implements OnInit {
-
-  cols: number = 3;
   width: string = "8em";
-  demographicsData: any;
   isDemoModeActive = false;
+  @Input() demographicsData;
 
   constructor(
     private route: ActivatedRoute,
     private responsive: BreakpointObserver,
-    private caseRecordService: CaseRecordsService,
     private demoModeService: DemoModeService
   ) { }
 
   ngOnInit(): void {
-    const caseId =  this.route.snapshot.params['id'];
-    const registrySchema = this.route.snapshot.queryParamMap.get('registrySchema');
-    this.caseRecordService.searchCases(registrySchema, [caseId.toString()], ['caseId']).subscribe(
-      {
-      next: value => this.demographicsData = value?.data[0]
-      }
-    );
-
     this.demoModeService.isDemoModeActive$.subscribe({
       next: value => this.isDemoModeActive = value
     })

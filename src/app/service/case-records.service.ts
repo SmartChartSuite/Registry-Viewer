@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from "@angular/common/http";
-import {BehaviorSubject, map, Observable} from "rxjs";
+import {BehaviorSubject, map, Observable, Subject} from "rxjs";
 import {CaseRecordApiResponse} from "../domain/case.record.api.response";
 import {CaseRecord} from "../domain/case.record";
 import {ChronologicalCaseRecord} from "../domain/chronological.case.record";
@@ -21,12 +21,17 @@ export class CaseRecordsService {
   caseRecordChronologicalDataStored:  ChronologicalCaseRecord [] = [];
   caseRecordChronologicalDataStored$: BehaviorSubject<ChronologicalCaseRecord []>;
 
+  private demographicsData =  new Subject<any>;
+  public demographicsData$ = this.demographicsData.asObservable();
+
+  private headerData =  new Subject<any>;
+  public headerData$ = this.headerData.asObservable();
+
+
   sections: string[] = [];
   sections$: BehaviorSubject<string[]>;
 
   baseApiUrl: string;
-
-  selectedCaseRecord: any;
   selectedCaseRecord$: BehaviorSubject<any>;
 
   constructor(private http: HttpClient, private demoModeService: DemoModeService, private environmentHandler: EnvironmentHandlerService) {
@@ -45,7 +50,54 @@ export class CaseRecordsService {
     });
   }
 
+  setCustomHeaderData(data) {
+    let result = [];
+    data.forEach(outerItem => {
+      const question = outerItem.question;
+      // per requirements uniques is determined by outerItem.question AND outerItem.category, we construct the string temporary for parsing
+      const uniqueStr = outerItem.question + outerItem.category;
+      const uniqueFlag = result.some(obj => obj['uniqueStr']);
+      if(uniqueFlag){
+        const inner = {
+          date: new Date(outerItem.date),
+          display: outerItem.derivedValue.coding.display,
+        }
+        result.forEach(el => {
+          if(el.label == question){
+            el.dateEntries.push(inner);
+            // after every push we want to make sure the data is sorted by date in desc order.
+            el.dateEntries.sort((a, b) => b.date - a.date);
+          }
+        })
+      }
+      else{
+        const inner = {
+          date: new Date(outerItem.date),
+          display: outerItem.derivedValue.coding.display,
+        }
+        const item = {
+          label: question,
+          dateEntries : [inner],
+          display: outerItem.derivedValue.coding.display,
+          uniqueStr: uniqueStr // we use this value only to determine uniqueness
+        }
+        result.push(item);
+      }
+      // The display for the other item is equivalent of the display of the first inner item.
+      // The first inner item is the last chronologically occurrence because the inner items are sorted by date in desc order
+      result = result.map(item=> ({...item, display: item.dateEntries[0].display}));
+    });
+    result = result.map(item=> { delete item.uniqueStr; return item }); //we don't need the unique str in our response
+    this.headerData.next(result);
+  }
+
+  setDemographicsData(demographicsData) {
+    this.demographicsData.next(demographicsData);
+  }
+
   setSelectedRecord(selectedCaseRecord) {
+    this.setDemographicsData(null);
+    this.setCustomHeaderData([]);
     this.selectedCaseRecord$.next(selectedCaseRecord);
   }
 
@@ -58,7 +110,7 @@ export class CaseRecordsService {
     }
 
     return this.http.put(this.baseApiUrl + 'case-record/' + registrySchemaTag, keyValue, {params}).pipe(
-      map((result: any) => {
+      map(() => {
         this.getByCaseId(registrySchemaTag, caseId).subscribe();
         }
       ),
