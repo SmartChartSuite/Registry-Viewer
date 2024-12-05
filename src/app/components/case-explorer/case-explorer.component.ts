@@ -74,9 +74,9 @@ export class CaseExplorerComponent implements OnInit {
           this.getCaseRecords(selectedRegistrySchema.tag);
         }
       }
-    })
-
-
+    });
+    this.caseRecordsService.setDemographicsData(null);
+    this.caseRecordsService.setCustomHeaderData([]);
 
   }
 

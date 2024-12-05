@@ -21,7 +21,7 @@ export class CaseRecordsService {
   caseRecordChronologicalDataStored:  ChronologicalCaseRecord [] = [];
   caseRecordChronologicalDataStored$: BehaviorSubject<ChronologicalCaseRecord []>;
 
-  private demographicsData =  new Subject<any>;
+  private demographicsData =  new BehaviorSubject<any>(null);
   public demographicsData$ = this.demographicsData.asObservable();
 
   private headerData =  new Subject<any>;
@@ -96,8 +96,6 @@ export class CaseRecordsService {
   }
 
   setSelectedRecord(selectedCaseRecord) {
-    this.setDemographicsData(null);
-    this.setCustomHeaderData([]);
     this.selectedCaseRecord$.next(selectedCaseRecord);
   }
 

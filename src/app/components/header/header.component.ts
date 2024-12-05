@@ -70,9 +70,11 @@ export class HeaderComponent implements OnInit{
       }
     });
 
-    this.caseRecordsService.demographicsData$.subscribe({next: value => this.demographicsData = value});
+    this.caseRecordsService.demographicsData$.subscribe({
+      next: value => this.demographicsData = value
+    });
     this.caseRecordsService.headerData$.subscribe({
-      next: value => {this.headerData = value; console.log(value)}
+      next: value => {this.headerData = value}
     });
 
   }
