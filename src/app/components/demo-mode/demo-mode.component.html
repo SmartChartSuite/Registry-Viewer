@@ -1,8 +1,7 @@
 <div class="demo-container">
   <div>
     <button
-      mat-icon-button
-      color="primary" matTooltip="Previous" aria-label="Previous"
+      mat-icon-button matTooltip="Previous" aria-label="Previous"
       [disabled]="!isPreviousEnabled()"
       (click)="onChangeDate(Operations.REW)">
       <mat-icon>
@@ -11,8 +10,7 @@
     </button>
 
     <button
-      mat-icon-button
-      color="primary" matTooltip="Reverse one week" matTooltipClass='red-tooltip' aria-label="Reverse one week"
+      mat-icon-button matTooltip="Reverse one week" matTooltipClass='red-tooltip' aria-label="Reverse one week"
       [disabled]="!isPreviousEnabled()"
       (click)="onChangeDate(Operations.PREVIOUS)">
       <mat-icon>
@@ -34,8 +32,7 @@
 
   <div>
     <button
-      mat-icon-button
-      color="primary" matTooltip="Advance one week" aria-label="Advance one week"
+      mat-icon-button matTooltip="Advance one week" aria-label="Advance one week"
       [disabled]="!isNextEnabled()"
       (click)="onChangeDate(Operations.NEXT)">
       <mat-icon>
@@ -44,8 +41,7 @@
     </button>
 
     <button
-      mat-icon-button
-      color="primary" matTooltip="Next" aria-label="Next"
+      mat-icon-button matTooltip="Next" aria-label="Next"
       [disabled]="!isNextEnabled()"
       (click)="onChangeDate(Operations.FF)">
       <mat-icon>
