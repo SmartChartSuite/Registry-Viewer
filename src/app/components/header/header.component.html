@@ -20,7 +20,10 @@
     </div>
 
     <div class="right-section">
-      <div>
+      <div class="demo-mode">
+        @if(isDemoModeActive){
+          <app-demo-mode></app-demo-mode>
+        }
         <mat-slide-toggle
           class="margin-right-md" (toggleChange)="onToggleDemoMode()" [checked]="isDemoModeActive"
           [disabled]="!isDemoModeEnabled()">
