@@ -55,6 +55,11 @@ import {LoginComponent} from "./components/login/login.component";
 import {Oauth2Interceptor} from "./interceptors/oauth2.interceptor";
 import { HeaderComponent } from './components/header/header.component';
 import { CustomHeaderComponent } from './components/header/custom-header/custom-header.component';
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import {LlmSearchComponent} from "./components/case-explorer/llm-search/llm-search.component";
+import {
+  LlmSearchResultsComponent
+} from "./components/case-explorer/llm-search/llm-search-results/llm-search-results.component";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -82,7 +87,9 @@ export const configFactory = (configService: ConfigService) => {
     LandingComponent,
     LoginComponent,
     HeaderComponent,
-    CustomHeaderComponent
+    CustomHeaderComponent,
+    LlmSearchComponent,
+    LlmSearchResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -118,6 +125,8 @@ export const configFactory = (configService: ConfigService) => {
     MatMenuModule,
     MatDividerModule,
     MatRadioModule,
+    MatTabGroup,
+    MatTab,
   ],
   providers: [
     ConfigService,

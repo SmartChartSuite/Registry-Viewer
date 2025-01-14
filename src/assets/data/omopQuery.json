@@ -1,0 +1,7 @@
+{
+  "codes":{
+
+  },
+  "omop_sql":"SELECT DATE_PART('year', de.drug_era_start_date) AS year, COUNT(DISTINCT de.person_id) AS num_patients FROM synpuf5.drug_era de JOIN synpuf5.concept c ON de.drug_concept_id = c.concept_id WHERE LOWER(c.concept_name) LIKE '%aspirin%' GROUP BY year ORDER BY year",
+  "user_query":"How many patients have taken aspirin, year over year?"
+}
