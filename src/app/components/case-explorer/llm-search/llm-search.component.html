@@ -4,7 +4,7 @@
       <mat-form-field appearance="outline" class="query-search">
         <mat-label>Search Query</mat-label>
         <input matInput type="text" formControlName="query">
-        <button matSuffix mat-icon-button aria-label="Clear Search Query" (click)="searchForm.reset()">
+        <button type="button" matSuffix mat-icon-button aria-label="Clear Search Query" (click)="onClear()">
           <mat-icon matTooltip="Clear Search Query" matSuffix>cancel</mat-icon>
         </button>
       </mat-form-field>

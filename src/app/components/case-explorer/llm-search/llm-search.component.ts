@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup} from "@angular/forms";
 import {LlmSearchService} from "../../../service/llm-search.service";
 
 @Component({
@@ -16,6 +16,11 @@ export class LlmSearchComponent {
   searchResults: any;
 
   constructor(private llmSearchService: LlmSearchService) { }
+
+  onClear(){
+    this.searchForm.reset();
+    this.searchResults = null;
+  }
 
   onSearch() {
     console.log(this.searchForm);

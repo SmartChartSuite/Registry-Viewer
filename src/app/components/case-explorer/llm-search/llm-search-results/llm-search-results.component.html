@@ -1,20 +1,22 @@
 @if(searchResults?.interpretedResults?.resultInterpretation){
-  <div class="margin-top-md margin-bottom-md">
+  <div class="margin-top-lg margin-bottom-md">
     <div class="results-label">Results Interpretation:</div>
     <div class="margin-top-sm">{{ searchResults?.interpretedResults?.resultInterpretation }}</div>
   </div>
+  <mat-divider/>
 }
 
 @if(searchResults?.query?.sql){
-  <div class="margin-top-md">
+  <div class="margin-top-lg margin-bottom-md">
     <div class="results-label">SQL Query:</div>
     <div class="console margin-top-sm">{{ searchResults?.query?.sql }} </div>
   </div>
+  <mat-divider/>
 }
 
 
 @if(searchResults?.interpretedResults?.dbResult?.length > 0){
-  <div class="margin-top-md results-label">DB Query Results:</div>
+  <div class="margin-top-lg results-label">DB Query Results:</div>
   <table mat-table [dataSource]="searchResults?.interpretedResults?.dbResult">
     @for (key of Object.keys(searchResults?.interpretedResults?.dbResult[0]); track key) {
       <ng-container [matColumnDef]=key>
