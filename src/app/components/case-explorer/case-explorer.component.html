@@ -1,8 +1,7 @@
 <div class="generic-component-wrapper" *ngIf="oauthService.hasValidAccessToken; else loggedout">
   <div class="generic-component-content container">
-    <h1>Patient Search</h1>
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-      <mat-tab label="Default">
+      <mat-tab label="Patient Search">
         <form style="display: flex" autocomplete="off" novalidate [formGroup]="searchForm"
               (submit)="onSearchFormSubmit()">
           <div class="column-40 margin-right-md margin-top-md">
@@ -111,7 +110,10 @@
 
         </div>
       </mat-tab>
-      <mat-tab label="LLM Saerch">
+      <mat-tab label="LLM Patient Search">
+
+      </mat-tab>
+      <mat-tab label="LLM Population Search">
         <div class="padding-top-lg"><app-llm-search></app-llm-search></div>
       </mat-tab>
     </mat-tab-group>
