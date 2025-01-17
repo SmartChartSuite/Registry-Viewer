@@ -1,10 +1,6 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from "@angular/material/sort";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordsService} from "../../service/case-records.service";
-import {CaseRecord} from "../../domain/case.record";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {CaseRecordApiResponse} from "../../domain/case.record.api.response";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
@@ -25,15 +21,13 @@ import {RegistrySchema} from "../../domain/registry.schema";
 })
 export class CaseExplorerComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
-
-  dataSource : MatTableDataSource<CaseRecord>;
-  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'status'];
   isLoading = true;
   searchForm: FormGroup = new FormGroup({});
   selectedRegistrySchema: RegistrySchema;
+  response: CaseRecordApiResponse;
+  dataFilter: any;
+  llmSearchForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,15 +42,17 @@ export class CaseExplorerComponent implements OnInit {
       searchQuery: [null],
       dob: [null]
     });
+
+    this.llmSearchForm = this.formBuilder.group({
+      llmSearchQuery: [null],
+    });
   }
 
   getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
     this.caseRecordsService.searchCases(registrySchema, searchTerms).subscribe({
       next: (response: CaseRecordApiResponse) => {
-        this.dataSource = new MatTableDataSource(response.data);
+        this.response = response;
         this.isLoading = false;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       },
       error: err => {
         console.error(err);
@@ -77,18 +73,13 @@ export class CaseExplorerComponent implements OnInit {
     });
     this.caseRecordsService.setDemographicsData(null);
     this.caseRecordsService.setCustomHeaderData([]);
-
   }
 
   applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+    this.dataFilter = (event.target as HTMLInputElement).value;
   }
 
-  onRowClicked(row: any) {
+  patientSelected(row: any) {
     this.router.navigate(['case', row.caseId], { queryParams: {registrySchema: this.selectedRegistrySchema.tag}} );
   }
 

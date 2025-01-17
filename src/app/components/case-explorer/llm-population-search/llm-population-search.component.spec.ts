@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LlmSearchComponent } from './llm-search.component';
+import { LlmPopulationSearchComponent } from './llm-population-search.component';
 
 describe('LlmSearchComponent', () => {
-  let component: LlmSearchComponent;
-  let fixture: ComponentFixture<LlmSearchComponent>;
+  let component: LlmPopulationSearchComponent;
+  let fixture: ComponentFixture<LlmPopulationSearchComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LlmSearchComponent]
+      imports: [LlmPopulationSearchComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LlmSearchComponent);
+    fixture = TestBed.createComponent(LlmPopulationSearchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -66,3 +66,14 @@ table {
   white-space: nowrap;
 }
 
+.search-bar{
+  display: flex;
+  align-items: center;
+  >.centered-input{
+    margin-bottom: -22px;
+  }
+  >.search-query{
+    flex: 1;
+  }
+}
+

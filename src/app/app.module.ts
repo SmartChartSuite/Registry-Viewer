@@ -56,10 +56,11 @@ import {Oauth2Interceptor} from "./interceptors/oauth2.interceptor";
 import { HeaderComponent } from './components/header/header.component';
 import { CustomHeaderComponent } from './components/header/custom-header/custom-header.component';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import {LlmSearchComponent} from "./components/case-explorer/llm-search/llm-search.component";
+import {LlmPopulationSearchComponent} from "./components/case-explorer/llm-population-search/llm-population-search.component";
 import {
   LlmSearchResultsComponent
-} from "./components/case-explorer/llm-search/llm-search-results/llm-search-results.component";
+} from "./components/case-explorer/llm-population-search/llm-population-search-results/llm-search-results.component";
+import { SearchResultsComponent } from './components/case-explorer/search-results/search-results.component';
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -88,8 +89,9 @@ export const configFactory = (configService: ConfigService) => {
     LoginComponent,
     HeaderComponent,
     CustomHeaderComponent,
-    LlmSearchComponent,
-    LlmSearchResultsComponent
+    LlmPopulationSearchComponent,
+    LlmSearchResultsComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,

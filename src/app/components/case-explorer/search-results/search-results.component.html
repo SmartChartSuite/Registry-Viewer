@@ -1,0 +1,65 @@
+<table mat-table [dataSource]="dataSource" matSort matSortDisableClear style="cursor:pointer">
+
+  <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name</th>
+    <td mat-cell *matCellDef="let caseRecord"> {{ caseRecord.lastName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="givenName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Given Name</th>
+    <td mat-cell *matCellDef="let caseRecord"> {{ caseRecord.givenName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dob">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Birth</th>
+    <td mat-cell *matCellDef="let caseRecord"> {{ caseRecord.dob | date:'mediumDate' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="gender">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender</th>
+    <td mat-cell *matCellDef="let caseRecord"> {{ caseRecord.gender }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Address</th>
+    <td mat-cell *matCellDef="let caseRecord">
+      <div>{{ caseRecord.street }}</div>
+      <div>{{ caseRecord.city }}
+        <span *ngIf="!!caseRecord.city && caseRecord.state">,</span>
+        {{ caseRecord.state }} {{ caseRecord.zip }}
+      </div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="phone">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone #</th>
+    <td mat-cell *matCellDef="let caseRecord"> {{ caseRecord.phone }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="initialReportDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Specimen Collected</th>
+    <td mat-cell *matCellDef="let caseRecord"> {{ caseRecord.initialReportDate | date:'mediumDate' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+    <td mat-cell *matCellDef="let caseRecord">
+      <mat-icon color="primary" class="margin-right-md" [matTooltip]="caseRecord.status?.detail">info
+      </mat-icon>
+      {{ caseRecord.status?.code | titlecase }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClicked(row)"></tr>
+
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell no-records-found" [colSpan]="displayedColumns.length"><span
+      class="no-records-found-text">No results found.</span>
+    </td>
+  </tr>
+
+</table>
+
+<mat-paginator [pageSizeOptions]="[10, 25, 50]" aria-label="Select page"></mat-paginator>
+

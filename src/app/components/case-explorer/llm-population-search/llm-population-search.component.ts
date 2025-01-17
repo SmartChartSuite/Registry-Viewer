@@ -3,12 +3,12 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {LlmSearchService} from "../../../service/llm-search.service";
 
 @Component({
-  selector: 'app-llm-search',
+  selector: 'app-llm-population-search',
   standalone: false,
-  templateUrl: './llm-search.component.html',
-  styleUrl: './llm-search.component.scss'
+  templateUrl: './llm-population-search.component.html',
+  styleUrl: './llm-population-search.component.scss'
 })
-export class LlmSearchComponent {
+export class LlmPopulationSearchComponent {
   searchForm = new FormGroup({
     query: new FormControl(''),
   });
