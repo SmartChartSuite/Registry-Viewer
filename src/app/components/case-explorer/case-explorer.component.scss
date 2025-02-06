@@ -77,3 +77,19 @@ table {
   }
 }
 
+.search-container{
+  display: flex;
+  >.search-history{
+    margin-right: 8px;
+    width: 20%;
+    min-height: 32em;
+    border: 1px solid rgba(125, 125, 125, .5);;
+    border-radius: 4px;
+    background-color: whitesmoke;
+  }
+  >.search{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+  }
+}

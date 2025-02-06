@@ -1,0 +1,3 @@
+@for (element of searchHistory; track element.index) {
+  <div (click)="onHistorySelected(element)">{{ element | json }}</div>
+}

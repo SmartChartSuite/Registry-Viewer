@@ -1,6 +1,25 @@
 <div class="generic-component-wrapper" *ngIf="oauthService.hasValidAccessToken; else loggedout">
   <div class="generic-component-content container">
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+      <mat-tab label="Query Data">
+        <div class="padding-top-lg search-container">
+          <div class="search-history">
+            <app-search-history [searchHistory]="searchHistory"></app-search-history>
+          </div>
+          <div class="search">
+            <app-search-form
+              [searchType]="SearchType.QUERY_DATA"
+              (onSearchEvent)="onSearchEvent($event)"
+              (onFilterSearchResultsEvent)="onFilterSearchResults($event)"
+            >
+            </app-search-form>
+            <app-common-search-results
+              [searchType]="SearchType.QUERY_DATA"
+              [searchResults]="searchResults"
+            ></app-common-search-results>
+          </div>
+        </div>
+      </mat-tab>
       <mat-tab label="Patient Search">
         <form style="display: flex" autocomplete="off" novalidate [formGroup]="searchForm"
               (submit)="onSearchFormSubmit()">
@@ -40,7 +59,12 @@
         <div class="spinner-container" *ngIf="isLoading">
           <mat-spinner [diameter]="70"></mat-spinner>
         </div>
-        <app-search-results [apiResponse]="response" [dataFilter]="dataFilter" (onPatientSelectedEvent)="patientSelected($event)"></app-search-results>
+        <app-common-search-results
+          [searchType]="SearchType.PATIENT_SEARCH"
+          [searchResults]="searchResults"
+          [selectedRegistrySchema]="selectedRegistrySchema"
+        ></app-common-search-results>
+<!--        <app-patient-search-results [searchResults]="response" [dataFilter]="dataFilter" (onPatientSelectedEvent)="patientSelected($event)"></app-patient-search-results>-->
       </mat-tab>
 
 
@@ -67,12 +91,13 @@
             </div>
           </div>
         </form>
-        <app-search-results [apiResponse]="response" [dataFilter]="dataFilter"
-                            (onPatientSelectedEvent)="patientSelected($event)"></app-search-results>
+        <app-patient-search-results [searchResults]="response" [dataFilter]="dataFilter"
+                            (onPatientSelectedEvent)="patientSelected($event)"></app-patient-search-results>
       </mat-tab>
       <mat-tab label="LLM Population Search">
         <div class="padding-top-lg"><app-llm-population-search></app-llm-population-search></div>
       </mat-tab>
+
     </mat-tab-group>
   </div>
 

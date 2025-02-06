@@ -60,7 +60,11 @@ import {LlmPopulationSearchComponent} from "./components/case-explorer/llm-popul
 import {
   LlmSearchResultsComponent
 } from "./components/case-explorer/llm-population-search/llm-population-search-results/llm-search-results.component";
-import { SearchResultsComponent } from './components/case-explorer/search-results/search-results.component';
+import { PatientSearchResultsComponent } from './components/case-explorer/patient-search-results/patient-search-results.component';
+import { SearchFormComponent } from './components/case-explorer/search-form/search-form.component';
+import { CommonSearchResultsComponent } from './components/case-explorer/common-search-results/common-search-results.component';
+import { SearchHistoryComponent } from './components/case-explorer/search-history/search-history.component';
+import { QuerySearchResultsComponent } from './components/case-explorer/query-search-results/query-search-results.component';
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -91,7 +95,11 @@ export const configFactory = (configService: ConfigService) => {
     CustomHeaderComponent,
     LlmPopulationSearchComponent,
     LlmSearchResultsComponent,
-    SearchResultsComponent
+    PatientSearchResultsComponent,
+    SearchFormComponent,
+    CommonSearchResultsComponent,
+    SearchHistoryComponent,
+    QuerySearchResultsComponent,
   ],
   imports: [
     BrowserModule,

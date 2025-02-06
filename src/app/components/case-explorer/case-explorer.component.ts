@@ -2,13 +2,25 @@ import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {CaseRecordApiResponse} from "../../domain/case.record.api.response";
+import {CaseRecordApiResponse, QuerySearchApiResponse} from "../../domain/case.record.api.response";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 import {UtilsService} from "../../service/utils.service";
 import {OAuthService} from "angular-oauth2-oidc";
 import {MetadataService} from "../../service/metadata.service";
 import {RegistrySchema} from "../../domain/registry.schema";
+import {SearchResultFilter} from "./search-form/search-form.component";
+
+export enum SearchTypeEnum {
+  'QUERY_DATA' = 'QUERY_DATA',
+  'PATIENT_SEARCH' = 'PATIENT_SEARCH',
+}
+
+export interface SearchHistory{
+  index: number;
+  queryStr: string;
+  searchResults: QuerySearchApiResponse;
+}
 
 @Component({
   selector: 'app-case-explorer',
@@ -28,6 +40,9 @@ export class CaseExplorerComponent implements OnInit {
   response: CaseRecordApiResponse;
   dataFilter: any;
   llmSearchForm: FormGroup;
+  protected readonly SearchType = SearchTypeEnum;
+  searchResults: CaseRecordApiResponse | QuerySearchApiResponse;
+  searchHistory: SearchHistory[];
 
   constructor(
     private route: ActivatedRoute,
@@ -51,7 +66,8 @@ export class CaseExplorerComponent implements OnInit {
   getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
     this.caseRecordsService.searchCases(registrySchema, searchTerms).subscribe({
       next: (response: CaseRecordApiResponse) => {
-        this.response = response;
+        console.log(response);
+        this.searchResults = response;
         this.isLoading = false;
       },
       error: err => {
@@ -62,7 +78,7 @@ export class CaseExplorerComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  getPatientSearchResults(){
     this.metadataService.selectedRegistrySchema$.subscribe({
       next: selectedRegistrySchema => {
         if (selectedRegistrySchema) {
@@ -73,6 +89,12 @@ export class CaseExplorerComponent implements OnInit {
     });
     this.caseRecordsService.setDemographicsData(null);
     this.caseRecordsService.setCustomHeaderData([]);
+  }
+
+  ngOnInit(): void {
+    //we assume that the we always need to get the data for the Patient Search
+    this.getPatientSearchResults();
+    this.getCachedQueryData();
   }
 
   applyFilter(event: Event) {
@@ -94,6 +116,51 @@ export class CaseExplorerComponent implements OnInit {
     //split the string on one or more white spaces
     let searchTerms = this.searchForm.value?.searchQuery?.trim().split(/\s+/);
     const dob = this.searchForm.value?.dob;
+
+    if(dob){
+      if(!searchTerms){
+        searchTerms = [];
+      }
+      const dobStr = this.getDateStr(dob);
+      searchTerms.push(dobStr);
+    }
+
+    if(searchTerms){
+      this.getCaseRecords(this.selectedRegistrySchema.tag, searchTerms);
+    }
+  }
+
+
+
+  onSearch() {
+
+  }
+
+  onFilterSearchResults(event: SearchResultFilter) {
+    console.log(event);
+  }
+
+  private getCachedQueryData() {
+
+  }
+
+  onSearchEvent(event: any) {
+    if(event.searchType == SearchTypeEnum.PATIENT_SEARCH){
+      this.executePatientSearch(event.searchFormValue)
+    }
+    else if(event.searchType == SearchTypeEnum.QUERY_DATA){
+      this.executeQuerySearch(event.searchFormValue)
+    }
+    console.log(event);
+  }
+
+  private executePatientSearch(searchFormValue: any) {
+
+  }
+
+  private executeQuerySearch(searchFormValue: any) {
+    let searchTerms = searchFormValue?.searchQuery?.trim().split(/\s+/);
+    const dob = searchFormValue?.dob;
 
     if(dob){
       if(!searchTerms){

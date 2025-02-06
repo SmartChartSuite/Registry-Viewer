@@ -1,0 +1,10 @@
+@if(searchType == SearchTypeEnum.PATIENT_SEARCH){
+  <app-patient-search-results
+    [searchResults]="searchResults"
+    (onPatientSelectedEvent)="patientSelected($event)">
+  </app-patient-search-results>
+}
+@else if(searchType == SearchTypeEnum.QUERY_DATA){
+
+}
+

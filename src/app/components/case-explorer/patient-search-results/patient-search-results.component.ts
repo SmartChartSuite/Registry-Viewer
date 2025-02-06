@@ -5,12 +5,12 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 
 @Component({
-  selector: 'app-search-results',
-  templateUrl: './search-results.component.html',
-  styleUrl: './search-results.component.scss'
+  selector: 'app-patient-search-results',
+  templateUrl: './patient-search-results.component.html',
+  styleUrl: './patient-search-results.component.scss'
 })
-export class SearchResultsComponent implements OnChanges{
-  @Input() apiResponse;
+export class PatientSearchResultsComponent implements OnChanges{
+  @Input() searchResults;
   @Input() dataFilter;
   @Output() onPatientSelectedEvent: EventEmitter<any> = new EventEmitter();
 
@@ -26,8 +26,10 @@ export class SearchResultsComponent implements OnChanges{
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['apiResponse']?.currentValue){
-      this.dataSource = new MatTableDataSource(this.apiResponse.data);
+    console.log(changes)
+    if(changes['searchResults']?.currentValue){
+
+      this.dataSource = new MatTableDataSource(this.searchResults.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
