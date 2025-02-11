@@ -23,7 +23,7 @@
       <mat-tab label="Query Data">
         <div class="padding-top-lg search-container">
           <div>
-            <app-search-history [searchHistory]="searchHistory"></app-search-history>
+            <app-search-history [searchHistory]="searchHistory" (onSearchHistorySelected)="onSearchHistorySelected($event)"></app-search-history>
           </div>
           <div class="search">
             <app-search-form

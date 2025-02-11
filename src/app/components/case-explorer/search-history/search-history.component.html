@@ -7,8 +7,8 @@
           <mat-icon class="icon-button" matTooltip="Collapse Search History" (click)="expanded =!expanded">chevron_left</mat-icon>
         </div>
       </div>
-      @for (element of searchHistory; track element.index) {
-        <div (click)="onHistorySelected(element)">{{ element.queryStr | json }}</div>
+      @for (element of searchHistory; track $index) {
+        <div class="line-item" (click)="onHistorySelected(element)">{{ element.queryStr }}</div>
       }
     </div>
   }

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordsService} from "../../service/case-records.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
@@ -35,12 +35,10 @@ export interface SearchHistory{
 })
 export class CaseExplorerComponent implements OnInit {
 
-  @ViewChild('input') input: ElementRef;
   isLoading = true;
   searchForm: FormGroup = new FormGroup({});
   selectedRegistrySchema: RegistrySchema;
   response: CaseRecordApiResponse;
-  dataFilter: any;
   llmSearchForm: FormGroup;
   protected readonly SearchType = SearchTypeEnum;
   searchResults: CaseRecordApiResponse | QuerySearchApiResponse;
@@ -187,5 +185,9 @@ export class CaseExplorerComponent implements OnInit {
 
   readSearchHistory(){
     return  JSON.parse(sessionStorage.getItem("searchHistory")) || [];
+  }
+
+  onSearchHistorySelected(event: SearchHistory) {
+    this.searchResults = event.searchResults;
   }
 }
