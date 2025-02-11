@@ -15,7 +15,7 @@ export interface SearchResultFilter {
 export class SearchFormComponent implements OnChanges{
   @Input() searchType!: SearchTypeEnum;
   @Output() onSearchEvent = new EventEmitter<any>();
-  @Output() onFilterSearchResultsEvent = new EventEmitter<SearchResultFilter>();
+  @Output() onFilterSearchResultsEvent = new EventEmitter<string>();
 
   searchTypeEnum = SearchTypeEnum;
   searchForm: FormGroup;
@@ -35,27 +35,24 @@ export class SearchFormComponent implements OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.searchType)
     if(changes['searchType'].currentValue == this.searchTypeEnum.QUERY_DATA){
+      this.searchForm = this.formBuilder.group({
+        'query': new FormControl(''),
+      });
+      console.log(this.searchForm.value);
+
+
+    }
+    else if (changes['searchType'].currentValue == this.searchTypeEnum.PATIENT_SEARCH){
       this.searchForm = this.formBuilder.group({
         'query': new FormControl(''),
         'dob': new FormControl(null),
         'filter': new FormControl(null),
       });
-
       // Presently we only filter the results from patient search
       this.searchForm.controls['filter'].valueChanges.subscribe(value => {
-        this.onFilterSearchResultsEvent.emit({filterByFormControl: 'filter', filterValue: value});
-      });
-    }
-    else if (changes['searchType'].currentValue == this.searchTypeEnum.PATIENT_SEARCH){
-      this.searchForm = this.formBuilder.group({
-        'query': new FormControl(''),
-      })
-    }
-    if(this.searchForm?.controls){
-      this.searchForm.valueChanges.subscribe(value => {
-        console.log('Form value changed:', value);
-        // Do something with the updated form value
+        this.onFilterSearchResultsEvent.emit(value);
       });
     }
   }

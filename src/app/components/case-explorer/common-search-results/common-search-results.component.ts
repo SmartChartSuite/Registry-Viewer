@@ -12,6 +12,7 @@ export class CommonSearchResultsComponent  implements OnChanges{
   @Input() searchResults!: any;
   @Input() searchType!: SearchTypeEnum;
   @Input() selectedRegistrySchema: RegistrySchema;
+  @Input() filterStr: string;
 
   protected readonly SearchTypeEnum = SearchTypeEnum;
 

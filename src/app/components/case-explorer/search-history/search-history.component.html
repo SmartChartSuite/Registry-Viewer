@@ -1,3 +1,21 @@
-@for (element of searchHistory; track element.index) {
-  <div (click)="onHistorySelected(element)">{{ element | json }}</div>
-}
+<div class="history-container">
+  @if(expanded){
+    <div class="expanded">
+      <div class="history-title">
+        <div class="title">Search History</div>
+        <div>
+          <mat-icon class="icon-button" matTooltip="Collapse Search History" (click)="expanded =!expanded">chevron_left</mat-icon>
+        </div>
+      </div>
+      @for (element of searchHistory; track element.index) {
+        <div (click)="onHistorySelected(element)">{{ element | json }}</div>
+      }
+    </div>
+  }
+  @else {
+    <div class="collapsed">
+      <div><mat-icon class="icon-button" matTooltip="Expand Seaerch History" (click)="expanded =!expanded">chevron_right</mat-icon></div>
+      <div class="text">Search History</div>
+    </div>
+  }
+</div>

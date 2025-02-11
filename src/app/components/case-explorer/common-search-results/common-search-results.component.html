@@ -1,6 +1,7 @@
 @if(searchType == SearchTypeEnum.PATIENT_SEARCH){
   <app-patient-search-results
     [searchResults]="searchResults"
+    [dataFilter]="filterStr"
     (onPatientSelectedEvent)="patientSelected($event)">
   </app-patient-search-results>
 }

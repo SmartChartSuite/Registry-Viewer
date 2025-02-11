@@ -1,0 +1,39 @@
+.history-container{
+  margin-right: 8px;
+  height: calc(100vh - 180px);
+  border: 1px solid rgba(125, 125, 125, .5);;
+  border-radius: 4px;
+  background-color: whitesmoke;
+  >.expanded{
+    width: 16em;
+  }
+  >.collapsed{
+    width: 2em;
+    display: flex;
+    flex-direction: column;
+    margin: 16px;
+    height: 100%;
+    >.text{
+
+      transform: rotate(-90deg);
+      white-space: nowrap;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      flex: 1;
+      font-size: larger;
+    }
+  }
+}
+
+
+.history-title{
+  display: flex;
+  justify-content: space-between;
+  margin: 16px;
+  font-size: larger;
+}
+
+.icon-button{
+  cursor: pointer;
+}

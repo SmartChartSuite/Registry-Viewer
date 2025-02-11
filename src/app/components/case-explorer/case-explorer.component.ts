@@ -8,8 +8,7 @@ import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker
 import {UtilsService} from "../../service/utils.service";
 import {OAuthService} from "angular-oauth2-oidc";
 import {MetadataService} from "../../service/metadata.service";
-import {RegistrySchema} from "../../domain/registry.schema";
-import {SearchResultFilter} from "./search-form/search-form.component";
+import {RegistrySchema} from "../../domain/registry.schema";``
 
 export enum SearchTypeEnum {
   'QUERY_DATA' = 'QUERY_DATA',
@@ -43,6 +42,7 @@ export class CaseExplorerComponent implements OnInit {
   protected readonly SearchType = SearchTypeEnum;
   searchResults: CaseRecordApiResponse | QuerySearchApiResponse;
   searchHistory: SearchHistory[];
+  filterStr: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +66,6 @@ export class CaseExplorerComponent implements OnInit {
   getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
     this.caseRecordsService.searchCases(registrySchema, searchTerms).subscribe({
       next: (response: CaseRecordApiResponse) => {
-        console.log(response);
         this.searchResults = response;
         this.isLoading = false;
       },
@@ -95,14 +94,8 @@ export class CaseExplorerComponent implements OnInit {
     //we assume that the we always need to get the data for the Patient Search
     this.getPatientSearchResults();
     this.getCachedQueryData();
-  }
-
-  applyFilter(event: Event) {
-    this.dataFilter = (event.target as HTMLInputElement).value;
-  }
-
-  patientSelected(row: any) {
-    this.router.navigate(['case', row.caseId], { queryParams: {registrySchema: this.selectedRegistrySchema.tag}} );
+    this.searchHistory = this.readSearchHistory();
+    console.log(this.searchHistory)
   }
 
   getDateStr(date: Date): string {
@@ -131,14 +124,10 @@ export class CaseExplorerComponent implements OnInit {
   }
 
 
-
-  onSearch() {
-
+  onFilterSearchResults(event: string) {
+    this.filterStr = event;
   }
 
-  onFilterSearchResults(event: SearchResultFilter) {
-    console.log(event);
-  }
 
   private getCachedQueryData() {
 
@@ -151,15 +140,11 @@ export class CaseExplorerComponent implements OnInit {
     else if(event.searchType == SearchTypeEnum.QUERY_DATA){
       this.executeQuerySearch(event.searchFormValue)
     }
-    console.log(event);
   }
 
   private executePatientSearch(searchFormValue: any) {
-
-  }
-
-  private executeQuerySearch(searchFormValue: any) {
-    let searchTerms = searchFormValue?.searchQuery?.trim().split(/\s+/);
+    console.log(searchFormValue)
+    let searchTerms = searchFormValue?.query?.trim().split(/\s+/);
     const dob = searchFormValue?.dob;
 
     if(dob){
@@ -173,5 +158,25 @@ export class CaseExplorerComponent implements OnInit {
     if(searchTerms){
       this.getCaseRecords(this.selectedRegistrySchema.tag, searchTerms);
     }
+  }
+
+  private executeQuerySearch(searchFormValue: any) {
+    console.log("execute query search here");
+    // TODO save search history saveSearchHistory
+  }
+
+  saveSearchHistory(searchResults: QuerySearchApiResponse, queryStr: string) {
+    const searchHistoryItem: SearchHistory = {index: 0, queryStr: queryStr, searchResults: searchResults};
+    if(this.searchHistory.length < 5){
+      this.searchHistory = [searchHistoryItem, ...this.searchHistory];
+    }
+    else {
+      this.searchHistory = [searchHistoryItem, ...this.searchHistory.slice(0, this.searchHistory.length - 1)];
+    }
+   sessionStorage.setItem("searchHistory", JSON.stringify(this.searchHistory));
+  }
+
+  readSearchHistory(){
+    return  JSON.parse(sessionStorage.getItem("searchHistory")) || [];
   }
 }

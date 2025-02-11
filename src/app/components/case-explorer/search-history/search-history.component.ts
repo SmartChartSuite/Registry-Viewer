@@ -11,6 +11,7 @@ export class SearchHistoryComponent {
   @Output() onSearchHistorySelected = new EventEmitter<SearchHistory>();
 
   protected readonly history = history;
+  expanded = false;
 
   onHistorySelected(element: SearchHistory) {
     this.onSearchHistorySelected.emit(element);
