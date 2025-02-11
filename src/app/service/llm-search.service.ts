@@ -3,6 +3,7 @@ import {forkJoin, map, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {EnvironmentHandlerService} from "./environment-handler.service";
 import {LlmResponse} from "../domain/llm-response";
+import {QuerySearchApiResponse} from "../domain/case.record.api.response";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class LlmSearchService {
     this.llmSearchUrl = this.environmentHandler.getBaseApiURL();
   }
 
-  getLLMResponse(query: string): Observable<LlmResponse>{
+  getLLMResponse(query: string): Observable<QuerySearchApiResponse>{
     // const getOmopQuery = this.http.get(`${this.llmSearchUrl}get_omop_query`);
     // const getInterpretOmopResults = this.http.get(`${this.llmSearchUrl}interpret_omop_results`);
 

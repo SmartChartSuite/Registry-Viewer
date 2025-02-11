@@ -8,7 +8,7 @@
         </div>
       </div>
       @for (element of searchHistory; track element.index) {
-        <div (click)="onHistorySelected(element)">{{ element | json }}</div>
+        <div (click)="onHistorySelected(element)">{{ element.queryStr | json }}</div>
       }
     </div>
   }

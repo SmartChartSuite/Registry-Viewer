@@ -8,7 +8,10 @@ import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker
 import {UtilsService} from "../../service/utils.service";
 import {OAuthService} from "angular-oauth2-oidc";
 import {MetadataService} from "../../service/metadata.service";
-import {RegistrySchema} from "../../domain/registry.schema";``
+import {RegistrySchema} from "../../domain/registry.schema";
+import {LlmSearchService} from "../../service/llm-search.service";
+
+``
 
 export enum SearchTypeEnum {
   'QUERY_DATA' = 'QUERY_DATA',
@@ -51,7 +54,8 @@ export class CaseExplorerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private utilService: UtilsService,
     public oauthService: OAuthService,
-    private metadataService: MetadataService
+    private metadataService: MetadataService,
+    private llmSearchService: LlmSearchService
   ) {
     this.searchForm = this.formBuilder.group({
       searchQuery: [null],
@@ -143,7 +147,6 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   private executePatientSearch(searchFormValue: any) {
-    console.log(searchFormValue)
     let searchTerms = searchFormValue?.query?.trim().split(/\s+/);
     const dob = searchFormValue?.dob;
 
@@ -161,8 +164,14 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   private executeQuerySearch(searchFormValue: any) {
-    console.log("execute query search here");
-    // TODO save search history saveSearchHistory
+    const searchQuery = searchFormValue?.query;
+    this.llmSearchService.getLLMResponse(searchFormValue).subscribe({
+      next: response=> {
+        this.searchResults = response;
+        this.saveSearchHistory(response, searchQuery);
+      },
+      error: err => console.error(err)
+    })
   }
 
   saveSearchHistory(searchResults: QuerySearchApiResponse, queryStr: string) {
@@ -173,7 +182,7 @@ export class CaseExplorerComponent implements OnInit {
     else {
       this.searchHistory = [searchHistoryItem, ...this.searchHistory.slice(0, this.searchHistory.length - 1)];
     }
-   sessionStorage.setItem("searchHistory", JSON.stringify(this.searchHistory));
+    sessionStorage.setItem("searchHistory", JSON.stringify(this.searchHistory));
   }
 
   readSearchHistory(){
