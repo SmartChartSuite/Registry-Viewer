@@ -25,7 +25,7 @@ export class CommonSearchResultsComponent  implements OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
+    console.log(changes);
   }
 
 }
