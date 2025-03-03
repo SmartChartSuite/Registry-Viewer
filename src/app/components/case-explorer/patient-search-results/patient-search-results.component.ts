@@ -26,9 +26,7 @@ export class PatientSearchResultsComponent implements OnChanges{
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes)
     if(changes['searchResults']?.currentValue){
-
       this.dataSource = new MatTableDataSource(this.searchResults.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

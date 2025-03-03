@@ -11,12 +11,16 @@ import {MetadataService} from "../../service/metadata.service";
 import {RegistrySchema} from "../../domain/registry.schema";
 import {LlmSearchService} from "../../service/llm-search.service";
 
-``
-
 export enum SearchTypeEnum {
-  'QUERY_DATA' = 'QUERY_DATA',
-  'PATIENT_SEARCH' = 'PATIENT_SEARCH',
+  POPULATION_SEARCH = 'Population Search',
+  PATIENT_SEARCH = 'Patient Search',
 }
+
+export enum SearchApiOptionsEnum {
+  TRADITIONAL = 'Traditional',
+  LLM = 'LLM'
+}
+
 
 export interface SearchHistory{
   index: number;
@@ -40,10 +44,12 @@ export class CaseExplorerComponent implements OnInit {
   selectedRegistrySchema: RegistrySchema;
   response: CaseRecordApiResponse;
   llmSearchForm: FormGroup;
-  protected readonly SearchType = SearchTypeEnum;
-  searchResults: CaseRecordApiResponse | QuerySearchApiResponse;
+  protected readonly searchType = SearchTypeEnum;
   searchHistory: SearchHistory[];
   filterStr: string;
+  readonly SEARCH_HISTORY_LENGTH = 5;
+  populationSearchResults: QuerySearchApiResponse;
+  patientSearchResults: CaseRecordApiResponse;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,7 +63,6 @@ export class CaseExplorerComponent implements OnInit {
   ) {
     this.searchForm = this.formBuilder.group({
       searchQuery: [null],
-      dob: [null]
     });
 
     this.llmSearchForm = this.formBuilder.group({
@@ -68,7 +73,7 @@ export class CaseExplorerComponent implements OnInit {
   getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
     this.caseRecordsService.searchCases(registrySchema, searchTerms).subscribe({
       next: (response: CaseRecordApiResponse) => {
-        this.searchResults = response;
+        this.patientSearchResults = response;
         this.isLoading = false;
       },
       error: err => {
@@ -97,34 +102,7 @@ export class CaseExplorerComponent implements OnInit {
     this.getPatientSearchResults();
     this.getCachedQueryData();
     this.searchHistory = this.readSearchHistory();
-    console.log(this.searchHistory)
   }
-
-  getDateStr(date: Date): string {
-    const y  = date.getFullYear().toString();
-    const m = (date.getMonth() + 1).toString(); // month is 0 based in js
-    const d = date.getDate().toString();
-    return y + '-' + m + '-' + d;
-  }
-
-  onSearchFormSubmit() {
-    //split the string on one or more white spaces
-    let searchTerms = this.searchForm.value?.searchQuery?.trim().split(/\s+/);
-    const dob = this.searchForm.value?.dob;
-
-    if(dob){
-      if(!searchTerms){
-        searchTerms = [];
-      }
-      const dobStr = this.getDateStr(dob);
-      searchTerms.push(dobStr);
-    }
-
-    if(searchTerms){
-      this.getCaseRecords(this.selectedRegistrySchema.tag, searchTerms);
-    }
-  }
-
 
   onFilterSearchResults(event: string) {
     this.filterStr = event;
@@ -136,36 +114,30 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   onSearchEvent(event: any) {
-    if(event.searchType == SearchTypeEnum.PATIENT_SEARCH){
+    if(event.apiOptions == SearchApiOptionsEnum.TRADITIONAL){
       this.executePatientSearch(event.searchFormValue)
     }
-    else if(event.searchType == SearchTypeEnum.QUERY_DATA){
-      this.executeQuerySearch(event.searchFormValue)
+    else if(event.searchType == SearchTypeEnum.POPULATION_SEARCH){
+      this.executePopulationSearch(event.searchFormValue)
     }
   }
 
   private executePatientSearch(searchFormValue: any) {
-    let searchTerms = searchFormValue?.query?.trim().split(/\s+/);
-    const dob = searchFormValue?.dob;
-
-    if(dob){
-      if(!searchTerms){
-        searchTerms = [];
-      }
-      const dobStr = this.getDateStr(dob);
-      searchTerms.push(dobStr);
-    }
-
-    if(searchTerms){
+    let searchTerms = searchFormValue?.searchQuery?.trim().split(/\s+/);
+    if (searchFormValue.apiOptions == SearchApiOptionsEnum.TRADITIONAL) {
       this.getCaseRecords(this.selectedRegistrySchema.tag, searchTerms);
+    }
+    else if(searchFormValue.apiOptions == SearchApiOptionsEnum.LLM){
+      console.log("SearchApiOptionsEnum.LLM");
+      this.getLlmCaseRecords(searchFormValue);
     }
   }
 
-  private executeQuerySearch(searchFormValue: any) {
+  private executePopulationSearch(searchFormValue: any) {
     const searchQuery = searchFormValue?.query;
     this.llmSearchService.getLLMResponse(searchFormValue).subscribe({
       next: response=> {
-        this.searchResults = response;
+        this.populationSearchResults = response
         this.saveSearchHistory(response, searchQuery);
       },
       error: err => console.error(err)
@@ -174,7 +146,7 @@ export class CaseExplorerComponent implements OnInit {
 
   saveSearchHistory(searchResults: QuerySearchApiResponse, queryStr: string) {
     const searchHistoryItem: SearchHistory = {index: 0, queryStr: queryStr, searchResults: searchResults};
-    if(this.searchHistory.length < 5){
+    if(this.searchHistory.length < this.SEARCH_HISTORY_LENGTH){
       this.searchHistory = [searchHistoryItem, ...this.searchHistory];
     }
     else {
@@ -188,6 +160,15 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   onSearchHistorySelected(event: SearchHistory) {
-    this.searchResults = event.searchResults;
+    this.populationSearchResults = event.searchResults;
+  }
+
+  onApiOptionsChangeEvent(event: any) {
+    this.executePatientSearch(event);
+  }
+
+  private getLlmCaseRecords(searchFormValue: any) {
+    //TODO implement llm search
+    this.patientSearchResults = {data: [], count: 0};
   }
 }

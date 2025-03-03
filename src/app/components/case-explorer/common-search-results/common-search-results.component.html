@@ -1,11 +1,11 @@
 @if(searchType == SearchTypeEnum.PATIENT_SEARCH){
   <app-patient-search-results
-    [searchResults]="searchResults"
+    [searchResults]="patientSearchResults"
     [dataFilter]="filterStr"
     (onPatientSelectedEvent)="patientSelected($event)">
   </app-patient-search-results>
 }
-@else if(searchType == SearchTypeEnum.QUERY_DATA){
-  <app-query-search-results [searchResults]="searchResults"></app-query-search-results>
+@else if(searchType == SearchTypeEnum.POPULATION_SEARCH){
+  <app-query-search-results [searchResults]="populationSearchResults"></app-query-search-results>
 }
 

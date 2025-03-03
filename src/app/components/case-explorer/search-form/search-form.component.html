@@ -1,26 +1,23 @@
 <form [formGroup]="searchForm" (submit)="onSearch()">
   <div class="search-bar">
+    @if(searchType == searchTypeEnum.PATIENT_SEARCH){
+      <mat-radio-group aria-label="Select an option" class="margin-right-md" formControlName="apiOptions">
+        @for (api of Object.values(apiOptionsEnum); track api) {
+          <mat-radio-button class="example-radio-button" [value]="api">{{api}}</mat-radio-button>
+        }
+      </mat-radio-group>
+    }
     <div class="centered-input search-query">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Search Query</mat-label>
         <input matInput type="text" formControlName="query">
-        @if(searchType == searchTypeEnum.QUERY_DATA){
+        @if(searchType == searchTypeEnum.POPULATION_SEARCH){
           <button type="button" matSuffix mat-icon-button aria-label="Clear Search Query" (click)="onClear()">
             <mat-icon matTooltip="Clear Search Query" matSuffix>cancel</mat-icon>
           </button>
         }
       </mat-form-field>
     </div>
-    @if (searchType == searchTypeEnum.PATIENT_SEARCH) {
-      <div class="centered-input margin-left-md">
-      <mat-form-field appearance="outline"  class="full-width">
-        <mat-label>Select a Date of Birth</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dob">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      </div>
-    }
     <button mat-raised-button color="primary" type="submit" class="margin-left-md margin-right-md">
       <mat-icon>search</mat-icon>
       Search
