@@ -12,13 +12,13 @@ import {RegistrySchema} from "../../domain/registry.schema";
 import {LlmSearchService} from "../../service/llm-search.service";
 
 export enum SearchTypeEnum {
-  POPULATION_SEARCH = 'Population Search',
+  POPULATION_SEARCH = 'Population Query',
   PATIENT_SEARCH = 'Patient Search',
 }
 
 export enum SearchApiOptionsEnum {
-  TRADITIONAL = 'Traditional',
-  LLM = 'LLM'
+  TRADITIONAL = 'Standard',
+  LLM = 'AI Query'
 }
 
 
