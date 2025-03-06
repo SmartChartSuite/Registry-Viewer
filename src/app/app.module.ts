@@ -56,10 +56,6 @@ import {Oauth2Interceptor} from "./interceptors/oauth2.interceptor";
 import { HeaderComponent } from './components/header/header.component';
 import { CustomHeaderComponent } from './components/header/custom-header/custom-header.component';
 import {MatTab, MatTabGroup} from "@angular/material/tabs";
-import {LlmPopulationSearchComponent} from "./components/case-explorer/llm-population-search/llm-population-search.component";
-import {
-  LlmSearchResultsComponent
-} from "./components/case-explorer/llm-population-search/llm-population-search-results/llm-search-results.component";
 import { PatientSearchResultsComponent } from './components/case-explorer/patient-search-results/patient-search-results.component';
 import { SearchFormComponent } from './components/case-explorer/search-form/search-form.component';
 import { CommonSearchResultsComponent } from './components/case-explorer/common-search-results/common-search-results.component';
@@ -93,8 +89,6 @@ export const configFactory = (configService: ConfigService) => {
     LoginComponent,
     HeaderComponent,
     CustomHeaderComponent,
-    LlmPopulationSearchComponent,
-    LlmSearchResultsComponent,
     PatientSearchResultsComponent,
     SearchFormComponent,
     CommonSearchResultsComponent,

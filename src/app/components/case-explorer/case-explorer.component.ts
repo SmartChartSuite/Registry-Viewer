@@ -118,7 +118,7 @@ export class CaseExplorerComponent implements OnInit {
       this.executePatientSearch(event.searchFormValue)
     }
     else if(event.searchType == SearchTypeEnum.POPULATION_SEARCH){
-      this.executePopulationSearch(event.searchFormValue)
+      this.executePopulationSearch(event.searchFormValue.value, this.selectedRegistrySchema)
     }
   }
 
@@ -128,17 +128,15 @@ export class CaseExplorerComponent implements OnInit {
       this.getCaseRecords(this.selectedRegistrySchema.tag, searchTerms);
     }
     else if(searchFormValue.apiOptions == SearchApiOptionsEnum.LLM){
-      console.log("SearchApiOptionsEnum.LLM");
       this.getLlmCaseRecords(searchFormValue);
     }
   }
 
-  private executePopulationSearch(searchFormValue: any) {
-    const searchQuery = searchFormValue?.query;
-    this.llmSearchService.getLLMResponse(searchFormValue).subscribe({
+  private executePopulationSearch(queryStr: string, selectedRegistrySchema: RegistrySchema) {
+    this.llmSearchService.getLLMResponse(queryStr, selectedRegistrySchema).subscribe({
       next: response=> {
         this.populationSearchResults = response
-        this.saveSearchHistory(response, searchQuery);
+        this.saveSearchHistory(response, queryStr);
       },
       error: err => console.error(err)
     })
@@ -169,6 +167,7 @@ export class CaseExplorerComponent implements OnInit {
 
   private getLlmCaseRecords(searchFormValue: any) {
     //TODO implement llm search
+    console.log(searchFormValue);
     this.patientSearchResults = {data: [], count: 0};
   }
 }
