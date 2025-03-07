@@ -15,6 +15,7 @@ export enum Operations {
   selector: 'app-demo-mode',
   templateUrl: './demo-mode.component.html',
   styleUrls: ['./demo-mode.component.scss'],
+  standalone: false,
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}

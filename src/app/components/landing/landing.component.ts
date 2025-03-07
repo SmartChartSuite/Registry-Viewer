@@ -8,7 +8,8 @@ import {Observable} from "rxjs";
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+  styleUrls: ['./landing.component.scss'],
+  standalone: false
 })
 export class LandingComponent implements OnInit {
 

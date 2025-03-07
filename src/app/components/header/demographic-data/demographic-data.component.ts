@@ -6,7 +6,8 @@ import {DemoModeService} from "../../../service/demo-mode.service";
 @Component({
   selector: 'app-demographic-data',
   templateUrl: './demographic-data.component.html',
-  styleUrls: ['./demographic-data.component.scss']
+  styleUrls: ['./demographic-data.component.scss'],
+  standalone: false
 })
 export class DemographicDataComponent implements OnInit {
   width: string = "8em";

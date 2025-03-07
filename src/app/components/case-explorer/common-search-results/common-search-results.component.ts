@@ -7,7 +7,8 @@ import {CaseRecordApiResponse, QuerySearchApiResponse} from "../../../domain/cas
 @Component({
   selector: 'app-common-search-results',
   templateUrl: './common-search-results.component.html',
-  styleUrl: './common-search-results.component.scss'
+  styleUrl: './common-search-results.component.scss',
+  standalone: false
 })
 export class CommonSearchResultsComponent{
   @Input() searchResults!: any;

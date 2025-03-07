@@ -10,7 +10,8 @@ export interface SearchResultFilter {
 @Component({
   selector: 'app-search-form',
   templateUrl: './search-form.component.html',
-  styleUrl: './search-form.component.scss'
+  styleUrl: './search-form.component.scss',
+  standalone: false
 })
 export class SearchFormComponent implements OnChanges{
   @Input() searchType!: SearchTypeEnum;

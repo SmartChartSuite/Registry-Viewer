@@ -7,7 +7,8 @@ import {MatSort} from "@angular/material/sort";
 @Component({
   selector: 'app-patient-search-results',
   templateUrl: './patient-search-results.component.html',
-  styleUrl: './patient-search-results.component.scss'
+  styleUrl: './patient-search-results.component.scss',
+  standalone: false
 })
 export class PatientSearchResultsComponent implements OnChanges{
   @Input() searchResults;

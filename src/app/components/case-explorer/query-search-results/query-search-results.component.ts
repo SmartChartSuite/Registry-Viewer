@@ -4,7 +4,8 @@ import {QuerySearchApiResponse} from "../../../domain/case.record.api.response";
 @Component({
   selector: 'app-query-search-results',
   templateUrl: './query-search-results.component.html',
-  styleUrl: './query-search-results.component.scss'
+  styleUrl: './query-search-results.component.scss',
+  standalone: false
 })
 export class QuerySearchResultsComponent implements OnChanges{
   @Input() searchResults!: QuerySearchApiResponse;

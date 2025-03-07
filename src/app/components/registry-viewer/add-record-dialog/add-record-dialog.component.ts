@@ -9,6 +9,7 @@ import {UtilsService} from "../../../service/utils.service";
   selector: 'app-add-record-dialog',
   templateUrl: './add-record-dialog.component.html',
   styleUrls: ['./add-record-dialog.component.scss'],
+  standalone: false
 })
 export class AddRecordDialogComponent implements OnInit {
 

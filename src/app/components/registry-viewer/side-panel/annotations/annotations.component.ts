@@ -12,7 +12,8 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 @Component({
   selector: 'app-annotations',
   templateUrl: './annotations.component.html',
-  styleUrls: ['./annotations.component.scss']
+  styleUrls: ['./annotations.component.scss'],
+  standalone: false
 })
 
 export class AnnotationsComponent implements OnInit {
