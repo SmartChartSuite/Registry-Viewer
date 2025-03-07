@@ -5,7 +5,6 @@ import {CaseRecordsService} from "../../service/case-records.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DemoModeService} from "../../service/demo-mode.service";
 import {UtilsService} from "../../service/utils.service";
-import {RegistrySchema} from "../../domain/registry.schema";
 
 
 @Component({
