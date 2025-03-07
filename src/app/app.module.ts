@@ -22,7 +22,12 @@ import { DetailsComponent } from './components/registry-viewer/side-panel/detail
 import { FlagComponent } from './components/registry-viewer/side-panel/flag/flag.component';
 import { AnnotationsComponent } from './components/registry-viewer/side-panel/annotations/annotations.component';
 import {DrawerService} from "./service/drawer.service";
-import {MatMultiSort, MatMultiSortModule, MatMultiSortTableSettingsComponent} from "ngx-mat-multi-sort";
+import {
+  MatMultiSort,
+  MatMultiSortHeaderComponent,
+  MatMultiSortModule,
+  MatMultiSortTableSettingsComponent
+} from "ngx-mat-multi-sort";
 import {AddRecordDialogComponent} from './components/registry-viewer/add-record-dialog/add-record-dialog.component';
 import {DatePipe, NgOptimizedImage} from "@angular/common";
 import { SectionComponent } from './components/registry-viewer/summary-view/section/section.component';
@@ -133,6 +138,7 @@ export const configFactory = (configService: ConfigService) => {
     MatTab,
     MatMultiSortTableSettingsComponent,
     MatMultiSort,
+    MatMultiSortHeaderComponent,
   ],
   providers: [
     ConfigService,
