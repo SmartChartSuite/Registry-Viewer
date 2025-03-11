@@ -9,7 +9,8 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 @Component({
   selector: 'app-flag',
   templateUrl: './flag.component.html',
-  styleUrls: ['./flag.component.scss']
+  styleUrls: ['./flag.component.scss'],
+  standalone: false
 })
 export class FlagComponent implements OnInit, OnDestroy {
   @Input() registrySchemaTag: string;

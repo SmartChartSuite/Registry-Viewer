@@ -7,7 +7,8 @@ import {ConfigService} from "../../service/config.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  standalone: false
 })
 export class LoginComponent {
   @Input({ required: true }) isLocatedInMainMenu: boolean;

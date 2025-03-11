@@ -4,7 +4,8 @@ import {SearchHistory} from "../case-explorer.component";
 @Component({
   selector: 'app-search-history',
   templateUrl: './search-history.component.html',
-  styleUrl: './search-history.component.scss'
+  styleUrl: './search-history.component.scss',
+  standalone: false
 })
 export class SearchHistoryComponent {
   @Input() searchHistory!: SearchHistory[];

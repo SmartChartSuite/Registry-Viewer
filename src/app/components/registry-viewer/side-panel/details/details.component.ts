@@ -8,8 +8,10 @@ import {CaseRecordsService} from "../../../../service/case-records.service";
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  styleUrls: ['./details.component.scss'],
+  standalone: false
 })
+
 export class DetailsComponent implements OnInit {
 
   @ViewChild('myIdentifier') myIdentifier: ElementRef;

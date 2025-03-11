@@ -3,7 +3,8 @@ import {Component, Input, OnInit} from '@angular/core';
 @Component({
   selector: 'app-summary-view',
   templateUrl: './summary-view.component.html',
-  styleUrls: ['./summary-view.component.scss']
+  styleUrls: ['./summary-view.component.scss'],
+  standalone: false
 })
 export class SummaryViewComponent implements OnInit {
 

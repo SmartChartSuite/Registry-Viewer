@@ -32,6 +32,7 @@ export interface SearchHistory{
   selector: 'app-case-explorer',
   templateUrl: './case-explorer.component.html',
   styleUrls: ['./case-explorer.component.scss'],
+  standalone: false,
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
