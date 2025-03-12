@@ -1,11 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {SearchApiOptionsEnum, SearchTypeEnum} from "../case-explorer.component";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {SearchApiOptionsEnum} from "../../../domain/search-api-options";
+import {SearchTypeEnum} from "../../../domain/search-type";
+import {Search} from "../../../domain/search";
 
-export interface SearchResultFilter {
-  filterByFormControl: 'filter'; //presently we only allow for one form control filter
-  filterValue: string;
-}
 
 @Component({
   selector: 'app-search-form',
@@ -15,14 +13,14 @@ export interface SearchResultFilter {
 })
 export class SearchFormComponent implements OnChanges{
   @Input() searchType!: SearchTypeEnum;
-  @Output() onSearchEvent = new EventEmitter<any>();
+  @Output() onSearchEvent = new EventEmitter<Search>();
   @Output() onFilterSearchResultsEvent = new EventEmitter<string>();
   @Output() onApiOptionsChangeEvent = new EventEmitter<any>();
 
   protected readonly Object = Object;
-
   protected readonly searchTypeEnum = SearchTypeEnum;
   protected readonly apiOptionsEnum = SearchApiOptionsEnum;
+
   searchForm: FormGroup;
 
   constructor(
@@ -31,12 +29,12 @@ export class SearchFormComponent implements OnChanges{
   }
 
   onClear() {
-    this.searchForm.reset();
+    this.searchForm.controls['query'].setValue('');
     this.onSearch()
   }
 
   onSearch() {
-    this.onSearchEvent.emit({searchType: this.searchType, searchFormValue: this.searchForm.value});
+    this.onSearchEvent.emit({searchType: this.searchType, queryStr: this.searchForm.value['query'], apiOption: this.searchForm.value['apiOptions']});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,7 +56,7 @@ export class SearchFormComponent implements OnChanges{
       this.searchForm.controls['apiOptions'].valueChanges.subscribe(value => {
         this.searchForm.controls['query'].setValue('');
         this.searchForm.controls['filter'].setValue('');
-        this.onApiOptionsChangeEvent.emit(this.searchForm.value);
+        this.onApiOptionsChangeEvent.emit(this.searchForm.value['apiOptions']);
       });
     }
   }

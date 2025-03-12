@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
-import {SearchTypeEnum} from "../case-explorer.component";
 import {Router} from "@angular/router";
 import {RegistrySchema} from "../../../domain/registry.schema";
+import {SearchTypeEnum} from "../../../domain/search-type";
 import {CaseRecordApiResponse, QuerySearchApiResponse} from "../../../domain/case.record.api.response";
 
 @Component({
@@ -15,14 +15,12 @@ export class CommonSearchResultsComponent{
   @Input() searchType!: SearchTypeEnum;
   @Input() selectedRegistrySchema: RegistrySchema;
   @Input() filterStr: string;
-
-  protected readonly SearchTypeEnum = SearchTypeEnum;
   @Input() patientSearchResults: CaseRecordApiResponse;
   @Input() populationSearchResults: QuerySearchApiResponse;
 
+  protected readonly SearchTypeEnum = SearchTypeEnum;
 
-  constructor(private router: Router,) {
-  }
+  constructor(private router: Router,) {}
 
   patientSelected(event: any) {
     this.router.navigate(['case', event.caseId], { queryParams: {registrySchema: this.selectedRegistrySchema.tag}} );

@@ -10,16 +10,9 @@ import {OAuthService} from "angular-oauth2-oidc";
 import {MetadataService} from "../../service/metadata.service";
 import {RegistrySchema} from "../../domain/registry.schema";
 import {LlmSearchService} from "../../service/llm-search.service";
-
-export enum SearchTypeEnum {
-  POPULATION_SEARCH = 'Population Query',
-  PATIENT_SEARCH = 'Patient Search',
-}
-
-export enum SearchApiOptionsEnum {
-  TRADITIONAL = 'Standard',
-  LLM = 'AI Query'
-}
+import {SearchApiOptionsEnum} from "../../domain/search-api-options";
+import {SearchTypeEnum} from "../../domain/search-type";
+import {Search} from "../../domain/search";
 
 
 export interface SearchHistory{
@@ -114,22 +107,22 @@ export class CaseExplorerComponent implements OnInit {
 
   }
 
-  onSearchEvent(event: any) {
-    if(event.apiOptions == SearchApiOptionsEnum.TRADITIONAL){
-      this.executePatientSearch(event.searchFormValue)
+  onSearchEvent(search: Search) {
+    if(search.searchType == SearchTypeEnum.PATIENT_SEARCH){
+      this.executePatientSearch(search.queryStr, search.apiOption)
     }
-    else if(event.searchType == SearchTypeEnum.POPULATION_SEARCH){
-      this.executePopulationSearch(event.searchFormValue.value, this.selectedRegistrySchema)
+    else if(search.searchType == SearchTypeEnum.POPULATION_SEARCH){
+      this.executePopulationSearch(search.queryStr, this.selectedRegistrySchema)
     }
   }
 
-  private executePatientSearch(searchFormValue: any) {
-    let searchTerms = searchFormValue?.searchQuery?.trim().split(/\s+/);
-    if (searchFormValue.apiOptions == SearchApiOptionsEnum.TRADITIONAL) {
+  private executePatientSearch(queryStr: string, apiOption: SearchApiOptionsEnum) {
+    let searchTerms = queryStr?.trim().split(/\s+/);
+    if (apiOption == SearchApiOptionsEnum.TRADITIONAL) {
       this.getCaseRecords(this.selectedRegistrySchema.tag, searchTerms);
     }
-    else if(searchFormValue.apiOptions == SearchApiOptionsEnum.LLM){
-      this.getLlmCaseRecords(searchFormValue);
+    else if(apiOption == SearchApiOptionsEnum.LLM){
+      this.getLlmCaseRecords(queryStr);
     }
   }
 
@@ -162,8 +155,8 @@ export class CaseExplorerComponent implements OnInit {
     this.populationSearchResults = event.searchResults;
   }
 
-  onApiOptionsChangeEvent(event: any) {
-    this.executePatientSearch(event);
+  onApiOptionsChangeEvent(apiOption: SearchApiOptionsEnum) {
+    this.executePatientSearch('', apiOption);
   }
 
   private getLlmCaseRecords(searchFormValue: any) {
