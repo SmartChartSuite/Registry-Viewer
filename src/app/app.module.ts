@@ -53,7 +53,6 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker"
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
-import { LandingComponent } from './components/landing/landing.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {OAuthModule, OAuthStorage} from "angular-oauth2-oidc";
 import {LoginComponent} from "./components/login/login.component";
@@ -90,7 +89,6 @@ export const configFactory = (configService: ConfigService) => {
     SectionComponent,
     ConformationDialogComponent,
     DemoModeComponent,
-    LandingComponent,
     LoginComponent,
     HeaderComponent,
     CustomHeaderComponent,
