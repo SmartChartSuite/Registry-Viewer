@@ -12,16 +12,14 @@
   <div class="search-bar">
     <div class="centered-input search-query">
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>{{ searchType == searchTypeEnum.POPULATION_SEARCH?  'Population': 'Search' }} Query</mat-label>
+        <mat-label>{{ searchType == searchTypeEnum.population?  'Population': 'Search' }} Query</mat-label>
         <input matInput type="text" formControlName="query">
-<!--        @if(searchType == searchTypeEnum.POPULATION_SEARCH){-->
           <button type="button" color="primary" matSuffix mat-icon-button aria-label="Clear Search Query" (click)="onClear()">
             <mat-icon matTooltip="Clear Search Query" matSuffix>cancel</mat-icon>
           </button>
-<!--        }-->
       </mat-form-field>
     </div>
-    <button mat-raised-button color="primary" type="submit" class="margin-left-md margin-right-md">
+    <button mat-raised-button color="primary" type="submit" class="margin-left-md margin-right-md" [disabled]="isLoading">
       <mat-icon>search</mat-icon>
       Search
     </button>

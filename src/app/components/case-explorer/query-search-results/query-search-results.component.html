@@ -1,13 +1,14 @@
-@if (searchResults?.['interpretedResults']?.['resultInterpretation'] || searchResults?.['interpretedResults']?.['dbResult']?.['length'] > 0) {
-  <div class="margin-top-lg results-label">Results</div>
-  @if (searchResults?.['interpretedResults']?.['resultInterpretation']) {
+@if (searchResults?.['interpretation']) {
+  <div class="margin-top-lg results-label">Search Results:</div>
+  @if (searchResults?.['interpretation']) {
     <div class="margin-top-lg margin-bottom-md">
-      <div class="margin-top-sm">{{ searchResults?.['interpretedResults']?.['resultInterpretation'] }}</div>
+      <div class="margin-top-sm">{{ searchResults?.['interpretation'] }}</div>
     </div>
-    <mat-divider/>
   }
 
+<!--  TODO: refactor code to the new response type-->
   @if (searchResults?.['interpretedResults']?.['dbResult']?.['length'] > 0) {
+    <mat-divider/>
 
     <table mat-table [dataSource]="searchResults?.['interpretedResults']?.['dbResult']">
       @for (key of Object.keys(searchResults?.['interpretedResults']?.['dbResult'][0]); track key) {

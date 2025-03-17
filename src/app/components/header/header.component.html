@@ -3,7 +3,7 @@
   <!--  Begin Main Section  -->
   <div class="main-section">
     <div class="left-section">
-      <div class="title" (click)="onRouteChanged('/')">Smart Chart Registry Viewer</div>
+      <div class="title" (click)="onHomeSelected()">Smart Chart Registry Viewer</div>
       <div class="left-border">
         @if (oauthService.hasValidIdToken() && selectedRegistrySchema) {
           <span class="margin-left-md">{{ selectedRegistrySchema.name }} </span>

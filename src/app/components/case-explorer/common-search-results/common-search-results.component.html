@@ -5,7 +5,7 @@
     (onPatientSelectedEvent)="patientSelected($event)">
   </app-patient-search-results>
 }
-@else if(searchType == SearchTypeEnum.POPULATION_SEARCH){
-  <app-query-search-results [searchResults]="populationSearchResults"></app-query-search-results>
+@else if(searchType == SearchTypeEnum.population){
+  <app-query-search-results [searchResults]="populationSearchResults" class="margin-left-md"></app-query-search-results>
 }
 

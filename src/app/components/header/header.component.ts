@@ -51,8 +51,8 @@ export class HeaderComponent implements OnInit{
 
   }
 
-  onRouteChanged(route: string) {
-    this.router.navigate([route]);
+  onHomeSelected() {
+    this.router.navigate(['/']);
     this.demoModeService.setDemoModeActive(false);
   }
 

@@ -7,11 +7,15 @@
           <div class="search">
             <app-search-form
               [searchType]="searchType.PATIENT_SEARCH"
+              [isLoading]="isLoading"
               (onSearchEvent)="onSearchEvent($event)"
               (onFilterSearchResultsEvent)="onFilterSearchResults($event)"
               (onApiOptionsChangeEvent)="onApiOptionsChangeEvent($event)"
             >
             </app-search-form>
+            @if(isLoading){
+              <div class=loading>{{ this.LOADING_RECORDS_MSG }}</div>
+            }
             <app-common-search-results
               class="margin-top-md"
               [searchType]="searchType.PATIENT_SEARCH"
@@ -23,21 +27,25 @@
         </div>
       </mat-tab>
 
-      <mat-tab [label]="searchType.POPULATION_SEARCH">
+      <mat-tab [label]="searchType.population">
         <div class="padding-top-lg search-container">
           <div>
             <app-search-history [searchHistory]="searchHistory" (onSearchHistorySelected)="onSearchHistorySelected($event)"></app-search-history>
           </div>
           <div class="search">
             <app-search-form
-              [searchType]="searchType.POPULATION_SEARCH"
+              [isLoading]="isLoading"
+              [searchType]="searchType.population"
               (onSearchEvent)="onSearchEvent($event)"
               (onFilterSearchResultsEvent)="onFilterSearchResults($event)"
             >
             </app-search-form>
+            @if(isLoading){
+              <div class=loading>{{ this.LOADING_RECORDS_MSG }}</div>
+            }
             <app-common-search-results
               class="margin-top-md"
-              [searchType]="searchType.POPULATION_SEARCH"
+              [searchType]="searchType.population"
               [populationSearchResults]="populationSearchResults"
               [selectedRegistrySchema]="selectedRegistrySchema"
             ></app-common-search-results>

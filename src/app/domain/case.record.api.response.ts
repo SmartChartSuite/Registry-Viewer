@@ -8,4 +8,8 @@ export class CaseRecordApiResponse {
 export class QuerySearchApiResponse{
   // TODO append the modal with actual response data structure
   [key: string]: any;
+  query: string;
+  interpretation: string;
+  images: any[];
+  patients: any[];
 }

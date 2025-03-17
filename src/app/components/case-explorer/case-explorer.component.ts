@@ -14,7 +14,6 @@ import {SearchApiOptionsEnum} from "../../domain/search-api-options";
 import {SearchTypeEnum} from "../../domain/search-type";
 import {Search} from "../../domain/search";
 
-
 export interface SearchHistory{
   index: number;
   queryStr: string;
@@ -33,7 +32,7 @@ export interface SearchHistory{
 })
 export class CaseExplorerComponent implements OnInit {
 
-  isLoading = true;
+  isLoading = false;
   searchForm: FormGroup = new FormGroup({});
   selectedRegistrySchema: RegistrySchema;
   response: CaseRecordApiResponse;
@@ -44,6 +43,7 @@ export class CaseExplorerComponent implements OnInit {
   readonly SEARCH_HISTORY_LENGTH = 5;
   populationSearchResults: QuerySearchApiResponse;
   patientSearchResults: CaseRecordApiResponse;
+  LOADING_RECORDS_MSG = "Loading Search Results";
 
   constructor(
     private route: ActivatedRoute,
@@ -111,7 +111,7 @@ export class CaseExplorerComponent implements OnInit {
     if(search.searchType == SearchTypeEnum.PATIENT_SEARCH){
       this.executePatientSearch(search.queryStr, search.apiOption)
     }
-    else if(search.searchType == SearchTypeEnum.POPULATION_SEARCH){
+    else if(search.searchType == SearchTypeEnum.population){
       this.executePopulationSearch(search.queryStr, this.selectedRegistrySchema)
     }
   }
@@ -127,12 +127,16 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   private executePopulationSearch(queryStr: string, selectedRegistrySchema: RegistrySchema) {
-    this.llmSearchService.getLLMResponse(queryStr, selectedRegistrySchema).subscribe({
+    this.isLoading = true;
+    this.llmSearchService.getLLMResponse(queryStr, selectedRegistrySchema, SearchTypeEnum.population).subscribe({
       next: response=> {
         this.populationSearchResults = response
         this.saveSearchHistory(response, queryStr);
+        this.isLoading = false;
       },
-      error: err => console.error(err)
+      error: err => {
+        console.error(err);
+      }
     })
   }
 

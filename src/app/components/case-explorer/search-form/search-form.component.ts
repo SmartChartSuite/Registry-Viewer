@@ -16,6 +16,7 @@ export class SearchFormComponent implements OnChanges{
   @Output() onSearchEvent = new EventEmitter<Search>();
   @Output() onFilterSearchResultsEvent = new EventEmitter<string>();
   @Output() onApiOptionsChangeEvent = new EventEmitter<any>();
+  @Input() isLoading!: boolean;
 
   protected readonly Object = Object;
   protected readonly searchTypeEnum = SearchTypeEnum;
@@ -38,12 +39,12 @@ export class SearchFormComponent implements OnChanges{
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(changes['searchType'].currentValue == this.searchTypeEnum.POPULATION_SEARCH){
+    if(changes['searchType']?.currentValue == this.searchTypeEnum.population){
       this.searchForm = this.formBuilder.group({
         'query': new FormControl(''),
       });
     }
-    else if (changes['searchType'].currentValue == this.searchTypeEnum.PATIENT_SEARCH){
+    else if (changes['searchType']?.currentValue == this.searchTypeEnum.PATIENT_SEARCH){
       this.searchForm = this.formBuilder.group({
         'query': new FormControl(''),
         'filter': new FormControl(null),

@@ -1,4 +1,4 @@
 export enum SearchTypeEnum {
-  POPULATION_SEARCH = 'Population Query',
+  population = 'Population Query',
   PATIENT_SEARCH = 'Patient Search',
 }
