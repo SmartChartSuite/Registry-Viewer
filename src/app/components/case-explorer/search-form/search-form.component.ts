@@ -16,6 +16,7 @@ export class SearchFormComponent implements OnChanges{
   @Output() onSearchEvent = new EventEmitter<Search>();
   @Output() onFilterSearchResultsEvent = new EventEmitter<string>();
   @Output() onApiOptionsChangeEvent = new EventEmitter<any>();
+  @Output() onCancelRequest = new EventEmitter<void>();
   @Input() isLoading!: boolean;
 
   protected readonly Object = Object;
@@ -31,8 +32,10 @@ export class SearchFormComponent implements OnChanges{
 
   onClear() {
     this.searchForm.controls['query'].setValue('');
+    this.onCancelRequest.emit();
     this.onSearch()
   }
+
 
   onSearch() {
     this.onSearchEvent.emit({searchType: this.searchType, queryStr: this.searchForm.value['query'], apiOption: this.searchForm.value['apiOptions']});
@@ -51,10 +54,10 @@ export class SearchFormComponent implements OnChanges{
         'apiOptions': new FormControl(this.apiOptionsEnum.TRADITIONAL) // the value type (string) should match
       });
       // Presently we only filter the results from patient search
-      this.searchForm.controls['filter'].valueChanges.subscribe(value => {
+      this.searchForm.controls['filter'].valueChanges.subscribe(() => {
         this.onFilterSearchResultsEvent.emit(this.searchForm.controls['filter'].value);
       });
-      this.searchForm.controls['apiOptions'].valueChanges.subscribe(value => {
+      this.searchForm.controls['apiOptions'].valueChanges.subscribe(() => {
         this.searchForm.controls['query'].setValue('');
         this.searchForm.controls['filter'].setValue('');
         this.onApiOptionsChangeEvent.emit(this.searchForm.value['apiOptions']);

@@ -38,6 +38,7 @@
               [searchType]="searchType.population"
               (onSearchEvent)="onSearchEvent($event)"
               (onFilterSearchResultsEvent)="onFilterSearchResults($event)"
+              (onCancelRequest)="onCancelSearchRequest()"
             >
             </app-search-form>
             @if(isLoading){

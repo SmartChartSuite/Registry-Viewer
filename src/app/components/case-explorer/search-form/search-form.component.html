@@ -19,6 +19,12 @@
           </button>
       </mat-form-field>
     </div>
+    @if(isLoading){
+      <button mat-raised-button class="margin-left-md margin-right-md" (click)="onCancelRequest.emit()">
+        <mat-icon>close</mat-icon>
+        Cancel Search
+      </button>
+    }
     <button mat-raised-button color="primary" type="submit" class="margin-left-md margin-right-md" [disabled]="isLoading">
       <mat-icon>search</mat-icon>
       Search

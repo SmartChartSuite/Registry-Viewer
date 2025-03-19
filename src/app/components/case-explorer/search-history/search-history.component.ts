@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SearchHistory} from "../case-explorer.component";
+import {SearchHistory} from "../../../domain/search-history";
 
 @Component({
   selector: 'app-search-history',

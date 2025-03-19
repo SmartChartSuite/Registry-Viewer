@@ -13,12 +13,8 @@ import {LlmSearchService} from "../../service/llm-search.service";
 import {SearchApiOptionsEnum} from "../../domain/search-api-options";
 import {SearchTypeEnum} from "../../domain/search-type";
 import {Search} from "../../domain/search";
+import {SearchHistory} from "../../domain/search-history";
 
-export interface SearchHistory{
-  index: number;
-  queryStr: string;
-  searchResults: QuerySearchApiResponse;
-}
 
 @Component({
   selector: 'app-case-explorer',
@@ -128,20 +124,51 @@ export class CaseExplorerComponent implements OnInit {
 
   private executePopulationSearch(queryStr: string, selectedRegistrySchema: RegistrySchema) {
     this.isLoading = true;
-    this.llmSearchService.getLLMResponse(queryStr, selectedRegistrySchema, SearchTypeEnum.population).subscribe({
+    this.populationSearchResults = null;
+    this.saveSearchHistory(queryStr, selectedRegistrySchema);
+    this.llmSearchService.getLLMResponse(queryStr, selectedRegistrySchema, SearchTypeEnum.population)
+      .subscribe({
       next: response=> {
         this.populationSearchResults = response
-        this.saveSearchHistory(response, queryStr);
+        this.updateSearchHistory(0, response, false, false);
         this.isLoading = false;
       },
       error: err => {
+        this.isLoading = false;
+        this.utilService.showErrorMessage(`${err.status} Server Error loading records.`);
+        const lastHistoryRecord = JSON.parse(sessionStorage.getItem("searchHistory"))[0]
+        this.updateSearchHistory(0,null, lastHistoryRecord.isCancelled, true);
         console.error(err);
+      },
+      complete: () => {
+        this.isLoading = false;
       }
     })
   }
 
-  saveSearchHistory(searchResults: QuerySearchApiResponse, queryStr: string) {
-    const searchHistoryItem: SearchHistory = {index: 0, queryStr: queryStr, searchResults: searchResults};
+  updateSearchHistory(index, searchResults: QuerySearchApiResponse, isCancelled, errorReturned): void {
+    let historyList = JSON.parse(sessionStorage.getItem("searchHistory")) || [];
+    if(historyList.length  == 0 ){
+      console.warn("Attempted to update an empty history list");
+      return;
+    }
+    historyList[index].searchResults = searchResults;
+    historyList[index].isCancelled = isCancelled;
+    historyList[index].errorReturned = errorReturned;
+    historyList[index].searchResults = searchResults;
+    this.searchHistory = [...historyList];
+    console.log(this.searchHistory);
+    sessionStorage.setItem("searchHistory", JSON.stringify(historyList));
+  }
+
+  saveSearchHistory(queryStr: string, selectedRegistrySchema: RegistrySchema, searchResults?: QuerySearchApiResponse, isCancelled?: boolean, errorReturned?: boolean) {
+    const searchHistoryItem: SearchHistory = {
+      queryStr: queryStr,
+      searchResults: searchResults,
+      registrySchema: selectedRegistrySchema,
+      isCancelled: isCancelled ?? false,
+      errorReturned: errorReturned ?? false,
+    };
     if(this.searchHistory.length < this.SEARCH_HISTORY_LENGTH){
       this.searchHistory = [searchHistoryItem, ...this.searchHistory];
     }
@@ -168,4 +195,10 @@ export class CaseExplorerComponent implements OnInit {
     console.log(searchFormValue);
     this.patientSearchResults = {data: [], count: 0};
   }
+
+  onCancelSearchRequest() {
+    this.llmSearchService.cancelSearchRequest();
+    this.updateSearchHistory(0, null, true, false);
+  }
+
 }
