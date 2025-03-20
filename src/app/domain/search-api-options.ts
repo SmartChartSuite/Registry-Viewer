@@ -1,4 +1,4 @@
 export enum SearchApiOptionsEnum {
   TRADITIONAL = 'Standard',
-  LLM = 'AI Query'
+  LLM = 'AI'
 }

@@ -104,7 +104,7 @@ export class CaseExplorerComponent implements OnInit {
   }
 
   onSearchEvent(search: Search) {
-    if(search.searchType == SearchTypeEnum.PATIENT_SEARCH){
+    if(search.searchType == SearchTypeEnum.patient){
       this.executePatientSearch(search.queryStr, search.apiOption)
     }
     else if(search.searchType == SearchTypeEnum.population){

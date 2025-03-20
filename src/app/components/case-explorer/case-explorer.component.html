@@ -2,11 +2,11 @@
   <div class="generic-component-content container">
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
 
-      <mat-tab [label]="searchType.PATIENT_SEARCH">
+      <mat-tab [label]="searchType.patient">
         <div class="padding-top-lg search-container">
           <div class="search">
             <app-search-form
-              [searchType]="searchType.PATIENT_SEARCH"
+              [searchType]="searchType.patient"
               [isLoading]="isLoading"
               (onSearchEvent)="onSearchEvent($event)"
               (onFilterSearchResultsEvent)="onFilterSearchResults($event)"
@@ -18,7 +18,7 @@
             }
             <app-common-search-results
               class="margin-top-md"
-              [searchType]="searchType.PATIENT_SEARCH"
+              [searchType]="searchType.patient"
               [patientSearchResults]="patientSearchResults"
               [filterStr]="filterStr"
               [selectedRegistrySchema]="selectedRegistrySchema"

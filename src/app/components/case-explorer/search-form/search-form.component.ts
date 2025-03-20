@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {SearchApiOptionsEnum} from "../../../domain/search-api-options";
 import {SearchTypeEnum} from "../../../domain/search-type";
 import {Search} from "../../../domain/search";
@@ -32,27 +32,27 @@ export class SearchFormComponent implements OnChanges{
 
   onClear() {
     this.searchForm.controls['query'].setValue('');
-    this.onCancelRequest.emit();
-    this.onSearch()
   }
 
 
   onSearch() {
-    this.onSearchEvent.emit({searchType: this.searchType, queryStr: this.searchForm.value['query'], apiOption: this.searchForm.value['apiOptions']});
+    if (this.searchForm.valid) {
+      this.onSearchEvent.emit({searchType: this.searchType, queryStr: this.searchForm.value['query'], apiOption: this.searchForm.value['apiOptions']});
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes['searchType']?.currentValue == this.searchTypeEnum.population){
       this.searchForm = this.formBuilder.group({
-        'query': new FormControl(''),
-      });
+        'query': new FormControl('',Validators.required),
+      }, { updateOn: 'submit'});
     }
-    else if (changes['searchType']?.currentValue == this.searchTypeEnum.PATIENT_SEARCH){
+    else if (changes['searchType']?.currentValue == this.searchTypeEnum.patient){
       this.searchForm = this.formBuilder.group({
-        'query': new FormControl(''),
+        'query': new FormControl('', Validators.required),
         'filter': new FormControl(null),
         'apiOptions': new FormControl(this.apiOptionsEnum.TRADITIONAL) // the value type (string) should match
-      });
+      }, { updateOn: 'submit'});
       // Presently we only filter the results from patient search
       this.searchForm.controls['filter'].valueChanges.subscribe(() => {
         this.onFilterSearchResultsEvent.emit(this.searchForm.controls['filter'].value);

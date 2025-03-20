@@ -2,7 +2,7 @@
   @if (expanded) {
     <div class="expanded">
       <div class="history-title">
-        <div class="title">Query History</div>
+        <div class="title">Population Query History</div>
         <div>
           <mat-icon class="icon-button" matTooltip="Collapse Search History" (click)="expanded =!expanded">
             chevron_left
@@ -33,7 +33,7 @@
         </div>
         <mat-divider></mat-divider>
       } @empty {
-        The search history is empty.
+        The population query history is empty.
       }
     </div>
   } @else {
@@ -42,7 +42,7 @@
         <mat-icon class="icon-button" matTooltip="Expand Seaerch History" (click)="expanded =!expanded">chevron_right
         </mat-icon>
       </div>
-      <div class="text">Query History</div>
+      <div class="text">Population Query History</div>
     </div>
   }
 </div>

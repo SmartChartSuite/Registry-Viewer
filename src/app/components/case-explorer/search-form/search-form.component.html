@@ -1,5 +1,5 @@
 <form [formGroup]="searchForm" (submit)="onSearch()">
-  @if(searchType == searchTypeEnum.PATIENT_SEARCH){
+  @if(searchType == searchTypeEnum.patient){
     <div class="margin-bottom-sm">
     <mat-label class="margin-left-sm">Search Type: </mat-label>
     <mat-radio-group aria-label="Select an option" class="margin-right-md" formControlName="apiOptions">
@@ -12,7 +12,12 @@
   <div class="search-bar">
     <div class="centered-input search-query">
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>{{ searchType == searchTypeEnum.population?  'Population': 'Search' }} Query</mat-label>
+        @if( searchType == searchTypeEnum.patient ){
+          <mat-label>{{ searchForm.controls?.['apiOptions']?.value == apiOptionsEnum.TRADITIONAL?  'Enter search term(s) ': 'Enter AI search query' }}</mat-label>
+        }
+        @else{
+          <mat-label>Enter population query</mat-label>
+        }
         <input matInput type="text" formControlName="query">
           <button type="button" color="primary" matSuffix mat-icon-button aria-label="Clear Search Query" (click)="onClear()">
             <mat-icon matTooltip="Clear Search Query" matSuffix>cancel</mat-icon>
@@ -26,10 +31,20 @@
       </button>
     }
     <button mat-raised-button color="primary" type="submit" class="margin-left-md margin-right-md" [disabled]="isLoading">
-      <mat-icon>search</mat-icon>
-      Search
+      @if( searchType == searchTypeEnum.patient && searchForm.controls?.['apiOptions']?.value == apiOptionsEnum.TRADITIONAL){
+        <mat-icon>search</mat-icon>
+      }
+      @else{
+        <mat-icon>psychology</mat-icon>
+      }
+      @if( searchType == searchTypeEnum.patient ){
+        <mat-label>{{ searchForm.controls?.['apiOptions']?.value == apiOptionsEnum.TRADITIONAL?  'Search': 'AI Search' }}</mat-label>
+      }
+      @else{
+        <mat-label>Query Population</mat-label>
+      }
     </button>
-    @if(searchType == searchTypeEnum.PATIENT_SEARCH){
+    @if(searchType == searchTypeEnum.patient){
       <div class="centered-input">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Filter Search Results</mat-label>
