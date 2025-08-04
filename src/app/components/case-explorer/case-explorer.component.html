@@ -1,4 +1,4 @@
-<div class="generic-component-wrapper" *ngIf="oauthService.hasValidAccessToken; else loggedout">
+<div class="generic-component-wrapperI'm ready to assist you with continuing a given code snippet while adhering strictly to the guidelines provided. Please provide the context of the code, and I'll be happy to help!<a" *ngIf="oauthService.hasValidAccessToken; else loggedout">
   <div class="generic-component-content container">
     <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
 
@@ -27,29 +27,30 @@
       </mat-tab>
 
       <mat-tab [label]="searchType.population">
-        <div class="padding-top-lg search-container">
-          <div>
-            <app-search-history [searchHistory]="searchHistory" (onSearchHistorySelected)="onSearchHistorySelected($event)"></app-search-history>
-          </div>
-          <div class="search">
-            <app-search-form
-              [isLoading]="isLoading"
-              [searchType]="searchType.population"
-              (onSearchEvent)="onSearchEvent($event)"
-              (onFilterSearchResultsEvent)="onFilterSearchResults($event)"
-              (onCancelRequest)="onCancelSearchRequest()"
-            >
-            </app-search-form>
-            @if(isLoading){
-              <div class=loading>{{ this.LOADING_RECORDS_MSG }}</div>
-            }
-            <app-common-search-results
-              class="margin-left-md"
-              [searchType]="searchType.population"
-              [populationSearchResults]="populationSearchResults"
-              [selectedRegistrySchema]="selectedRegistrySchema"
-            ></app-common-search-results>
-          </div>
+        <div class="padding-top-lg">
+          <app-chanlit-container/>
+<!--          <div>-->
+<!--            <app-search-history [searchHistory]="searchHistory" (onSearchHistorySelected)="onSearchHistorySelected($event)"></app-search-history>-->
+<!--          </div>-->
+<!--          <div class="search">-->
+<!--            <app-search-form-->
+<!--              [isLoading]="isLoading"-->
+<!--              [searchType]="searchType.population"-->
+<!--              (onSearchEvent)="onSearchEvent($event)"-->
+<!--              (onFilterSearchResultsEvent)="onFilterSearchResults($event)"-->
+<!--              (onCancelRequest)="onCancelSearchRequest()"-->
+<!--            >-->
+<!--            </app-search-form>-->
+<!--            @if(isLoading){-->
+<!--              <div class=loading>{{ this.LOADING_RECORDS_MSG }}</div>-->
+<!--            }-->
+<!--            <app-common-search-results-->
+<!--              class="margin-left-md"-->
+<!--              [searchType]="searchType.population"-->
+<!--              [populationSearchResults]="populationSearchResults"-->
+<!--              [selectedRegistrySchema]="selectedRegistrySchema"-->
+<!--            ></app-common-search-results>-->
+<!--          </div>-->
         </div>
       </mat-tab>
     </mat-tab-group>

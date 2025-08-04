@@ -33,8 +33,7 @@ export class SearchFormComponent implements OnChanges{
   onClear() {
     this.searchForm.controls['query'].setValue('');
   }
-
-
+  
   onSearch() {
     this.onSearchEvent.emit({searchType: this.searchType, queryStr: this.searchForm.value['query'], apiOption: this.searchForm.value['apiOptions']});
   }
