@@ -22,6 +22,5 @@
         "sendAccessToken": true
       }
     }
-  },
-  "impactUrl": "https://dev.heat.icl.gtri.org/impact-ai/"
+  }
 }

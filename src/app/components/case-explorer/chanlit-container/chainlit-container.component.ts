@@ -15,7 +15,8 @@ export class ChainlitContainerComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer, private environmentHandlerService: EnvironmentHandlerService,) { }
 
   ngOnInit(): void {
-    const url = this.environmentHandlerService.getImpactUrl();
+    //TODO : remove hardcoded url
+    const url = 'https://dev.heat.icl.gtri.org/impact-ai/';
     this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
