@@ -19,6 +19,10 @@ export class EnvironmentHandlerService {
   }
   getImpactUrl(): string {
     let impactUrl = this.config.impactUrl;
+    if (!impactUrl.endsWith("/")) {
+      impactUrl = impactUrl.concat("/");
+    }
+    console.log(impactUrl)
     return impactUrl;
   }
 }
