@@ -1,6 +1,7 @@
 import { Injectable} from '@angular/core';
 import {ConfigService} from "./config.service";
 import {Config} from "../models/config";
+import localConfig from "../../assets/config/config.json"
 
 @Injectable({
   providedIn: 'root'
@@ -19,10 +20,13 @@ export class EnvironmentHandlerService {
   }
   getImpactUrl(): string {
     let impactUrl = this.config.impactUrl;
+    if (!impactUrl) {
+      impactUrl = localConfig.impactUrl;
+    }
     if (!impactUrl.endsWith("/")) {
       impactUrl = impactUrl.concat("/");
     }
-    console.log(impactUrl)
+    console.log(impactUrl);
     return impactUrl;
   }
 }
