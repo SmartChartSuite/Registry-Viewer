@@ -8,7 +8,7 @@ export class Config {
   title: string = "";
   api: string = "";
   auth: AuthConfig;
-  impactUrl: string = "";
+  impactUrl?: string = "";
 }
 
 export class AuthConfig {
