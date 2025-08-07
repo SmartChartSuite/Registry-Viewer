@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import {EnvironmentHandlerService} from "../../../service/environment-handler.service";
 
 @Component({
   selector: 'app-chanlit-container',
@@ -11,10 +12,10 @@ export class ChainlitContainerComponent implements OnInit {
   title = 'test-app';
   iframeUrl: SafeResourceUrl;
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer, private environmentHandlerService: EnvironmentHandlerService,) { }
 
   ngOnInit(): void {
-    const url = 'http://localhost:8000/';
+    const url = this.environmentHandlerService.getImpactUrl();
     this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 

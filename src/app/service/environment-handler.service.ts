@@ -17,4 +17,8 @@ export class EnvironmentHandlerService {
     }
     return baseApiUrl;
   }
+  getImpactUrl(): string {
+    let impactUrl = this.config.impactUrl;
+    return impactUrl;
+  }
 }
