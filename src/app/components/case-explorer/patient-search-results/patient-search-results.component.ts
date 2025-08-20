@@ -19,7 +19,7 @@ export class PatientSearchResultsComponent implements OnChanges{
   @ViewChild(MatSort) sort: MatSort;
 
   dataSource : MatTableDataSource<CaseRecord>;
-  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'status'];
+  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate'];
 
   onRowClicked(row: any) {
     this.onPatientSelectedEvent.emit(row);
