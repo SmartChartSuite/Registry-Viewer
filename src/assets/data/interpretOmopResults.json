@@ -1,0 +1,26 @@
+{
+  "data":{
+    "schema":"synpuf5",
+    "user_query":"How many patients have taken aspirin, year over year?",
+    "db_result":[
+      {
+        "year":2008.0,
+        "num_patients":279804
+      },
+      {
+        "year":2009.0,
+        "num_patients":306437
+      },
+      {
+        "year":2010.0,
+        "num_patients":206909
+      }
+    ]
+  },
+  "response":{
+    "image":"data:image/png;base64<ENCODEDIMAGE>",
+    "result_interpretation":"From 2008 to 2010, the number of patients who took aspirin varied each year. In 2008, there were 279,804 patients, which increased to 306,437 in 2009. However, in 2010, the number decreased to 206,909 patients.",
+    "time":3.2694919109344482,
+    "user_query":"How many patients have taken aspirin, year over year?"
+  }
+}

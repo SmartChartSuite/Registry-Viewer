@@ -66,3 +66,62 @@ table {
   white-space: nowrap;
 }
 
+.search-bar{
+  display: flex;
+  align-items: center;
+  >.centered-input{
+    margin-bottom: -22px;
+  }
+  >.search-query{
+    flex: 1;
+  }
+}
+
+.search-container{
+  display: flex;
+  >.search-history{
+    margin-right: 8px;
+    width: 20%;
+    height: calc(100vh - 200px);
+    border: 1px solid rgba(125, 125, 125, .5);;
+    border-radius: 4px;
+    background-color: whitesmoke;
+  }
+  >.search{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+  }
+}
+
+
+
+.loading {
+  margin: 16px;
+  font-family: monospace;
+}
+
+.loading:after {
+  content: "...";
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  animation: ellipsis-dot 1s infinite .3s;
+  animation-fill-mode: forwards;
+  width: 32px;
+}
+
+@keyframes ellipsis-dot {
+  0% {
+    content: "";
+  }
+  25% {
+    content: ".";
+  }
+  50% {
+    content: "..";
+  }
+  75% {
+    content: "...";
+  }
+}

@@ -22,7 +22,12 @@ import { DetailsComponent } from './components/registry-viewer/side-panel/detail
 import { FlagComponent } from './components/registry-viewer/side-panel/flag/flag.component';
 import { AnnotationsComponent } from './components/registry-viewer/side-panel/annotations/annotations.component';
 import {DrawerService} from "./service/drawer.service";
-import {MatMultiSortModule} from "ngx-mat-multi-sort";
+import {
+  MatMultiSort,
+  MatMultiSortHeaderComponent,
+  MatMultiSortModule,
+  MatMultiSortTableSettingsComponent
+} from "ngx-mat-multi-sort";
 import {AddRecordDialogComponent} from './components/registry-viewer/add-record-dialog/add-record-dialog.component';
 import {DatePipe, NgOptimizedImage} from "@angular/common";
 import { SectionComponent } from './components/registry-viewer/summary-view/section/section.component';
@@ -48,13 +53,19 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {APP_DATE_FORMATS, AppDateAdapter} from "./provider/format-datepicker"
 import {MatMenuModule} from "@angular/material/menu";
 import {MatDividerModule} from "@angular/material/divider";
-import { LandingComponent } from './components/landing/landing.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {OAuthModule, OAuthStorage} from "angular-oauth2-oidc";
 import {LoginComponent} from "./components/login/login.component";
 import {Oauth2Interceptor} from "./interceptors/oauth2.interceptor";
 import { HeaderComponent } from './components/header/header.component';
 import { CustomHeaderComponent } from './components/header/custom-header/custom-header.component';
+import {MatTab, MatTabGroup} from "@angular/material/tabs";
+import { PatientSearchResultsComponent } from './components/case-explorer/patient-search-results/patient-search-results.component';
+import { SearchFormComponent } from './components/case-explorer/search-form/search-form.component';
+import { CommonSearchResultsComponent } from './components/case-explorer/common-search-results/common-search-results.component';
+import { SearchHistoryComponent } from './components/case-explorer/search-history/search-history.component';
+import { QuerySearchResultsComponent } from './components/case-explorer/query-search-results/query-search-results.component';
+import {ChainlitContainerComponent} from "./components/case-explorer/chanlit-container/chainlit-container.component";
 
 export const configFactory = (configService: ConfigService) => {
   return () => configService.loadConfig();
@@ -79,46 +90,56 @@ export const configFactory = (configService: ConfigService) => {
     SectionComponent,
     ConformationDialogComponent,
     DemoModeComponent,
-    LandingComponent,
     LoginComponent,
     HeaderComponent,
-    CustomHeaderComponent
+    CustomHeaderComponent,
+    PatientSearchResultsComponent,
+    SearchFormComponent,
+    CommonSearchResultsComponent,
+    SearchHistoryComponent,
+    QuerySearchResultsComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatSortModule,
-    ReactiveFormsModule,
-    MatNativeDateModule,
-    MatExpansionModule,
-    FormsModule,
-    MatMultiSortModule,
-    ScrollingModule,
-    MatGridListModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatDialogModule,
-    MatTableModule,
-    MatSelectModule,
-    MatProgressSpinnerModule,
-    MatButtonToggleModule,
-    MatButtonModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatDatepickerModule,
-    NgOptimizedImage,
-    MatTooltipModule,
-    OAuthModule.forRoot(),
-    MatMenuModule,
-    MatDividerModule,
-    MatRadioModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatSortModule,
+        ReactiveFormsModule,
+        MatNativeDateModule,
+        MatExpansionModule,
+        FormsModule,
+        MatMultiSortModule,
+        ScrollingModule,
+        MatGridListModule,
+        MatCardModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        MatTableModule,
+        MatSelectModule,
+        MatProgressSpinnerModule,
+        MatButtonToggleModule,
+        MatButtonModule,
+        MatSlideToggleModule,
+        MatSnackBarModule,
+        MatDatepickerModule,
+        NgOptimizedImage,
+        MatTooltipModule,
+        OAuthModule.forRoot(),
+        MatMenuModule,
+        MatDividerModule,
+        MatRadioModule,
+        MatTabGroup,
+        MatTab,
+        MatMultiSortTableSettingsComponent,
+        MatMultiSort,
+        MatMultiSortHeaderComponent,
+        ChainlitContainerComponent,
+    ],
   providers: [
     ConfigService,
     {

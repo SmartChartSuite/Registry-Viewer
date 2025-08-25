@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @use "@angular/material" as mat;
 
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 
 $my-app-primary: mat.m2-define-palette(mat.$m2-blue-grey-palette);
 $my-app-accent: mat.m2-define-palette(mat.$m2-green-palette, A400, A200, A700);
@@ -184,11 +185,14 @@ $lg: 24px;
 .margin-top-xs { margin-top: $xs; }
 .margin-top-sm { margin-top: $sm; }
 .margin-top-md { margin-top: $md; }
+.margin-top-lg { margin-top: $lg; }
 .margin-left-md { margin-left: $md; }
 .margin-left-sm { margin-left: $sm; }
 .margin-right-md { margin-right: $md; }
+.margin-right-lg { margin-right: $lg; }
 .padding-bottom-md { padding-bottom: $md; }
 .padding-top-md { padding-top: $md; }
+.padding-top-lg { padding-top: $lg; }
 .padding-bottom-md { padding-bottom: $md; }
 .padding-left-md { padding-left: $md; }
 .padding-right-md { padding-right: $md; }

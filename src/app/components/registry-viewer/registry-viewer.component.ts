@@ -5,13 +5,13 @@ import {CaseRecordsService} from "../../service/case-records.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DemoModeService} from "../../service/demo-mode.service";
 import {UtilsService} from "../../service/utils.service";
-import {RegistrySchema} from "../../domain/registry.schema";
 
 
 @Component({
   selector: 'app-registry-viewer',
   templateUrl: './registry-viewer.component.html',
-  styleUrls: ['./registry-viewer.component.scss']
+  styleUrls: ['./registry-viewer.component.scss'],
+  standalone: false
 })
 export class RegistryViewerComponent implements OnInit, AfterViewInit {
 

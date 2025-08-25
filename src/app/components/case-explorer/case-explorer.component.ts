@@ -1,23 +1,26 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from "@angular/material/sort";
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {CaseRecordsService} from "../../service/case-records.service";
-import {CaseRecord} from "../../domain/case.record";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {CaseRecordApiResponse} from "../../domain/case.record.api.response";
+import {CaseRecordApiResponse, QuerySearchApiResponse} from "../../domain/case.record.api.response";
 import {DateAdapter, MAT_DATE_FORMATS} from "@angular/material/core";
 import {APP_DATE_FORMATS, AppDateAdapter} from "../../provider/format-datepicker";
 import {UtilsService} from "../../service/utils.service";
 import {OAuthService} from "angular-oauth2-oidc";
 import {MetadataService} from "../../service/metadata.service";
 import {RegistrySchema} from "../../domain/registry.schema";
+import {LlmSearchService} from "../../service/llm-search.service";
+import {SearchApiOptionsEnum} from "../../domain/search-api-options";
+import {SearchTypeEnum} from "../../domain/search-type";
+import {Search} from "../../domain/search";
+import {SearchHistory} from "../../domain/search-history";
+
 
 @Component({
   selector: 'app-case-explorer',
   templateUrl: './case-explorer.component.html',
   styleUrls: ['./case-explorer.component.scss'],
+  standalone: false,
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
@@ -25,15 +28,18 @@ import {RegistrySchema} from "../../domain/registry.schema";
 })
 export class CaseExplorerComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild('input') input: ElementRef;
-
-  dataSource : MatTableDataSource<CaseRecord>;
-  displayedColumns: string[] = ['lastName', 'givenName', 'dob', 'gender', 'address', 'phone', 'initialReportDate', 'status'];
-  isLoading = true;
+  isLoading = false;
   searchForm: FormGroup = new FormGroup({});
   selectedRegistrySchema: RegistrySchema;
+  response: CaseRecordApiResponse;
+  llmSearchForm: FormGroup;
+  protected readonly searchType = SearchTypeEnum;
+  searchHistory: SearchHistory[];
+  filterStr: string;
+  readonly SEARCH_HISTORY_LENGTH = 5;
+  populationSearchResults: QuerySearchApiResponse;
+  patientSearchResults: CaseRecordApiResponse;
+  LOADING_RECORDS_MSG = "Loading Search Results";
 
   constructor(
     private route: ActivatedRoute,
@@ -42,21 +48,23 @@ export class CaseExplorerComponent implements OnInit {
     private formBuilder: FormBuilder,
     private utilService: UtilsService,
     public oauthService: OAuthService,
-    private metadataService: MetadataService
+    private metadataService: MetadataService,
+    private llmSearchService: LlmSearchService
   ) {
     this.searchForm = this.formBuilder.group({
       searchQuery: [null],
-      dob: [null]
+    });
+
+    this.llmSearchForm = this.formBuilder.group({
+      llmSearchQuery: [null],
     });
   }
 
   getCaseRecords(registrySchema: string, searchTerms?: string[]): void {
     this.caseRecordsService.searchCases(registrySchema, searchTerms).subscribe({
       next: (response: CaseRecordApiResponse) => {
-        this.dataSource = new MatTableDataSource(response.data);
+        this.patientSearchResults = response;
         this.isLoading = false;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       },
       error: err => {
         console.error(err);
@@ -66,7 +74,7 @@ export class CaseExplorerComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  getPatientSearchResults(){
     this.metadataService.selectedRegistrySchema$.subscribe({
       next: selectedRegistrySchema => {
         if (selectedRegistrySchema) {
@@ -77,43 +85,120 @@ export class CaseExplorerComponent implements OnInit {
     });
     this.caseRecordsService.setDemographicsData(null);
     this.caseRecordsService.setCustomHeaderData([]);
+  }
+
+  ngOnInit(): void {
+    //we assume that the we always need to get the data for the Patient Search
+    this.getPatientSearchResults();
+    this.getCachedQueryData();
+    this.searchHistory = this.readSearchHistory();
+  }
+
+  onFilterSearchResults(event: string) {
+    this.filterStr = event;
+  }
+
+
+  private getCachedQueryData() {
 
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  onSearchEvent(search: Search) {
+    if(search.searchType == SearchTypeEnum.patient){
+      this.executePatientSearch(search.queryStr, search.apiOption)
+    }
+    else if(search.searchType == SearchTypeEnum.population){
+      this.executePopulationSearch(search.queryStr, this.selectedRegistrySchema)
     }
   }
 
-  onRowClicked(row: any) {
-    this.router.navigate(['case', row.caseId], { queryParams: {registrySchema: this.selectedRegistrySchema.tag}} );
-  }
-
-  getDateStr(date: Date): string {
-    const y  = date.getFullYear().toString();
-    const m = (date.getMonth() + 1).toString(); // month is 0 based in js
-    const d = date.getDate().toString();
-    return y + '-' + m + '-' + d;
-  }
-
-  onSearchFormSubmit() {
-    //split the string on one or more white spaces
-    let searchTerms = this.searchForm.value?.searchQuery?.trim().split(/\s+/);
-    const dob = this.searchForm.value?.dob;
-
-    if(dob){
-      if(!searchTerms){
-        searchTerms = [];
-      }
-      const dobStr = this.getDateStr(dob);
-      searchTerms.push(dobStr);
-    }
-
-    if(searchTerms){
+  private executePatientSearch(queryStr: string, apiOption: SearchApiOptionsEnum) {
+    let searchTerms = queryStr?.trim().split(/\s+/);
+    if (apiOption == SearchApiOptionsEnum.TRADITIONAL) {
       this.getCaseRecords(this.selectedRegistrySchema.tag, searchTerms);
     }
+    else if(apiOption == SearchApiOptionsEnum.LLM){
+      this.getLlmCaseRecords(queryStr);
+    }
   }
+
+  private executePopulationSearch(queryStr: string, selectedRegistrySchema: RegistrySchema) {
+    this.isLoading = true;
+    this.populationSearchResults = null;
+    this.saveSearchHistory(queryStr, selectedRegistrySchema);
+    this.llmSearchService.getLLMResponse(queryStr, selectedRegistrySchema, SearchTypeEnum.population)
+      .subscribe({
+      next: response=> {
+        this.populationSearchResults = response
+        this.updateSearchHistory(0, response, false, false);
+        this.isLoading = false;
+      },
+      error: err => {
+        this.isLoading = false;
+        this.utilService.showErrorMessage(`${err.status} Server Error loading records.`);
+        const lastHistoryRecord = JSON.parse(sessionStorage.getItem("searchHistory"))[0]
+        this.updateSearchHistory(0,null, lastHistoryRecord.isCancelled, true);
+        console.error(err);
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    })
+  }
+
+  updateSearchHistory(index, searchResults: QuerySearchApiResponse, isCancelled, errorReturned): void {
+    let historyList = JSON.parse(sessionStorage.getItem("searchHistory")) || [];
+    if(historyList.length  == 0 ){
+      console.warn("Attempted to update an empty history list");
+      return;
+    }
+    historyList[index].searchResults = searchResults;
+    historyList[index].isCancelled = isCancelled;
+    historyList[index].errorReturned = errorReturned;
+    historyList[index].searchResults = searchResults;
+    this.searchHistory = [...historyList];
+    console.log(this.searchHistory);
+    sessionStorage.setItem("searchHistory", JSON.stringify(historyList));
+  }
+
+  saveSearchHistory(queryStr: string, selectedRegistrySchema: RegistrySchema, searchResults?: QuerySearchApiResponse, isCancelled?: boolean, errorReturned?: boolean) {
+    const searchHistoryItem: SearchHistory = {
+      queryStr: queryStr,
+      searchResults: searchResults,
+      registrySchema: selectedRegistrySchema,
+      isCancelled: isCancelled ?? false,
+      errorReturned: errorReturned ?? false,
+    };
+    if(this.searchHistory.length < this.SEARCH_HISTORY_LENGTH){
+      this.searchHistory = [searchHistoryItem, ...this.searchHistory];
+    }
+    else {
+      this.searchHistory = [searchHistoryItem, ...this.searchHistory.slice(0, this.searchHistory.length - 1)];
+    }
+    sessionStorage.setItem("searchHistory", JSON.stringify(this.searchHistory));
+  }
+
+  readSearchHistory(){
+    return  JSON.parse(sessionStorage.getItem("searchHistory")) || [];
+  }
+
+  onSearchHistorySelected(event: SearchHistory) {
+    this.populationSearchResults = event.searchResults;
+  }
+
+  onApiOptionsChangeEvent(apiOption: SearchApiOptionsEnum) {
+    this.executePatientSearch('', apiOption);
+  }
+
+  private getLlmCaseRecords(searchFormValue: any) {
+    //TODO implement llm search
+    console.log(searchFormValue);
+    this.patientSearchResults = {data: [], count: 0};
+  }
+
+  onCancelSearchRequest() {
+    this.llmSearchService.cancelSearchRequest();
+    this.updateSearchHistory(0, null, true, false);
+  }
+
 }

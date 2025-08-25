@@ -1,0 +1,48 @@
+<div class="history-container">
+  @if (expanded) {
+    <div class="expanded">
+      <div class="history-title">
+        <div class="title">Population Query History</div>
+        <div>
+          <mat-icon class="icon-button" matTooltip="Collapse Search History" (click)="expanded =!expanded">
+            chevron_left
+          </mat-icon>
+        </div>
+      </div>
+      @for (element of searchHistory; track $index) {
+        <div class="line-item">
+          <div>
+            @if(element.searchResults){
+              <span class="has-response" (click)="onHistorySelected(element)">
+                {{ element.queryStr }}
+              </span>
+            }
+            @else {
+              <span class="no-response">{{ element.queryStr }}</span>
+            }
+          </div>
+          <div class="row">
+            @if (element.errorReturned) {
+              <mat-icon color=primary matTooltip='Query resulted in an error' class="margin-right-sm small-icon">error</mat-icon>
+            }
+            @if (element.isCancelled) {
+              <mat-icon color=primary matTooltip='Query request cancelled' class="margin-right-sm small-icon">close</mat-icon>
+            }
+            <div>{{ element.registrySchema.name }}</div>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      } @empty {
+        The population query history is empty.
+      }
+    </div>
+  } @else {
+    <div class="collapsed">
+      <div>
+        <mat-icon class="icon-button" matTooltip="Expand Seaerch History" (click)="expanded =!expanded">chevron_right
+        </mat-icon>
+      </div>
+      <div class="text">Population Query History</div>
+    </div>
+  }
+</div>

@@ -11,7 +11,8 @@ import {OAuthService} from "angular-oauth2-oidc";
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  standalone: false
 })
 export class HeaderComponent implements OnInit{
 
@@ -50,8 +51,8 @@ export class HeaderComponent implements OnInit{
 
   }
 
-  onRouteChanged(route: string) {
-    this.router.navigate([route]);
+  onHomeSelected() {
+    this.router.navigate(['/']);
     this.demoModeService.setDemoModeActive(false);
   }
 

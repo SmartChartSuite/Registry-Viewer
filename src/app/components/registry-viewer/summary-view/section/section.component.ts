@@ -14,6 +14,7 @@ import {openAnnotationDialog} from "../../add-record-dialog/add-record-dialog.co
   selector: 'app-section',
   templateUrl: './section.component.html',
   styleUrls: ['./section.component.scss', '../../registry-viewer.component.scss'],
+  standalone: false,
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),

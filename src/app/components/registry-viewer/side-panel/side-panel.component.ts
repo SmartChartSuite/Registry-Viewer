@@ -5,7 +5,8 @@ import {DrawerService} from "../../../service/drawer.service";
 @Component({
   selector: 'app-side-panel',
   templateUrl: './side-panel.component.html',
-  styleUrls: ['./side-panel.component.scss']
+  styleUrls: ['./side-panel.component.scss'],
+  standalone: false
 })
 export class SidePanelComponent {
   @Input() registrySchemaTag: string;
