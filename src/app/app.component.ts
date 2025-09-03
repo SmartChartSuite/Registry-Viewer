@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
   }
 
   private initUserAuthenticatedFlow() {
-    this.metadataService.selectedRegistrySchema$.subscribe(value => this.registrySchema = value)
+    this.metadataService.selectedRegistrySchema$.subscribe(value => this.registrySchema = value);
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationStart),

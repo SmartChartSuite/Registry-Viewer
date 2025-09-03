@@ -38,7 +38,6 @@ export class LoginComponent {
     this.oauthService.events.pipe(
       skipWhile(value => !this.oauthService.hasValidAccessToken()),
       switchMap(() => this.metadataService.getMetadata()),
-      tap(registrySchemaList => this.metadataService.setSelectedRegistrySchema(registrySchemaList[0])),
     ).subscribe({
         next: ()=> {},
         error: err => {

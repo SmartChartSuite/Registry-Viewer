@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit{
       next: registrySchemaList => {
         if(registrySchemaList?.length){
           this.registrySchemaList = registrySchemaList
-          this.selectedRegistrySchema = registrySchemaList[0];
+          this.selectedRegistrySchema = registrySchemaList.find(el=> el.tag === "syphilis");
           this.metadataService.setSelectedRegistrySchema(this.selectedRegistrySchema);
         }
       }

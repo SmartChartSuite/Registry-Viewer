@@ -1,14 +1,15 @@
 <form [formGroup]="searchForm" (submit)="onSearch()">
-  @if(searchType == searchTypeEnum.patient){
-    <div class="margin-bottom-sm">
-    <mat-label class="margin-left-sm">Search Type: </mat-label>
-    <mat-radio-group aria-label="Select an option" class="margin-right-md" formControlName="apiOptions">
-      @for (api of Object.values(apiOptionsEnum); track api) {
-        <mat-radio-button class="margin-right-md" [value]="api">{{api}}</mat-radio-button>
-      }
-    </mat-radio-group>
-    </div>
-  }
+  <!-- TODO Temporary removed the search type. May have to be re-initialized when we decided what to do with the AI -->
+<!--  @if(searchType == searchTypeEnum.patient){-->
+<!--    <div class="margin-bottom-sm">-->
+<!--    <mat-label class="margin-left-sm">Search Type: </mat-label>-->
+<!--    <mat-radio-group aria-label="Select an option" class="margin-right-md" formControlName="apiOptions">-->
+<!--      @for (api of Object.values(apiOptionsEnum); track api) {-->
+<!--        <mat-radio-button class="margin-right-md" [value]="api">{{api}}</mat-radio-button>-->
+<!--      }-->
+<!--    </mat-radio-group>-->
+<!--    </div>-->
+<!--  }-->
   <div class="search-bar">
     <div class="centered-input search-query">
       <mat-form-field appearance="outline" class="full-width">
